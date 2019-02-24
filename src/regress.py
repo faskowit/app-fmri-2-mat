@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 """
 Created on Tue Oct 23 15:46:26 2018
@@ -51,6 +52,11 @@ def nuisance_regress(inputimg, inputmask, confoundsfile, inputtr=0,
         # data being formatted to have the dim4 be the TR...
         tr = inputimg.header.get_zooms()[3]
         print("found that tr is: {}".format(str(tr)))
+
+        if tr == 0:
+            print("thats not a good tr. exiting")
+            exit(1)
+
     else:
         tr = inputtr
 
@@ -143,8 +149,8 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None):
     df = pd.read_csv(confounds_file, sep="\t")
 
     # extract nusiance regressors for movement + signal
-    p6 = df[['X', 'Y', 'Z', 'RotX', 'RotY', 'RotZ']]
-    p9 = df[['CSF', 'WhiteMatter', 'GlobalSignal', 'X', 'Y', 'Z', 'RotX', 'RotY', 'RotZ']]
+    p6 = df[['trans_x', 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z']]
+    p9 = df[['csf', 'white_matter', 'global_signal', 'trans_x', 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z']]
     
     # 6Pder
     p6_der = p6.diff().fillna(0)
@@ -168,14 +174,14 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None):
     p36 = pd.concat((p18, p18_2), axis=1)
 
     # GSR4
-    gsr = df['GlobalSignal']
+    gsr = df['global_signal']
     gsr_der = gsr.diff().fillna(0)
     gsr_der2 = gsr_der ** 2
     gsr4 = pd.concat((gsr, gsr_der, gsr_der2), axis=1)
     gsr4['sqrterm'] = np.power(range(1, gsr.shape[0]+1), 2)
 
     # get compcor nuisance regressors and combine with 12P
-    aCompC = df.filter(regex='aCompCor')
+    aCompC = df.filter(regex='a_comp_cor_')
     p12aCompC = pd.concat((p12, aCompC), axis=1)
     p24aCompC = pd.concat((p12, p12_2, aCompC), axis=1)
 
@@ -202,7 +208,7 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None):
         # if no spike regression still call get_spikereg_confounds to get count
         # of available trs
         threshold = 99999
-    outliers, outlier_stats = get_spikereg_confounds(df["FramewiseDisplacement"].values, threshold)
+    outliers, outlier_stats = get_spikereg_confounds(df["framewise_displacement"].values, threshold)
 
     if spikereg_threshold:
         confounds = pd.concat([confounds, outliers], axis=1)
