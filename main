@@ -1,0 +1,115 @@
+#!/bin/bash
+#PBS -l nodes=1:ppn=1,walltime=00:15:00,vmem=6gb
+#PBS -N app-fmri-2-mat
+
+# TODO 
+# give user more control over parameters
+
+#set -e
+#set -x
+
+EXEDIR=$(dirname "$(readlink -f "$0")")/
+
+echo "PWD: $(pwd)"
+echo "ls pwd dir read--> "
+ls -dl ${PWD}
+
+###############################################################################
+
+inFMRI="null"
+inMASK="null"
+inPARC="null"
+inCONF="null"
+
+###############################################################################
+# read input from config.json
+# starting off with basic options here
+
+if [[ -f config.json ]] ; then
+	# roll with config.json
+	echo "reading config.json"
+
+	inFMRI=`jq -r '.t1' config.json`
+	inMASK=`jq -r '.t2' config.json`
+	inPARC=`jq -r '.fmri' config.json`
+	inCONF=`jq -r '.fmap' config.json`
+
+else
+	echo "reading command line args"
+
+	while [ "$1" != "" ]; do
+	    case $1 in
+	        -f | -fmri )           	shift
+	                               	inFMRI=$1
+	                          		checkisfile $1
+	                               	;;
+	        -m | -mask )    		shift
+									inMASK=$1
+									checkisfile $1
+	                                ;;
+	        -p | -parc )    		shift
+									inPARC=$1
+									checkisfile $1
+	                                ;;
+	        -c | -conf )			shift
+									inCONF=$1
+									checkisfile $1
+	                                ;;
+	        -h | --help )           echo "see script"
+	                                exit 1
+	                                ;;
+	        * )                     echo "see script"
+	                                exit 1
+	    esac
+	    shift
+	done
+
+fi
+
+###############################################################################
+# check the inputs
+
+if [[ ${inFMRI} = "null" ]] ||
+	[[ ${inMASK} = "null" ]]
+	[[ ${inPARC} = "null" ]]
+	[[ ${inCONF} = "null" ]] ; then
+	echo "need an fmri, mask, parc, and confounds file"
+	exit 1
+fi
+
+###############################################################################
+# run it
+
+mkdir -p ${PWD}/output_regress/
+
+cmd="python ${EXEDIR}/src/regress.py \
+		-strategy 36P \
+		-fwhm 0 \
+		-out ${PWD}/output_regress/out \
+		${inFMRI} \
+		${inMASK} \
+		${inCONF} \
+	"
+echo $cmd
+eval $cmd
+
+regressFMRI=${PWD}/output_regress/out_nuisance.nii.gz
+
+if [[ ! -f ${regressFMRI} ]] ; then
+	echo "something wrong with nusiance regression"
+	exit 1
+fi
+
+mkdir -p ${PWD}/output_makemat/
+
+cmd="python ${EXEDIR}/src/makemat.py \
+		-space labels \
+		-type correlation \
+		-out ${PWD}/output_makemat/out \
+		${regressFMRI} \
+		${inMASK} \
+		-parcs ${inPARC}
+	"
+echo $cmd
+eval $cmd
+
