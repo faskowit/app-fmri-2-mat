@@ -1,5 +1,5 @@
 #!/bin/bash
-#PBS -l nodes=1:ppn=1,walltime=00:15:00,vmem=6gb
+#PBS -l nodes=1:ppn=1,walltime=00:10:00,vmem=6gb
 #PBS -N app-fmri-2-mat
 
 # TODO 
@@ -7,6 +7,15 @@
 
 #set -e
 #set -x
+
+function checkisfile {
+
+	inFile=$1
+	if [[ ! -f ${inFile} ]] ; then
+		echo "file does not exist: $inFile"
+		exit 1
+	fi
+}
 
 EXEDIR=$(dirname "$(readlink -f "$0")")/
 
@@ -20,6 +29,8 @@ inFMRI="null"
 inMASK="null"
 inPARC="null"
 inCONF="null"
+inOUTBASE="null"
+inTR="null"
 
 ###############################################################################
 # read input from config.json
@@ -29,10 +40,10 @@ if [[ -f config.json ]] ; then
 	# roll with config.json
 	echo "reading config.json"
 
-	inFMRI=`jq -r '.t1' config.json`
-	inMASK=`jq -r '.t2' config.json`
-	inPARC=`jq -r '.fmri' config.json`
-	inCONF=`jq -r '.fmap' config.json`
+	inFMRI=`jq -r '.fmri' config.json`
+	inMASK=`jq -r '.mask' config.json`
+	inPARC=`jq -r '.parc' config.json`
+	inCONF=`jq -r '.confounds' config.json`
 
 else
 	echo "reading command line args"
@@ -54,6 +65,13 @@ else
 	        -c | -conf )			shift
 									inCONF=$1
 									checkisfile $1
+	                                ;;
+	        -o | -out )				shift
+									inOUTBASE=$1
+									checkisfile $1
+	                                ;;
+	        -t | -tr )				shift
+									inTR=$1
 	                                ;;
 	        -h | --help )           echo "see script"
 	                                exit 1
@@ -77,23 +95,42 @@ if [[ ${inFMRI} = "null" ]] ||
 	exit 1
 fi
 
+if [[ ${inOUTBASE} = "null" ]] ; then
+	inOUTBASE=${PWD}/
+fi
+
+###############################################################################
+# try to get repeition time if not provided
+
+if [[ ${inTR} = "null" ]] ; then
+
+	blJson=$(dirname ${inFMRI})/.brainlife.json
+	getTr=$(jq -r '.meta.RepetitionTime' ${blJson})
+	if [[ ${getTr} != "null" ]] ; then
+		inTR=${getTr}
+	fi
+fi
+
 ###############################################################################
 # run it
 
 mkdir -p ${PWD}/output_regress/
 
-cmd="python ${EXEDIR}/src/regress.py \
+cmd="python3 ${EXEDIR}/src/regress.py \
 		-strategy 36P \
 		-fwhm 0 \
-		-out ${PWD}/output_regress/out \
+		-out ${inOUTBASE}/output_regress/out \
 		${inFMRI} \
 		${inMASK} \
 		${inCONF} \
 	"
+if [[ ${inTR} != "null" ]] ; then
+	cmd="${cmd} -tr ${inTR}"
+fi
 echo $cmd
 eval $cmd
 
-regressFMRI=${PWD}/output_regress/out_nuisance.nii.gz
+regressFMRI=${inOUTBASE}/output_regress/out_nuisance.nii.gz
 
 if [[ ! -f ${regressFMRI} ]] ; then
 	echo "something wrong with nusiance regression"
@@ -102,14 +139,19 @@ fi
 
 mkdir -p ${PWD}/output_makemat/
 
-cmd="python ${EXEDIR}/src/makemat.py \
+cmd="python3 ${EXEDIR}/src/makemat.py \
 		-space labels \
 		-type correlation \
-		-out ${PWD}/output_makemat/out \
+		-out ${inOUTBASE}/output_makemat/out \
 		${regressFMRI} \
 		${inMASK} \
 		-parcs ${inPARC}
 	"
 echo $cmd
 eval $cmd
+
+###############################################################################
+# map output for bl
+
+
 
