@@ -4,7 +4,7 @@ MAINTAINER j faskowitz <jfaskowi@iu.edu>
 # pip and jq
 RUN apt-get update && apt-get install -y python3-pip jq && apt clean
 
-$ python packages
+# python packages
 RUN pip3 install numpy nibabel pandas nilearn
 
 #make it work under singularity
