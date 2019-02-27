@@ -12,11 +12,11 @@ copied/adapted from original code here: https://github.com/fliem/sea_zrh_rs
 
 import os
 import csv
+import argparse
 import nibabel as nib
 import numpy as np
-import pandas as pd
 from nilearn import input_data, image
-import argparse
+import pandas as pd
 
 
 def nuisance_regress(inputimg, inputmask, confoundsfile, inputtr=0,

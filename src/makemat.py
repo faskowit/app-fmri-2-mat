@@ -12,10 +12,10 @@ copied/adapted from original code here: https://github.com/fliem/sea_zrh_rs
 
 import os
 import csv
-import nibabel as nib
 import argparse
-from nilearn import input_data, connectome
+import nibabel as nib
 import numpy as np
+from nilearn import input_data, connectome
 import pandas as pd
 
 
