@@ -222,8 +222,7 @@ def main():
     parser.add_argument('fmri', type=str, help='input fmri to be denoised')
     parser.add_argument('mask', type=str, help='input mask in same space as fmri')
     parser.add_argument('confounds', type=str, help='input confounds file (from fmriprep)')
-    parser.add_argument('-tr', type=float, help='tr of image (for bandpass filtering)',
-                        default=0)
+    parser.add_argument('-tr', type=float, help='tr of image (for bandpass filtering)', default=0)
     parser.add_argument('-strategy', type=str, help='confound strategy',
                         choices=["36P", "9P", "6P", "aCompCor", "24aCompCor", "24aCompCorGsr"],
                         default='36P')

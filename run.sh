@@ -44,6 +44,7 @@ if [[ -f config.json ]] ; then
 	inMASK=`jq -r '.mask' config.json`
 	inPARC=`jq -r '.parc' config.json`
 	inCONF=`jq -r '.confounds' config.json`
+	inTR=`jq -r '.tr' config.json`
 
 else
 	echo "reading command line args"
@@ -105,9 +106,14 @@ fi
 if [[ ${inTR} = "null" ]] ; then
 
 	blJson=$(dirname ${inFMRI})/.brainlife.json
-	getTr=$(jq -r '.meta.RepetitionTime' ${blJson})
-	if [[ ${getTr} != "null" ]] ; then
-		inTR=${getTr}
+
+	if [[ -f ${blJson} ]] ; then
+		getTr=$(jq -r '.meta.RepetitionTime' ${blJson})
+		if [[ ${getTr} != "null" ]] ; then
+			inTR=${getTr}
+		fi
+	else
+		echo "no tr read from blJson"
 	fi
 fi
 
