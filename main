@@ -1,5 +1,5 @@
 #!/bin/bash
-#PBS -l nodes=1:ppn=1,vmem=6g,walltime=00:15:00
+#PBS -l nodes=1:ppn=1,vmem=16g,walltime=00:15:00
 #PBS -N app-fmri-2-mat
 #PBS -V
 
