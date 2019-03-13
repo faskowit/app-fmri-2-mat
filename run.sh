@@ -1,6 +1,4 @@
 #!/bin/bash
-#PBS -l nodes=1:ppn=1,walltime=00:15:00,vmem=12gb
-#PBS -N app-fmri-2-mat
 
 # TODO 
 # give user more control over parameters
