@@ -170,5 +170,6 @@ eval $cmd
 ###############################################################################
 # map output for bl
 
-
+mv ${inOUTBASE}/output_regress/out_nuisance.nii.gz \
+	${inOUTBASE}/output_regress/bold.nii.gz 
 
