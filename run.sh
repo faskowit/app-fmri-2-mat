@@ -29,10 +29,17 @@ inPARC="null"
 inCONF="null"
 inOUTBASE="null"
 inTR="null"
+saveTS="null"
 
 ###############################################################################
 # read input from config.json
 # starting off with basic options here
+
+if [[ "$#" -lt 4 ]] ; then 
+	echo "need at least 4 arguments: fmri, mask, parc, conf"
+	echo "will hopefully find these in config.json."
+	echo "or else I'll complain"
+fi
 
 if [[ -f config.json ]] ; then
 	# roll with config.json
@@ -43,6 +50,7 @@ if [[ -f config.json ]] ; then
 	inPARC=`jq -r '.parc' config.json`
 	inCONF=`jq -r '.confounds' config.json`
 	inTR=`jq -r '.tr' config.json`
+	saveTS=`jq -r '.savets' config.json`
 
 else
 	echo "reading command line args"
@@ -72,9 +80,11 @@ else
 	        -t | -tr )				shift
 									inTR=$1
 	                                ;;
+	       	-s | -savets )			saveTS="true"
+	       							;;	
 	        -h | --help )           echo "see script"
 	                                exit 1
-	                                ;;
+	                                ;;		
 	        * )                     echo "see script"
 	                                exit 1
 	    esac
@@ -87,8 +97,8 @@ fi
 # check the inputs
 
 if [[ ${inFMRI} = "null" ]] ||
-	[[ ${inMASK} = "null" ]]
-	[[ ${inPARC} = "null" ]]
+	[[ ${inMASK} = "null" ]] ||
+	[[ ${inPARC} = "null" ]] ||
 	[[ ${inCONF} = "null" ]] ; then
 	echo "need an fmri, mask, parc, and confounds file"
 	exit 1
@@ -111,7 +121,7 @@ if [[ ${inTR} = "null" ]] ; then
 			inTR=${getTr}
 		fi
 	else
-		echo "no tr read from blJson"
+		echo "blJson not found, not reading TR from here"
 	fi
 fi
 
@@ -149,8 +159,11 @@ cmd="python3 ${EXEDIR}/src/makemat.py \
 		-out ${inOUTBASE}/output_makemat/out \
 		${regressFMRI} \
 		${inMASK} \
-		-parcs ${inPARC}
+		-parcs ${inPARC} \
 	"
+if [[ ${saveTS} = "true" ]] ; then
+	cmd="${cmd} -savetimeseries"
+fi
 echo $cmd
 eval $cmd
 
