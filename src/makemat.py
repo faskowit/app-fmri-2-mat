@@ -32,7 +32,7 @@ def get_con_df(raw_mat, roi_names):
     r4  0.2  0.5  0.9  0.0
     """
     # sanity check if matrix is symmetrical
-    assert np.allclose(raw_mat, raw_mat.T), "matrix not symmetrical"
+    assert np.allclose(raw_mat, raw_mat.T, atol=1e-04, equal_nan=True), "matrix not symmetrical"
 
     np.fill_diagonal(raw_mat, 0)
     con_df = pd.DataFrame(raw_mat, index=roi_names, columns=roi_names)
@@ -82,7 +82,7 @@ def main():
     parser.add_argument('-space', type=str, help='space that the connectivity is computed in',
                         choices=['labels', 'data'], default='labels')
     parser.add_argument('-type', type=str, help='type of connectivity',
-                        choices=['correlation', 'partial correlation', 'tangent', 'covariance', 'precision'],
+                        choices=['correlation', 'partial correlation', 'covariance'],
                         default='correlation')
     parser.add_argument('-out', type=str, help='output base name',
                         default='output')
@@ -123,7 +123,7 @@ def main():
         baseoutname = (os.path.basename(parc)).rsplit('.nii', 1)[0]
 
         # write
-        conndf.to_csv(''.join([args.out, '_', baseoutname, '_connMatdf.csv']))
+        conndf.to_csv(''.join([args.out, '_', baseoutname, '_', ''.join(args.type.split()), '_connMatdf.csv']))
 
         # # format name
         # with open(''.join([args.out, '_', baseoutname, '_connMat.csv']), "w") as f:
