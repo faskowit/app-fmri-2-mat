@@ -18,7 +18,7 @@ import pandas as pd
 
 
 def nuisance_regress(inputimg, inputmask, confoundsfile, inputtr=0,
-    conftype="36P", spikethr=0.25, smoothkern=6.0):
+    conftype="36P", spikethr=0.25, smoothkern=6.0, discardvols=4):
     """
     
     returns a nibabel.nifti1.Nifti1Image that is cleaned in following ways:
@@ -70,12 +70,12 @@ def nuisance_regress(inputimg, inputmask, confoundsfile, inputtr=0,
     time_series = masker.fit_transform(inputimg, confounds=confounds.values)
 
     # inverse masker operation to get the nifti object, n.b. this returns a Nifti1Image!!!
-    outImg = masker.inverse_transform(time_series)
+    outimg = masker.inverse_transform(time_series)
 
-    # get rid of the first four volumes
-    outImg4 = image.index_img(outImg, np.arange(4, outImg.shape[3]))
+    # get rid of the first N volumes
+    outimgtrim = image.index_img(outimg, np.arange(discardvols, outimg.shape[3]))
 
-    return outImg4, confounds, outlier_stats
+    return outimgtrim, confounds, outlier_stats
 
 
 def get_spikereg_confounds(motion_ts, threshold):
@@ -247,6 +247,8 @@ def main():
                         default=0.5)
     parser.add_argument('-fwhm', type=float, help='smoothing fwhm',
                         default=6.0)
+    parser.add_argument('-discardvols', type=int, help='number of volumes to discard at beginning of func',
+                        default=4)
     parser.add_argument('-out', type=str, help='ouput base name',
                         default='output')
 
@@ -268,7 +270,8 @@ def main():
                                                 args.confounds, inputtr=args.tr,
                                                 conftype=args.strategy,
                                                 spikethr=args.spikethr,
-                                                smoothkern=args.fwhm)
+                                                smoothkern=args.fwhm,
+                                                discardvols=args.discardvols)
 
     # write it
     nib.save(nrImg, ''.join([args.out, '_nuisance.nii.gz']))
