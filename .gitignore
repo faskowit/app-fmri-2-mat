@@ -1,2 +1,4 @@
 config.json
 output*
+.idea/
+test_data/*

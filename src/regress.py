@@ -10,8 +10,6 @@ copied/adapted from original code here: https://github.com/fliem/sea_zrh_rs
 
 """
 
-import os
-import csv
 import argparse
 import nibabel as nib
 import numpy as np
@@ -148,9 +146,28 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None):
 
     df = pd.read_csv(confounds_file, sep="\t")
 
+    # check if old/new confound names
+    if 'GlobalSignal' in df:
+        print("detected old confounds names")
+        p6cols = ['X', 'Y', 'Z', 'RotX', 'RotY', 'RotZ']
+        p9cols = ['CSF', 'WhiteMatter', 'GlobalSignal', 'X', 'Y', 'Z', 'RotX', 'RotY', 'RotZ']
+        globalsignalcol = 'GlobalSignal'
+        compCorregex = 'aCompCor'
+        framewisecol = 'FramewiseDisplacement'
+    elif 'global_signal' in df:
+        print("detected new confounds names")
+        p6cols = ['trans_x', 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z']
+        p9cols = ['csf', 'white_matter', 'global_signal', 'trans_x', 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z']
+        globalsignalcol = 'global_signal'
+        compCorregex = 'a_comp_cor_'
+        framewisecol = 'framewise_displacement'
+    else:
+        print("trouble reading necessary columns from confounds file. exiting")
+        exit(1)
+
     # extract nusiance regressors for movement + signal
-    p6 = df[['trans_x', 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z']]
-    p9 = df[['csf', 'white_matter', 'global_signal', 'trans_x', 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z']]
+    p6 = df[p6cols]
+    p9 = df[p9cols]
     
     # 6Pder
     p6_der = p6.diff().fillna(0)
@@ -174,14 +191,14 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None):
     p36 = pd.concat((p18, p18_2), axis=1)
 
     # GSR4
-    gsr = df['global_signal']
+    gsr = df[globalsignalcol]
     gsr_der = gsr.diff().fillna(0)
     gsr_der2 = gsr_der ** 2
     gsr4 = pd.concat((gsr, gsr_der, gsr_der2), axis=1)
     gsr4['sqrterm'] = np.power(range(1, gsr.shape[0]+1), 2)
 
     # get compcor nuisance regressors and combine with 12P
-    aCompC = df.filter(regex='a_comp_cor_')
+    aCompC = df.filter(regex=compCorregex)
     p12aCompC = pd.concat((p12, aCompC), axis=1)
     p24aCompC = pd.concat((p12, p12_2, aCompC), axis=1)
 
@@ -208,7 +225,7 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None):
         # if no spike regression still call get_spikereg_confounds to get count
         # of available trs
         threshold = 99999
-    outliers, outlier_stats = get_spikereg_confounds(df["framewise_displacement"].values, threshold)
+    outliers, outlier_stats = get_spikereg_confounds(df[framewisecol].values, threshold)
 
     if spikereg_threshold:
         confounds = pd.concat([confounds, outliers], axis=1)
@@ -247,7 +264,11 @@ def main():
     inputMask = nib.load(args.mask)
 
     # call nuisance regress, get a nib Nifti1Image
-    nrImg, outldf, outdfstat = nuisance_regress(inputImg, inputMask, args.confounds, inputtr=args.tr, conftype=args.strategy, spikethr=args.spikethr, smoothkern=args.fwhm)
+    nrImg, outldf, outdfstat = nuisance_regress(inputImg, inputMask,
+                                                args.confounds, inputtr=args.tr,
+                                                conftype=args.strategy,
+                                                spikethr=args.spikethr,
+                                                smoothkern=args.fwhm)
 
     # write it
     nib.save(nrImg, ''.join([args.out, '_nuisance.nii.gz']))

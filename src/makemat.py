@@ -17,6 +17,7 @@ import nibabel as nib
 import numpy as np
 from nilearn import input_data, connectome
 import pandas as pd
+import h5py
 
 
 def get_con_df(raw_mat, roi_names):
@@ -38,7 +39,7 @@ def get_con_df(raw_mat, roi_names):
     return con_df
 
 
-def extract_mat(rsimg, maskimg, labelimg, regnames=None, conntype='correlation', space='labels'):
+def extract_mat(rsimg, maskimg, labelimg, conntype='correlation', space='labels', savets=False):
 
     masker = input_data.NiftiLabelsMasker(labelimg,
                                           background_label=0,
@@ -54,15 +55,23 @@ def extract_mat(rsimg, maskimg, labelimg, regnames=None, conntype='correlation',
     connobj = connectome.ConnectivityMeasure(kind=conntype)
     connmat = connobj.fit_transform([time_series])[0]
 
-    if regnames is not None:
-        reglabs = open(regnames).read().splitlines()
-    else:
-        # get the unique labels list, other than 0, which will be first
-        reglabs = list(np.unique(labelimg.get_data())[1:].astype(np.int).astype(np.str))
+    # note, no more support for providing region labels, should be done outside
+    # of this function. Here, we just save the ints that demarcate the regions
+    # in the image
+
+    # get the unique labels list, other than 0, which will be first
+    reginparc = np.unique(labelimg.get_data())[1:].astype(np.int)
+    reglabs = list(reginparc.astype(np.str))
 
     conndf = get_con_df(connmat, reglabs)
 
-    return conndf, connmat
+    # print(str(time_series))
+
+    # if not saving time series, don't pass anything substantial, save mem
+    if not savets:
+        time_series = 42
+
+    return conndf, connmat, time_series, reginparc
 
 
 def main():
@@ -70,7 +79,6 @@ def main():
     parser = argparse.ArgumentParser(description='fmri -> adjacency matrix')
     parser.add_argument('fmri', type=str, help='input fmri to be denoised')
     parser.add_argument('mask', type=str, help='input mask in same space as fmri')
-    parser.add_argument('-regionnames', type=str, help='single column file that contains region names')
     parser.add_argument('-space', type=str, help='space that the connectivity is computed in',
                         choices=['labels', 'data'], default='labels')
     parser.add_argument('-type', type=str, help='type of connectivity',
@@ -78,6 +86,8 @@ def main():
                         default='correlation')
     parser.add_argument('-out', type=str, help='output base name',
                         default='output')
+    parser.add_argument('-savetimeseries', help='also save average time series from each roi in parcellation',
+                        action="store_true")
     parser.add_argument('-parcs', help='parcs to be used for makin\' matrices. make last arg',
                         nargs='+', required=True)
 
@@ -91,18 +101,23 @@ def main():
     print("END ARGS\n")
 
     # read in the data
-    inputImg = nib.load(args.fmri)
-    inputMask = nib.load(args.mask)
+    inputimg = nib.load(args.fmri)
+    inputmask = nib.load(args.mask)
+
+    # if args.savetimeseries:
+    #    # initialize an hd5 group
+    #    h5file = h5py.File(''.join([args.out, '_timeseries.hdf5']), "w")
+    #    h5filegroup = h5file.create_group('timeseries')
 
     # loop over labels provided
     for parc in args.parcs:
 
         print("\nmaking conn matricies for {}".format(str(parc)))
 
-        labImg = nib.load(parc)
-        conndf, connmat = extract_mat(inputImg, inputMask, labImg,
-                                      conntype=args.type, space=args.space,
-                                      regnames=args.regionnames)
+        labimg = nib.load(parc)
+        conndf, connmat, times, regions = extract_mat(inputimg, inputmask, labimg,
+                                                      conntype=args.type, space=args.space,
+                                                      savets=args.savetimeseries)
 
         # format name
         baseoutname = (os.path.basename(parc)).rsplit('.nii', 1)[0]
@@ -110,11 +125,21 @@ def main():
         # write
         conndf.to_csv(''.join([args.out, '_', baseoutname, '_connMatdf.csv']))
 
-        # format name
-        baseoutname = (os.path.basename(parc)).rsplit('.nii', 1)[0]
-        with open(''.join([args.out, '_', baseoutname, '_connMat.csv']), "w") as f:
-            writer = csv.writer(f)
-            writer.writerows(connmat)
+        # # format name
+        # with open(''.join([args.out, '_', baseoutname, '_connMat.csv']), "w") as f:
+        #     writer = csv.writer(f)
+        #     writer.writerows(connmat)
+
+        # also write out time series if requested
+        if args.savetimeseries:
+
+            # this method closes file: https://stackoverflow.com/questions/29863342/close-an-open-h5py-data-file
+            with h5py.File(''.join([args.out, '_', baseoutname, '_timeseries.hdf5']), "w")as h5f:
+                h5f.create_dataset('timeseries',
+                                   data=times,
+                                   compression="gzip")
+                h5f.create_dataset('regionids',
+                                   data=np.array(regions))
 
 
 if __name__ == '__main__':
