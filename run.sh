@@ -31,6 +31,7 @@ inOUTBASE="null"
 inTR="null"
 saveTS="null"
 inDISCARD="null"
+inSPACE="null"
 
 # initialize this to be an array so we can add multiple parcs via cmd line
 inPARC=()
@@ -56,6 +57,7 @@ if [[ -f config.json ]] ; then
 	inTR=`jq -r '.tr' config.json`
 	saveTS=`jq -r '.savets' config.json`
 	inDISCARD=`jq -r '.discardvols' config.json`
+	inSPACE=`jq -r '.inspace' config.json`
 
 else
 	echo "reading command line args"
@@ -88,6 +90,9 @@ else
 	                                ;;
 	        -d | -discard )			shift
 									inDISCARD=$1
+	                    			;;
+            -e | -space )			shift
+									inSPACE=$1
 	                    			;;
 	       	-s | -savets )			saveTS="true"
 	       							;;	
@@ -126,6 +131,15 @@ re='^[0-9]+$'
 if ! [[ ${inDISCARD} =~ $re ]] ; then
    echo "ERROR: discard vols not an integer" >&2; 
    exit 1
+fi
+
+if [[ ${inSPACE} = "null" ]] ; then
+	inSPACE="data"
+fi
+
+if [[ ${inSPACE} != "data" ]] && [[ ${inSPACE} != "labels" ]] ; then
+	echo "ERROR: space can only be 'data' or 'labels'" >&2; 
+	exit 1
 fi
 
 ###############################################################################
@@ -180,7 +194,7 @@ for (( i=0; i<${#inPARC[@]}; i++ )) ; do
 	echo ; echo "making matrix $((i+1)) from parc: ${inPARC[i]}" ; echo
 
 	cmd="python3 ${EXEDIR}/src/makemat.py \
-			-space labels \
+			-space ${inSPACE} \
 			-type correlation \
 			-out ${inOUTBASE}/output_makemat/out \
 			${regressFMRI} \
