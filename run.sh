@@ -25,11 +25,15 @@ ls -dl ${PWD}
 
 inFMRI="null"
 inMASK="null"
-inPARC="null"
+# inPARC="null"
 inCONF="null"
 inOUTBASE="null"
 inTR="null"
 saveTS="null"
+inDISCARD="null"
+
+# initialize this to be an array so we can add multiple parcs via cmd line
+inPARC=()
 
 ###############################################################################
 # read input from config.json
@@ -51,6 +55,7 @@ if [[ -f config.json ]] ; then
 	inCONF=`jq -r '.confounds' config.json`
 	inTR=`jq -r '.tr' config.json`
 	saveTS=`jq -r '.savets' config.json`
+	inDISCARD=`jq -r '.discardvols' config.json`
 
 else
 	echo "reading command line args"
@@ -66,8 +71,9 @@ else
 									checkisfile $1
 	                                ;;
 	        -p | -parc )    		shift
-									inPARC=$1
 									checkisfile $1
+									# add to list
+									inPARC[${#inPARC[@]}]=$1
 	                                ;;
 	        -c | -conf )			shift
 									inCONF=$1
@@ -75,11 +81,14 @@ else
 	                                ;;
 	        -o | -out )				shift
 									inOUTBASE=$1
-									checkisfile $1
+									#checkisfile $1
 	                                ;;
 	        -t | -tr )				shift
 									inTR=$1
 	                                ;;
+	        -d | -discard )			shift
+									inDISCARD=$1
+	                    			;;
 	       	-s | -savets )			saveTS="true"
 	       							;;	
 	        -h | --help )           echo "see script"
@@ -88,7 +97,7 @@ else
 	        * )                     echo "see script"
 	                                exit 1
 	    esac
-	    shift
+	    shift #this shift "moves up" the arg in after each case
 	done
 
 fi
@@ -100,12 +109,23 @@ if [[ ${inFMRI} = "null" ]] ||
 	[[ ${inMASK} = "null" ]] ||
 	[[ ${inPARC} = "null" ]] ||
 	[[ ${inCONF} = "null" ]] ; then
-	echo "need an fmri, mask, parc, and confounds file"
+	echo "ERROR: need an fmri, mask, parc, and confounds file" >&2;
 	exit 1
 fi
 
 if [[ ${inOUTBASE} = "null" ]] ; then
 	inOUTBASE=${PWD}/
+fi
+
+if [[ ${inDISCARD} = "null" ]] ; then
+	inDISCARD=4 
+fi
+
+# https://stackoverflow.com/questions/806906/how-do-i-test-if-a-variable-is-a-number-in-bash
+re='^[0-9]+$'
+if ! [[ ${inDISCARD} =~ $re ]] ; then
+   echo "ERROR: discard vols not an integer" >&2; 
+   exit 1
 fi
 
 ###############################################################################
@@ -128,12 +148,13 @@ fi
 ###############################################################################
 # run it
 
-mkdir -p ${PWD}/output_regress/
+mkdir -p ${inOUTBASE}/output_regress/
 
 cmd="python3 ${EXEDIR}/src/regress.py \
 		-strategy 36P \
 		-fwhm 0 \
 		-out ${inOUTBASE}/output_regress/out \
+		-discardvols ${inDISCARD} \
 		${inFMRI} \
 		${inMASK} \
 		${inCONF} \
@@ -147,25 +168,31 @@ eval $cmd
 regressFMRI=${inOUTBASE}/output_regress/out_nuisance.nii.gz
 
 if [[ ! -f ${regressFMRI} ]] ; then
-	echo "something wrong with nusiance regression"
+	echo "ERROR: something wrong with nusiance regression" >&2; 
 	exit 1
 fi
 
-mkdir -p ${PWD}/output_makemat/
+# loop through the pars provided. output is storred based on name of parc
+for (( i=0; i<${#inPARC[@]}; i++ )) ; do
 
-cmd="python3 ${EXEDIR}/src/makemat.py \
-		-space labels \
-		-type correlation \
-		-out ${inOUTBASE}/output_makemat/out \
-		${regressFMRI} \
-		${inMASK} \
-		-parcs ${inPARC} \
-	"
-if [[ ${saveTS} = "true" ]] ; then
-	cmd="${cmd} -savetimeseries"
-fi
-echo $cmd
-eval $cmd
+	mkdir -p ${inOUTBASE}/output_makemat/
+
+	echo ; echo "making matrix $((i+1)) from parc: ${inPARC[i]}" ; echo
+
+	cmd="python3 ${EXEDIR}/src/makemat.py \
+			-space labels \
+			-type correlation \
+			-out ${inOUTBASE}/output_makemat/out \
+			${regressFMRI} \
+			${inMASK} \
+			-parcs ${inPARC[i]} \
+		"
+	if [[ ${saveTS} = "true" ]] ; then
+		cmd="${cmd} -savetimeseries"
+	fi
+	echo $cmd
+	eval $cmd
+done
 
 ###############################################################################
 # map output for bl

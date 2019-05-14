@@ -1,4 +1,4 @@
-config.json
+*.json
 output*
 .idea/
 test_data/*
