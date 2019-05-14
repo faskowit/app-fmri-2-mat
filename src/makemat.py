@@ -123,7 +123,7 @@ def main():
         baseoutname = (os.path.basename(parc)).rsplit('.nii', 1)[0]
 
         # write
-        conndf.to_csv(''.join([args.out, '_', baseoutname, '_', ''.join(args.type.split()), '_connMatdf.csv']))
+        conndf.to_csv(''.join([args.out, '_', baseoutname, '_', ''.join(args.type.split()), '_connMatdf.csv']), float_format='%.3g')
 
         # # format name
         # with open(''.join([args.out, '_', baseoutname, '_connMat.csv']), "w") as f:
