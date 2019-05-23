@@ -64,41 +64,47 @@ else
 
 	while [ "$1" != "" ]; do
 	    case $1 in
-	        -f | -fmri )           	shift
+	        -f | -fmri ) shift
 	                               	inFMRI=$1
 	                          		checkisfile $1
 	                               	;;
-	        -m | -mask )    		shift
+	        -m | -mask ) shift
 									inMASK=$1
 									checkisfile $1
 	                                ;;
-	        -p | -parc )    		shift
+	        -p | -parc ) shift
 									checkisfile $1
 									# add to list
 									inPARC[${#inPARC[@]}]=$1
 	                                ;;
-	        -c | -conf )			shift
+	        -c | -conf ) shift
 									inCONF=$1
 									checkisfile $1
 	                                ;;
-	        -o | -out )				shift
+	        -o | -out ) shift
 									inOUTBASE=$1
 									#checkisfile $1
 	                                ;;
-	        -t | -tr )				shift
+	        -t | -tr ) shift
 									inTR=$1
 	                                ;;
-	        -d | -discard )			shift
+	        -d | -discard ) shift
 									inDISCARD=$1
 	                    			;;
-            -e | -space )			shift
+            -e | -space ) shift
 									inSPACE=$1
 	                    			;;
 	       	-s | -savets )			saveTS="true"
 	       							;;	
 	        -h | --help )           echo "see script"
 	                                exit 1
-	                                ;;		
+	                                ;;
+            -regressextra )	shift
+									REXTRA="${REXTRA} $1 $2" ; shift
+									;;
+			-makematextra )	shift
+									MEXTRA="${MEXTRA} $1 $2" ; shift
+            						;;	
 	        * )                     echo "see script"
 	                                exit 1
 	    esac
@@ -169,6 +175,7 @@ cmd="python3 ${EXEDIR}/src/regress.py \
 		-fwhm 0 \
 		-out ${inOUTBASE}/output_regress/out \
 		-discardvols ${inDISCARD} \
+		${REXTRA} \
 		${inFMRI} \
 		${inMASK} \
 		${inCONF} \
@@ -197,6 +204,7 @@ for (( i=0; i<${#inPARC[@]}; i++ )) ; do
 			-space ${inSPACE} \
 			-type correlation \
 			-out ${inOUTBASE}/output_makemat/out \
+			${MEXTRA}
 			${regressFMRI} \
 			${inMASK} \
 			-parcs ${inPARC[i]} \
