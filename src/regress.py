@@ -18,7 +18,8 @@ import pandas as pd
 
 
 def nuisance_regress(inputimg, inputmask, confoundsfile, inputtr=0,
-    conftype="36P", spikethr=0.25, smoothkern=6.0, discardvols=4):
+    conftype="36P", spikethr=0.25, smoothkern=6.0, discardvols=4,
+    highpassval=0.008 , lowpassval=0.08):
     """
     
     returns a nibabel.nifti1.Nifti1Image that is cleaned in following ways:
@@ -45,6 +46,12 @@ def nuisance_regress(inputimg, inputmask, confoundsfile, inputtr=0,
                                              kind=conftype,
                                              spikereg_threshold=spikethr)
 
+    # check highpass low pass
+    if highpassval >= lowpassval:
+        print("high and low pass values dont make sense. exiting")
+        exit(1)
+
+    # check tr
     if inputtr == 0:
         # read the tr from the fourth dimension of zooms, this depends on the input
         # data being formatted to have the dim4 be the TR...
@@ -60,7 +67,7 @@ def nuisance_regress(inputimg, inputmask, confoundsfile, inputtr=0,
 
     # masker params
     masker_params = {"mask_img": inputmask, "detrend": True, "standardize": True,
-                     "low_pass": 0.08, "high_pass": 0.008, "t_r": tr,
+                     "low_pass": lowpassval, "high_pass": highpassval, "t_r": tr,
                      "smoothing_fwhm": smoothkern, "verbose": 1, }
 
     # invoke masker
@@ -249,6 +256,10 @@ def main():
                         default=6.0)
     parser.add_argument('-discardvols', type=int, help='number of volumes to discard at beginning of func',
                         default=4)
+    parser.add_argument('-highpass', type=float, help='high pass value',
+                        default=0.008)
+    parser.add_argument('-lowpass', type=float, help='low pass value',
+                        default=0.08)
     parser.add_argument('-out', type=str, help='ouput base name',
                         default='output')
 
@@ -271,7 +282,9 @@ def main():
                                                 conftype=args.strategy,
                                                 spikethr=args.spikethr,
                                                 smoothkern=args.fwhm,
-                                                discardvols=args.discardvols)
+                                                discardvols=args.discardvols,
+                                                highpassval=args.highpass,
+                                                lowpassval=args.lowpass)
 
     # write it
     nib.save(nrImg, ''.join([args.out, '_nuisance.nii.gz']))
