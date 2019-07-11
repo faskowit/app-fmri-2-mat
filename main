@@ -4,8 +4,6 @@
 #PBS -V
 
 set -e
+set -x
 
-echo "running app-fmri-2-mat w/ singularity"
-# time singularity exec -e docker://faskowit/app-fmri-2-mat ./run.sh
-time singularity exec --writable -e docker://faskowit/app-fmri-2-mat \
-	bash -c "./run.sh $@ "
+time singularity exec -e docker://faskowit/app-fmri-2-mat ./run.sh
