@@ -16,8 +16,15 @@ import numpy as np
 from nilearn import input_data, image
 import pandas as pd
 
+# https://github.com/edickie/ciftify/blob/master/ciftify/bin/ciftify_clean_img.py#L301
+# MIT License https://github.com/edickie/ciftify/blob/master/LICENSE
+def image_drop_dummy_trs(nib_image, start_from_tr):
+    ''' use nilearn to drop the number of trs from the image'''
+    img_out = nib_image.slicer[:,:,:, start_from_tr:]
+    return img_out
 
-def nuisance_regress(inputimg, inputmask, confoundsfile, inputtr=0,
+
+def nuisance_regress(inputimg, confoundsfile, inputmask, inputtr=0,
     conftype="36P", spikethr=0.25, smoothkern=6.0, discardvols=4,
     highpassval=0.008 , lowpassval=0.08):
     """
@@ -65,22 +72,44 @@ def nuisance_regress(inputimg, inputmask, confoundsfile, inputtr=0,
     else:
         tr = inputtr
 
-    # masker params
-    masker_params = {"mask_img": inputmask, "detrend": True, "standardize": True,
-                     "low_pass": lowpassval, "high_pass": highpassval, "t_r": tr,
-                     "smoothing_fwhm": smoothkern, "verbose": 1, }
+    if inputmask is not None:
+        print("cleaning image with masker")
 
-    # invoke masker
-    masker = input_data.NiftiMasker(**masker_params)
+        # masker params
+        masker_params = {"mask_img": inputmask, "detrend": True, 
+                         "standardize": True, "low_pass": lowpassval,
+                         "high_pass": highpassval, "t_r": tr,
+                         "smoothing_fwhm": smoothkern, "verbose": 1, }
 
-    # perform the nuisance regression
-    time_series = masker.fit_transform(inputimg, confounds=confounds.values)
+        # invoke masker
+        masker = input_data.NiftiMasker(**masker_params)
 
-    # inverse masker operation to get the nifti object, n.b. this returns a Nifti1Image!!!
-    outimg = masker.inverse_transform(time_series)
+        # perform the nuisance regression
+        time_series = masker.fit_transform(inputimg, confounds=confounds.values)
+
+        # inverse masker operation to get the nifti object, n.b. this returns a Nifti1Image!!!
+        outimg = masker.inverse_transform(time_series)
+    else:
+        # no mask! so no masker
+        print("cleaning image with no mask")
+
+        clean_params = {"confounds": confounds.values,
+                        "detrend": True, "standardize": True, 
+                        "low_pass": lowpassval, "high_pass": highpassval, 
+                        "t_r": tr, }
+
+        loadimg = image.load_img(inputimg)
+
+        outimg = image.clean_img(loadimg, **clean_params)
+
+
 
     # get rid of the first N volumes
-    outimgtrim = image.index_img(outimg, np.arange(discardvols, outimg.shape[3]))
+    #outimgtrim = image.index_img(outimg, np.arange(discardvols, outimg.shape[3]))
+    if discardvols > 0:
+        outimgtrim = image_drop_dummy_trs(outimg,discardvols)
+    else:
+        outimgtrim = outimg
 
     return outimgtrim, confounds, outlier_stats
 
@@ -204,27 +233,29 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None):
     gsr4 = pd.concat((gsr, gsr_der, gsr_der2), axis=1)
     gsr4['sqrterm'] = np.power(range(1, gsr.shape[0]+1), 2)
 
-    # get compcor nuisance regressors and combine with 12P
-    aCompC = df.filter(regex=compCorregex)
-    p12aCompC = pd.concat((p12, aCompC), axis=1)
-    p24aCompC = pd.concat((p12, p12_2, aCompC), axis=1)
-
     if kind == "36P":
         confounds = p36
     elif kind == "9P":
         confounds = p9
     elif kind == "6P":
         confounds = p6
-    elif kind == "aCompCor":
-        confounds = p12aCompC
-    elif kind == "24aCompCor":
-        confounds = p24aCompC
-    elif kind == "24aCompCorGsr":
-        confounds = pd.concat((p24aCompC, gsr4), axis=1)
     else:
-        # it will never get here, but assign confounds so my linter doesn't complain
-        confounds = ''
-        exit(1)
+        # then we grab compcor stuff
+        # get compcor nuisance regressors and combine with 12P
+        aCompC = df.filter(regex=compCorregex)
+        p12aCompC = pd.concat((p12, aCompC), axis=1)
+        p24aCompC = pd.concat((p12, p12_2, aCompC), axis=1)
+
+        if kind == "aCompCor":
+            confounds = p12aCompC
+        elif kind == "24aCompCor":
+            confounds = p24aCompC
+        elif kind == "24aCompCorGsr":
+            confounds = pd.concat((p24aCompC, gsr4), axis=1)
+        else:
+            # it will never get here, but assign confounds so my linter doesn't complain
+            confounds = ''
+            exit(1)
 
     if spikereg_threshold:
         threshold = spikereg_threshold
@@ -244,8 +275,9 @@ def main():
 
     parser = argparse.ArgumentParser(description='nusiance regression')
     parser.add_argument('fmri', type=str, help='input fmri to be denoised')
-    parser.add_argument('mask', type=str, help='input mask in same space as fmri')
     parser.add_argument('confounds', type=str, help='input confounds file (from fmriprep)')
+    parser.add_argument('-mask', type=str, help='input mask in same space as fmri',
+                        default=None)
     parser.add_argument('-tr', type=float, help='tr of image (for bandpass filtering)', default=0)
     parser.add_argument('-strategy', type=str, help='confound strategy',
                         choices=["36P", "9P", "6P", "aCompCor", "24aCompCor", "24aCompCorGsr"],
@@ -274,11 +306,16 @@ def main():
 
     # read in the data
     inputImg = nib.load(args.fmri)
-    inputMask = nib.load(args.mask)
+
+    if args.mask is not None:
+        inputMask = nib.load(args.mask)
+    else:
+        inputMask = None
 
     # call nuisance regress, get a nib Nifti1Image
-    nrImg, outldf, outdfstat = nuisance_regress(inputImg, inputMask,
-                                                args.confounds, inputtr=args.tr,
+    nrImg, outldf, outdfstat = nuisance_regress(inputImg, args.confounds,
+                                                inputmask=inputMask, 
+                                                inputtr=args.tr,
                                                 conftype=args.strategy,
                                                 spikethr=args.spikethr,
                                                 smoothkern=args.fwhm,

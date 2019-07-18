@@ -40,8 +40,8 @@ inPARC=()
 # read input from config.json
 # starting off with basic options here
 
-if [[ "$#" -lt 4 ]] ; then 
-	echo "need at least 4 arguments: fmri, mask, parc, conf"
+if [[ "$#" -lt 3 ]] ; then 
+	echo "need at least 3 arguments: fmri, parc, conf"
 	echo "will hopefully find these in config.json."
 	echo "or else I'll complain"
 fi
@@ -117,10 +117,9 @@ fi
 # check the inputs
 
 if [[ ${inFMRI} = "null" ]] ||
-	[[ ${inMASK} = "null" ]] ||
 	[[ ${inPARC} = "null" ]] ||
 	[[ ${inCONF} = "null" ]] ; then
-	echo "ERROR: need an fmri, mask, parc, and confounds file" >&2;
+	echo "ERROR: need an fmri, parc, and confounds file" >&2;
 	exit 1
 fi
 
@@ -171,15 +170,15 @@ fi
 mkdir -p ${inOUTBASE}/output_regress/
 
 cmd="python3 ${EXEDIR}/src/regress.py \
-		-strategy 36P \
-		-fwhm 0 \
 		-out ${inOUTBASE}/output_regress/out \
 		-discardvols ${inDISCARD} \
 		${REXTRA} \
 		${inFMRI} \
-		${inMASK} \
 		${inCONF} \
 	"
+if [[ ${inMASK} != "null" ]] ; then
+	cmd="${cmd} -mask ${inMASK}"
+fi
 if [[ ${inTR} != "null" ]] ; then
 	cmd="${cmd} -tr ${inTR}"
 fi
