@@ -39,7 +39,7 @@ def get_con_df(raw_mat, roi_names):
     return con_df
 
 
-def extract_mat(rsimg, maskimg, labelimg, conntype='correlation', space='labels', savets=False):
+def extract_mat(rsimg, maskimg, labelimg, conntype='correlation', space='labels', savets=False, nomat=False):
 
     masker = input_data.NiftiLabelsMasker(labelimg,
                                           background_label=0,
@@ -49,23 +49,21 @@ def extract_mat(rsimg, maskimg, labelimg, conntype='correlation', space='labels'
                                           resampling_target=space,
                                           verbose=0)
 
-    # Extract time series
-    time_series = masker.fit_transform(rsimg)
-
-    connobj = connectome.ConnectivityMeasure(kind=conntype)
-    connmat = connobj.fit_transform([time_series])[0]
-
-    # note, no more support for providing region labels, should be done outside
-    # of this function. Here, we just save the ints that demarcate the regions
-    # in the image
-
     # get the unique labels list, other than 0, which will be first
     reginparc = np.unique(labelimg.get_data())[1:].astype(np.int)
     reglabs = list(reginparc.astype(np.str))
 
-    conndf = get_con_df(connmat, reglabs)
+    # Extract time series
+    time_series = masker.fit_transform(rsimg)
 
-    # print(str(time_series))
+    if nomat:
+        connmat = None
+        conndf = None
+    else:
+        connobj = connectome.ConnectivityMeasure(kind=conntype)
+        connmat = connobj.fit_transform([time_series])[0]
+        conndf = get_con_df(connmat, reglabs)
+
 
     # if not saving time series, don't pass anything substantial, save mem
     if not savets:
@@ -87,6 +85,8 @@ def main():
     parser.add_argument('-out', type=str, help='output base name',
                         default='output')
     parser.add_argument('-savetimeseries', help='also save average time series from each roi in parcellation',
+                        action="store_true")
+    parser.add_argument('-nomatrix', help='if you dont want to compute matix (because you just want time series)',
                         action="store_true")
     parser.add_argument('-parcs', help='parcs to be used for makin\' matrices. make last arg',
                         nargs='+', required=True)
@@ -116,14 +116,17 @@ def main():
 
         labimg = nib.load(parc)
         conndf, connmat, times, regions = extract_mat(inputimg, inputmask, labimg,
-                                                      conntype=args.type, space=args.space,
-                                                      savets=args.savetimeseries)
+                                                      conntype=args.type, 
+                                                      space=args.space,
+                                                      savets=args.savetimeseries,
+                                                      nomat=args.nomatrix)
 
         # format name
         baseoutname = (os.path.basename(parc)).rsplit('.nii', 1)[0]
 
-        # write
-        conndf.to_csv(''.join([args.out, '_', baseoutname, '_', ''.join(args.type.split()), '_connMatdf.csv']), float_format='%.3g')
+        if conndf is not None:
+            # write
+            conndf.to_csv(''.join([args.out, '_', baseoutname, '_', ''.join(args.type.split()), '_connMatdf.csv']), float_format='%.3g')
 
         # # format name
         # with open(''.join([args.out, '_', baseoutname, '_connMat.csv']), "w") as f:
