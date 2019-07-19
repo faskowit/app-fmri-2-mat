@@ -16,6 +16,10 @@ import numpy as np
 from nilearn import input_data, image
 import pandas as pd
 
+NUSCHOICES= ["36P", "9P", "6P", 
+             "aCompCor", "24aCompCor", "24aCompCorGsr",
+             "globalsig", "globalsig4"]
+
 # https://github.com/edickie/ciftify/blob/master/ciftify/bin/ciftify_clean_img.py#L301
 # MIT License https://github.com/edickie/ciftify/blob/master/LICENSE
 def image_drop_dummy_trs(nib_image, start_from_tr):
@@ -177,7 +181,7 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None):
 
     Ng et al. (2016). http://doi.org/10.1016/j.neuroimage.2016.03.029
     """
-    if kind not in ["36P", "9P", "6P", "aCompCor", "24aCompCor", "24aCompCorGsr"]:
+    if kind not in NUSCHOICES:
         raise Exception("Confound type unknown {}".format(kind))
 
     df = pd.read_csv(confounds_file, sep="\t")
@@ -233,7 +237,11 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None):
     gsr4 = pd.concat((gsr, gsr_der, gsr_der2), axis=1)
     gsr4['sqrterm'] = np.power(range(1, gsr.shape[0]+1), 2)
 
-    if kind == "36P":
+    if kind == "globalsig":
+        confounds = gsr
+    elif kind == "globalsig4":
+        confounds = gsr4
+    elif kind == "36P":
         confounds = p36
     elif kind == "9P":
         confounds = p9
@@ -263,6 +271,7 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None):
         # if no spike regression still call get_spikereg_confounds to get count
         # of available trs
         threshold = 99999
+        
     outliers, outlier_stats = get_spikereg_confounds(df[framewisecol].values, threshold)
 
     if spikereg_threshold:
@@ -280,7 +289,7 @@ def main():
                         default=None)
     parser.add_argument('-tr', type=float, help='tr of image (for bandpass filtering)', default=0)
     parser.add_argument('-strategy', type=str, help='confound strategy',
-                        choices=["36P", "9P", "6P", "aCompCor", "24aCompCor", "24aCompCorGsr"],
+                        choices=NUSCHOICES,
                         default='36P')
     parser.add_argument('-spikethr', type=float, help='spike threshold value',
                         default=0.5)
