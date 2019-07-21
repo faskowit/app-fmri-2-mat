@@ -34,6 +34,7 @@ with open(input_csv) as cm_csv:
         except:
             print("no %s in key.txt" % col)
         #print(rec)
+
     #for line in cm_lines[1:]:
     #    None
     #    #print(line)
@@ -41,9 +42,14 @@ with open(input_csv) as cm_csv:
 if not os.path.exists("cm"):
     os.makedirs("cm")
 
+with open("cm/cm.csv", "w") as cm_csv:
+    lines = cm_lines[1:]
+    csv = []
+    for line in lines:
+        line = line.strip().split(",")[1:]
+        csv.append(",".join(line))
+    cm_csv.write("\n".join(csv))
+
 with open("cm/label.json", "w") as label_file:
     json.dump(labels, label_file, indent=4)
-
-shutil.copy(input_csv, "cm/cm.csv")
-
 
