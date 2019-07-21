@@ -38,20 +38,20 @@ with open(input_csv) as cm_csv:
     #last 14 are for 14 freesurferaseg  (https://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/AnatomicalROI/FreeSurferColorLUT)
     f14 = [
             {"name": "Freesurfer Aseg / Left thalamus", "label": "10"},
-            {"name": "Freesurfer Ageg / Left caudate", "label": "11"},
-            {"name": "Freesurfer Ageg / Left putamen", "label": "12"},
-            {"name": "Freesurfer Ageg / Left pallidum", "label": "13"},
-            {"name": "Freesurfer Ageg / Left hippocampus", "label": "17"},
-            {"name": "Freesurfer Ageg / Left amygdala", "label": "18"},
-            {"name": "Freesurfer Ageg / Left accumbens", "label": "26"},
+            {"name": "Freesurfer Aseg / Left caudate", "label": "11"},
+            {"name": "Freesurfer Aseg / Left putamen", "label": "12"},
+            {"name": "Freesurfer Aseg / Left pallidum", "label": "13"},
+            {"name": "Freesurfer Aseg / Left hippocampus", "label": "17"},
+            {"name": "Freesurfer Aseg / Left amygdala", "label": "18"},
+            {"name": "Freesurfer Aseg / Left accumbens", "label": "26"},
 
-            {"name": "Freesurfer Ageg / Right thalamus", "label": "49"},
-            {"name": "Freesurfer Ageg / Right caudate", "label": "50"},
-            {"name": "Freesurfer Ageg / Right putamen", "label": "51"},
-            {"name": "Freesurfer Ageg / Right pallidum", "label": "52"},
-            {"name": "Freesurfer Ageg / Right hippocampus", "label": "53"},
-            {"name": "Freesurfer Ageg / Right amygdala", "label": "54"},
-            {"name": "Freesurfer Ageg / Right accumbens", "label": "58"},
+            {"name": "Freesurfer Aseg / Right thalamus", "label": "49"},
+            {"name": "Freesurfer Aseg / Right caudate", "label": "50"},
+            {"name": "Freesurfer Aseg / Right putamen", "label": "51"},
+            {"name": "Freesurfer Aseg / Right pallidum", "label": "52"},
+            {"name": "Freesurfer Aseg / Right hippocampus", "label": "53"},
+            {"name": "Freesurfer Aseg / Right amygdala", "label": "54"},
+            {"name": "Freesurfer Aseg / Right accumbens", "label": "58"},
     ]
 
     idx=0
