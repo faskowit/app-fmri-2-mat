@@ -1,4 +1,6 @@
 *.json
 output*
 .idea/
-test_data/*
+test_data
+cm
+
