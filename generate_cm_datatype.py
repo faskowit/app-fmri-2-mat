@@ -26,18 +26,38 @@ labels = [ {"name": None, "desc": "index-0 is the diagonal"} ]
 #parse the csv
 with open(input_csv) as cm_csv:
     cm_lines = cm_csv.readlines()
-    cols = cm_lines[0].split(",")
-    for col in cols[1:]:
+    parcs = cm_lines[0].split(",")
+    for parc in parcs[1:-14]:
         try:
-            rec = catalog[col.strip()]
+            rec = catalog[parc.strip()]
             labels.append(rec)
         except:
-            print("no %s in key.txt" % col)
-        #print(rec)
+            print("no %s in key.txt" % parc)
 
-    #for line in cm_lines[1:]:
-    #    None
-    #    #print(line)
+    #https://github.com/faskowit/app-fmri-2-mat/issues/5
+    #last 14 are for 14 freesurferaseg  (https://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/AnatomicalROI/FreeSurferColorLUT)
+    f14 = [
+            {"name": "Freesurfer Aseg / Left thalamus", "label": "10"},
+            {"name": "Freesurfer Ageg / Left caudate", "label": "11"},
+            {"name": "Freesurfer Ageg / Left putamen", "label": "12"},
+            {"name": "Freesurfer Ageg / Left pallidum", "label": "13"},
+            {"name": "Freesurfer Ageg / Left hippocampus", "label": "17"},
+            {"name": "Freesurfer Ageg / Left amygdala", "label": "18"},
+            {"name": "Freesurfer Ageg / Left accumbens", "label": "26"},
+
+            {"name": "Freesurfer Ageg / Right thalamus", "label": "49"},
+            {"name": "Freesurfer Ageg / Right caudate", "label": "50"},
+            {"name": "Freesurfer Ageg / Right putamen", "label": "51"},
+            {"name": "Freesurfer Ageg / Right pallidum", "label": "52"},
+            {"name": "Freesurfer Ageg / Right hippocampus", "label": "53"},
+            {"name": "Freesurfer Ageg / Right amygdala", "label": "54"},
+            {"name": "Freesurfer Ageg / Right accumbens", "label": "58"},
+    ]
+
+    idx=0
+    for parc in parcs[-14:]:
+        labels.append({"name": f14[idx]["name"], "label": f14[idx]["label"], "parcellation": int(parc)}) 
+        idx+=1
 
 if not os.path.exists("cm"):
     os.makedirs("cm")
