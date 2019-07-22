@@ -1,0 +1,7 @@
+{
+    "fmri": "testdata/fmri/bold.nii.gz",
+    "mask": "testdata/mask/mask.nii.gz",
+    "parc": "testdata/parc/parc.nii.gz",
+    "key": "testdata/parc/key.txt",
+    "confounds": "testdata/confounds/regressors.tsv"
+}

@@ -221,3 +221,5 @@ done
 mv ${inOUTBASE}/output_regress/out_nuisance.nii.gz \
 	${inOUTBASE}/output_regress/bold.nii.gz 
 
+# convert matcon output to brainlife neuro/cm
+./generate_cm_datatype.py
