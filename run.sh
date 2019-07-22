@@ -221,5 +221,16 @@ done
 mv ${inOUTBASE}/output_regress/out_nuisance.nii.gz \
 	${inOUTBASE}/output_regress/bold.nii.gz 
 
-# convert matcon output to brainlife neuro/cm
-./generate_cm_datatype.py
+# if we are running on brainlife, lets format!
+if [[ -f config.json ]] ; then
+		
+	keyGrep=$(cat config.json | grep "key")
+
+	if [[ ! -z ${keyGrep} ]] ; then
+		# convert matcon output to brainlife neuro/cm
+		python3 ./generate_cm_datatype.py
+		echo "generated bl cm data in ./cm"
+	else
+		echo "no key found in config.json, didn't do bl formatting"
+	fi
+fi
