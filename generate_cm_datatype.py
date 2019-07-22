@@ -19,7 +19,7 @@ with open(config["key"]) as key_file:
         parcellation = tokens[2]
         name_comp = tokens[3].split(" ") #== rh.R_V4t_ROI.label \n
         name = name_comp[1]
-        catalog[parcellation] = {"name": name, "label": label, "parcellation": int(parcellation)}
+        catalog[parcellation] = {"name": name, "label": label, "voxel_value": int(parcellation)}
 
 labels = [ {"name": None, "desc": "index-0 is the diagonal"} ]
 
@@ -56,7 +56,7 @@ with open(input_csv) as cm_csv:
 
     idx=0
     for parc in parcs[-14:]:
-        labels.append({"name": f14[idx]["name"], "label": f14[idx]["label"], "parcellation": int(parc)}) 
+        labels.append({"name": f14[idx]["name"], "label": f14[idx]["label"], "voxel_value": int(parc)}) 
         idx+=1
 
 if not os.path.exists("cm"):
