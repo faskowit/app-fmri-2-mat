@@ -21,7 +21,7 @@ with open(config["key"]) as key_file:
         name = name_comp[1]
         catalog[parcellation] = {"name": name, "label": label, "voxel_value": int(parcellation)}
 
-labels = [ {"name": None, "desc": "index-0 is the diagonal"} ]
+labels = [ {"name": "self-loop", "desc": "index(x,x) is the diagonal"} ]
 
 #parse the csv
 with open(input_csv) as cm_csv:
