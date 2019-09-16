@@ -62,7 +62,7 @@ with open(input_csv) as cm_csv:
 #if not os.path.exists("cm"):
 #    os.makedirs("cm")
 
-with open("cm/cm/correlation.csv", "w") as cm_csv:
+with open("cm/csv/correlation.csv", "w") as cm_csv:
     lines = cm_lines[1:]
     csv = []
     for line in lines:
