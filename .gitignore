@@ -1,7 +1,7 @@
-*.json
 output*
 .idea/
 test_data
 testdata
-cm
-
+*.csv
+product.json
+config.json

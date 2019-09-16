@@ -59,10 +59,10 @@ with open(input_csv) as cm_csv:
         labels.append({"name": f14[idx]["name"], "label": f14[idx]["label"], "voxel_value": int(parc)}) 
         idx+=1
 
-if not os.path.exists("cm"):
-    os.makedirs("cm")
+#if not os.path.exists("cm"):
+#    os.makedirs("cm")
 
-with open("cm/cm.csv", "w") as cm_csv:
+with open("cm/cm/correlation.csv", "w") as cm_csv:
     lines = cm_lines[1:]
     csv = []
     for line in lines:
