@@ -1,1886 +1,1886 @@
 [
     {
-        "name": null, 
-        "desc": "index-0 is the diagonal"
+        "name": "self-loop", 
+        "desc": "index(x,x) is the diagonal"
     }, 
     {
+        "voxel_value": 1, 
         "name": "lh.???.label", 
-        "voxel_index": 1, 
         "label": "1001"
     }, 
     {
+        "voxel_value": 2, 
         "name": "lh.L_V1_ROI.label", 
-        "voxel_index": 2, 
         "label": "1002"
     }, 
     {
+        "voxel_value": 3, 
         "name": "lh.L_MST_ROI.label", 
-        "voxel_index": 3, 
         "label": "1003"
     }, 
     {
+        "voxel_value": 4, 
         "name": "lh.L_V6_ROI.label", 
-        "voxel_index": 4, 
         "label": "1004"
     }, 
     {
+        "voxel_value": 5, 
         "name": "lh.L_V2_ROI.label", 
-        "voxel_index": 5, 
         "label": "1005"
     }, 
     {
+        "voxel_value": 6, 
         "name": "lh.L_V3_ROI.label", 
-        "voxel_index": 6, 
         "label": "1006"
     }, 
     {
+        "voxel_value": 7, 
         "name": "lh.L_V4_ROI.label", 
-        "voxel_index": 7, 
         "label": "1007"
     }, 
     {
+        "voxel_value": 8, 
         "name": "lh.L_V8_ROI.label", 
-        "voxel_index": 8, 
         "label": "1008"
     }, 
     {
+        "voxel_value": 9, 
         "name": "lh.L_4_ROI.label", 
-        "voxel_index": 9, 
         "label": "1009"
     }, 
     {
+        "voxel_value": 10, 
         "name": "lh.L_3b_ROI.label", 
-        "voxel_index": 10, 
         "label": "1010"
     }, 
     {
+        "voxel_value": 11, 
         "name": "lh.L_FEF_ROI.label", 
-        "voxel_index": 11, 
         "label": "1011"
     }, 
     {
+        "voxel_value": 12, 
         "name": "lh.L_PEF_ROI.label", 
-        "voxel_index": 12, 
         "label": "1012"
     }, 
     {
+        "voxel_value": 13, 
         "name": "lh.L_55b_ROI.label", 
-        "voxel_index": 13, 
         "label": "1013"
     }, 
     {
+        "voxel_value": 14, 
         "name": "lh.L_V3A_ROI.label", 
-        "voxel_index": 14, 
         "label": "1014"
     }, 
     {
+        "voxel_value": 15, 
         "name": "lh.L_RSC_ROI.label", 
-        "voxel_index": 15, 
         "label": "1015"
     }, 
     {
+        "voxel_value": 16, 
         "name": "lh.L_POS2_ROI.label", 
-        "voxel_index": 16, 
         "label": "1016"
     }, 
     {
+        "voxel_value": 17, 
         "name": "lh.L_V7_ROI.label", 
-        "voxel_index": 17, 
         "label": "1017"
     }, 
     {
+        "voxel_value": 18, 
         "name": "lh.L_IPS1_ROI.label", 
-        "voxel_index": 18, 
         "label": "1018"
     }, 
     {
+        "voxel_value": 19, 
         "name": "lh.L_FFC_ROI.label", 
-        "voxel_index": 19, 
         "label": "1019"
     }, 
     {
+        "voxel_value": 20, 
         "name": "lh.L_V3B_ROI.label", 
-        "voxel_index": 20, 
         "label": "1020"
     }, 
     {
+        "voxel_value": 21, 
         "name": "lh.L_LO1_ROI.label", 
-        "voxel_index": 21, 
         "label": "1021"
     }, 
     {
+        "voxel_value": 22, 
         "name": "lh.L_LO2_ROI.label", 
-        "voxel_index": 22, 
         "label": "1022"
     }, 
     {
+        "voxel_value": 23, 
         "name": "lh.L_PIT_ROI.label", 
-        "voxel_index": 23, 
         "label": "1023"
     }, 
     {
+        "voxel_value": 24, 
         "name": "lh.L_MT_ROI.label", 
-        "voxel_index": 24, 
         "label": "1024"
     }, 
     {
+        "voxel_value": 25, 
         "name": "lh.L_A1_ROI.label", 
-        "voxel_index": 25, 
         "label": "1025"
     }, 
     {
+        "voxel_value": 26, 
         "name": "lh.L_PSL_ROI.label", 
-        "voxel_index": 26, 
         "label": "1026"
     }, 
     {
+        "voxel_value": 27, 
         "name": "lh.L_SFL_ROI.label", 
-        "voxel_index": 27, 
         "label": "1027"
     }, 
     {
+        "voxel_value": 28, 
         "name": "lh.L_PCV_ROI.label", 
-        "voxel_index": 28, 
         "label": "1028"
     }, 
     {
+        "voxel_value": 29, 
         "name": "lh.L_STV_ROI.label", 
-        "voxel_index": 29, 
         "label": "1029"
     }, 
     {
+        "voxel_value": 30, 
         "name": "lh.L_7Pm_ROI.label", 
-        "voxel_index": 30, 
         "label": "1030"
     }, 
     {
+        "voxel_value": 31, 
         "name": "lh.L_7m_ROI.label", 
-        "voxel_index": 31, 
         "label": "1031"
     }, 
     {
+        "voxel_value": 32, 
         "name": "lh.L_POS1_ROI.label", 
-        "voxel_index": 32, 
         "label": "1032"
     }, 
     {
+        "voxel_value": 33, 
         "name": "lh.L_23d_ROI.label", 
-        "voxel_index": 33, 
         "label": "1033"
     }, 
     {
+        "voxel_value": 34, 
         "name": "lh.L_v23ab_ROI.label", 
-        "voxel_index": 34, 
         "label": "1034"
     }, 
     {
+        "voxel_value": 35, 
         "name": "lh.L_d23ab_ROI.label", 
-        "voxel_index": 35, 
         "label": "1035"
     }, 
     {
+        "voxel_value": 36, 
         "name": "lh.L_31pv_ROI.label", 
-        "voxel_index": 36, 
         "label": "1036"
     }, 
     {
+        "voxel_value": 37, 
         "name": "lh.L_5m_ROI.label", 
-        "voxel_index": 37, 
         "label": "1037"
     }, 
     {
+        "voxel_value": 38, 
         "name": "lh.L_5mv_ROI.label", 
-        "voxel_index": 38, 
         "label": "1038"
     }, 
     {
+        "voxel_value": 39, 
         "name": "lh.L_23c_ROI.label", 
-        "voxel_index": 39, 
         "label": "1039"
     }, 
     {
+        "voxel_value": 40, 
         "name": "lh.L_5L_ROI.label", 
-        "voxel_index": 40, 
         "label": "1040"
     }, 
     {
+        "voxel_value": 41, 
         "name": "lh.L_24dd_ROI.label", 
-        "voxel_index": 41, 
         "label": "1041"
     }, 
     {
+        "voxel_value": 42, 
         "name": "lh.L_24dv_ROI.label", 
-        "voxel_index": 42, 
         "label": "1042"
     }, 
     {
+        "voxel_value": 43, 
         "name": "lh.L_7AL_ROI.label", 
-        "voxel_index": 43, 
         "label": "1043"
     }, 
     {
+        "voxel_value": 44, 
         "name": "lh.L_SCEF_ROI.label", 
-        "voxel_index": 44, 
         "label": "1044"
     }, 
     {
+        "voxel_value": 45, 
         "name": "lh.L_6ma_ROI.label", 
-        "voxel_index": 45, 
         "label": "1045"
     }, 
     {
+        "voxel_value": 46, 
         "name": "lh.L_7Am_ROI.label", 
-        "voxel_index": 46, 
         "label": "1046"
     }, 
     {
+        "voxel_value": 47, 
         "name": "lh.L_7PL_ROI.label", 
-        "voxel_index": 47, 
         "label": "1047"
     }, 
     {
+        "voxel_value": 48, 
         "name": "lh.L_7PC_ROI.label", 
-        "voxel_index": 48, 
         "label": "1048"
     }, 
     {
+        "voxel_value": 49, 
         "name": "lh.L_LIPv_ROI.label", 
-        "voxel_index": 49, 
         "label": "1049"
     }, 
     {
+        "voxel_value": 50, 
         "name": "lh.L_VIP_ROI.label", 
-        "voxel_index": 50, 
         "label": "1050"
     }, 
     {
+        "voxel_value": 51, 
         "name": "lh.L_MIP_ROI.label", 
-        "voxel_index": 51, 
         "label": "1051"
     }, 
     {
+        "voxel_value": 52, 
         "name": "lh.L_1_ROI.label", 
-        "voxel_index": 52, 
         "label": "1052"
     }, 
     {
+        "voxel_value": 53, 
         "name": "lh.L_2_ROI.label", 
-        "voxel_index": 53, 
         "label": "1053"
     }, 
     {
+        "voxel_value": 54, 
         "name": "lh.L_3a_ROI.label", 
-        "voxel_index": 54, 
         "label": "1054"
     }, 
     {
+        "voxel_value": 55, 
         "name": "lh.L_6d_ROI.label", 
-        "voxel_index": 55, 
         "label": "1055"
     }, 
     {
+        "voxel_value": 56, 
         "name": "lh.L_6mp_ROI.label", 
-        "voxel_index": 56, 
         "label": "1056"
     }, 
     {
+        "voxel_value": 57, 
         "name": "lh.L_6v_ROI.label", 
-        "voxel_index": 57, 
         "label": "1057"
     }, 
     {
+        "voxel_value": 58, 
         "name": "lh.L_p24pr_ROI.label", 
-        "voxel_index": 58, 
         "label": "1058"
     }, 
     {
+        "voxel_value": 59, 
         "name": "lh.L_33pr_ROI.label", 
-        "voxel_index": 59, 
         "label": "1059"
     }, 
     {
+        "voxel_value": 60, 
         "name": "lh.L_a24pr_ROI.label", 
-        "voxel_index": 60, 
         "label": "1060"
     }, 
     {
+        "voxel_value": 61, 
         "name": "lh.L_p32pr_ROI.label", 
-        "voxel_index": 61, 
         "label": "1061"
     }, 
     {
+        "voxel_value": 62, 
         "name": "lh.L_a24_ROI.label", 
-        "voxel_index": 62, 
         "label": "1062"
     }, 
     {
+        "voxel_value": 63, 
         "name": "lh.L_d32_ROI.label", 
-        "voxel_index": 63, 
         "label": "1063"
     }, 
     {
+        "voxel_value": 64, 
         "name": "lh.L_8BM_ROI.label", 
-        "voxel_index": 64, 
         "label": "1064"
     }, 
     {
+        "voxel_value": 65, 
         "name": "lh.L_p32_ROI.label", 
-        "voxel_index": 65, 
         "label": "1065"
     }, 
     {
+        "voxel_value": 66, 
         "name": "lh.L_10r_ROI.label", 
-        "voxel_index": 66, 
         "label": "1066"
     }, 
     {
+        "voxel_value": 67, 
         "name": "lh.L_47m_ROI.label", 
-        "voxel_index": 67, 
         "label": "1067"
     }, 
     {
+        "voxel_value": 68, 
         "name": "lh.L_8Av_ROI.label", 
-        "voxel_index": 68, 
         "label": "1068"
     }, 
     {
+        "voxel_value": 69, 
         "name": "lh.L_8Ad_ROI.label", 
-        "voxel_index": 69, 
         "label": "1069"
     }, 
     {
+        "voxel_value": 70, 
         "name": "lh.L_9m_ROI.label", 
-        "voxel_index": 70, 
         "label": "1070"
     }, 
     {
+        "voxel_value": 71, 
         "name": "lh.L_8BL_ROI.label", 
-        "voxel_index": 71, 
         "label": "1071"
     }, 
     {
+        "voxel_value": 72, 
         "name": "lh.L_9p_ROI.label", 
-        "voxel_index": 72, 
         "label": "1072"
     }, 
     {
+        "voxel_value": 73, 
         "name": "lh.L_10d_ROI.label", 
-        "voxel_index": 73, 
         "label": "1073"
     }, 
     {
+        "voxel_value": 74, 
         "name": "lh.L_8C_ROI.label", 
-        "voxel_index": 74, 
         "label": "1074"
     }, 
     {
+        "voxel_value": 75, 
         "name": "lh.L_44_ROI.label", 
-        "voxel_index": 75, 
         "label": "1075"
     }, 
     {
+        "voxel_value": 76, 
         "name": "lh.L_45_ROI.label", 
-        "voxel_index": 76, 
         "label": "1076"
     }, 
     {
+        "voxel_value": 77, 
         "name": "lh.L_47l_ROI.label", 
-        "voxel_index": 77, 
         "label": "1077"
     }, 
     {
+        "voxel_value": 78, 
         "name": "lh.L_a47r_ROI.label", 
-        "voxel_index": 78, 
         "label": "1078"
     }, 
     {
+        "voxel_value": 79, 
         "name": "lh.L_6r_ROI.label", 
-        "voxel_index": 79, 
         "label": "1079"
     }, 
     {
+        "voxel_value": 80, 
         "name": "lh.L_IFJa_ROI.label", 
-        "voxel_index": 80, 
         "label": "1080"
     }, 
     {
+        "voxel_value": 81, 
         "name": "lh.L_IFJp_ROI.label", 
-        "voxel_index": 81, 
         "label": "1081"
     }, 
     {
+        "voxel_value": 82, 
         "name": "lh.L_IFSp_ROI.label", 
-        "voxel_index": 82, 
         "label": "1082"
     }, 
     {
+        "voxel_value": 83, 
         "name": "lh.L_IFSa_ROI.label", 
-        "voxel_index": 83, 
         "label": "1083"
     }, 
     {
+        "voxel_value": 84, 
         "name": "lh.L_p9-46v_ROI.label", 
-        "voxel_index": 84, 
         "label": "1084"
     }, 
     {
+        "voxel_value": 85, 
         "name": "lh.L_46_ROI.label", 
-        "voxel_index": 85, 
         "label": "1085"
     }, 
     {
+        "voxel_value": 86, 
         "name": "lh.L_a9-46v_ROI.label", 
-        "voxel_index": 86, 
         "label": "1086"
     }, 
     {
+        "voxel_value": 87, 
         "name": "lh.L_9-46d_ROI.label", 
-        "voxel_index": 87, 
         "label": "1087"
     }, 
     {
+        "voxel_value": 88, 
         "name": "lh.L_9a_ROI.label", 
-        "voxel_index": 88, 
         "label": "1088"
     }, 
     {
+        "voxel_value": 89, 
         "name": "lh.L_10v_ROI.label", 
-        "voxel_index": 89, 
         "label": "1089"
     }, 
     {
+        "voxel_value": 90, 
         "name": "lh.L_a10p_ROI.label", 
-        "voxel_index": 90, 
         "label": "1090"
     }, 
     {
+        "voxel_value": 91, 
         "name": "lh.L_10pp_ROI.label", 
-        "voxel_index": 91, 
         "label": "1091"
     }, 
     {
+        "voxel_value": 92, 
         "name": "lh.L_11l_ROI.label", 
-        "voxel_index": 92, 
         "label": "1092"
     }, 
     {
+        "voxel_value": 93, 
         "name": "lh.L_13l_ROI.label", 
-        "voxel_index": 93, 
         "label": "1093"
     }, 
     {
+        "voxel_value": 94, 
         "name": "lh.L_OFC_ROI.label", 
-        "voxel_index": 94, 
         "label": "1094"
     }, 
     {
+        "voxel_value": 95, 
         "name": "lh.L_47s_ROI.label", 
-        "voxel_index": 95, 
         "label": "1095"
     }, 
     {
+        "voxel_value": 96, 
         "name": "lh.L_LIPd_ROI.label", 
-        "voxel_index": 96, 
         "label": "1096"
     }, 
     {
+        "voxel_value": 97, 
         "name": "lh.L_6a_ROI.label", 
-        "voxel_index": 97, 
         "label": "1097"
     }, 
     {
+        "voxel_value": 98, 
         "name": "lh.L_i6-8_ROI.label", 
-        "voxel_index": 98, 
         "label": "1098"
     }, 
     {
+        "voxel_value": 99, 
         "name": "lh.L_s6-8_ROI.label", 
-        "voxel_index": 99, 
         "label": "1099"
     }, 
     {
+        "voxel_value": 100, 
         "name": "lh.L_43_ROI.label", 
-        "voxel_index": 100, 
         "label": "1100"
     }, 
     {
+        "voxel_value": 101, 
         "name": "lh.L_OP4_ROI.label", 
-        "voxel_index": 101, 
         "label": "1101"
     }, 
     {
+        "voxel_value": 102, 
         "name": "lh.L_OP1_ROI.label", 
-        "voxel_index": 102, 
         "label": "1102"
     }, 
     {
+        "voxel_value": 103, 
         "name": "lh.L_OP2-3_ROI.label", 
-        "voxel_index": 103, 
         "label": "1103"
     }, 
     {
+        "voxel_value": 104, 
         "name": "lh.L_52_ROI.label", 
-        "voxel_index": 104, 
         "label": "1104"
     }, 
     {
+        "voxel_value": 105, 
         "name": "lh.L_RI_ROI.label", 
-        "voxel_index": 105, 
         "label": "1105"
     }, 
     {
+        "voxel_value": 106, 
         "name": "lh.L_PFcm_ROI.label", 
-        "voxel_index": 106, 
         "label": "1106"
     }, 
     {
+        "voxel_value": 107, 
         "name": "lh.L_PoI2_ROI.label", 
-        "voxel_index": 107, 
         "label": "1107"
     }, 
     {
+        "voxel_value": 108, 
         "name": "lh.L_TA2_ROI.label", 
-        "voxel_index": 108, 
         "label": "1108"
     }, 
     {
+        "voxel_value": 109, 
         "name": "lh.L_FOP4_ROI.label", 
-        "voxel_index": 109, 
         "label": "1109"
     }, 
     {
+        "voxel_value": 110, 
         "name": "lh.L_MI_ROI.label", 
-        "voxel_index": 110, 
         "label": "1110"
     }, 
     {
+        "voxel_value": 111, 
         "name": "lh.L_Pir_ROI.label", 
-        "voxel_index": 111, 
         "label": "1111"
     }, 
     {
+        "voxel_value": 112, 
         "name": "lh.L_AVI_ROI.label", 
-        "voxel_index": 112, 
         "label": "1112"
     }, 
     {
+        "voxel_value": 113, 
         "name": "lh.L_AAIC_ROI.label", 
-        "voxel_index": 113, 
         "label": "1113"
     }, 
     {
+        "voxel_value": 114, 
         "name": "lh.L_FOP1_ROI.label", 
-        "voxel_index": 114, 
         "label": "1114"
     }, 
     {
+        "voxel_value": 115, 
         "name": "lh.L_FOP3_ROI.label", 
-        "voxel_index": 115, 
         "label": "1115"
     }, 
     {
+        "voxel_value": 116, 
         "name": "lh.L_FOP2_ROI.label", 
-        "voxel_index": 116, 
         "label": "1116"
     }, 
     {
+        "voxel_value": 117, 
         "name": "lh.L_PFt_ROI.label", 
-        "voxel_index": 117, 
         "label": "1117"
     }, 
     {
+        "voxel_value": 118, 
         "name": "lh.L_AIP_ROI.label", 
-        "voxel_index": 118, 
         "label": "1118"
     }, 
     {
+        "voxel_value": 119, 
         "name": "lh.L_EC_ROI.label", 
-        "voxel_index": 119, 
         "label": "1119"
     }, 
     {
+        "voxel_value": 120, 
         "name": "lh.L_PreS_ROI.label", 
-        "voxel_index": 120, 
         "label": "1120"
     }, 
     {
+        "voxel_value": 121, 
         "name": "lh.L_H_ROI.label", 
-        "voxel_index": 121, 
         "label": "1121"
     }, 
     {
+        "voxel_value": 122, 
         "name": "lh.L_ProS_ROI.label", 
-        "voxel_index": 122, 
         "label": "1122"
     }, 
     {
+        "voxel_value": 123, 
         "name": "lh.L_PeEc_ROI.label", 
-        "voxel_index": 123, 
         "label": "1123"
     }, 
     {
+        "voxel_value": 124, 
         "name": "lh.L_STGa_ROI.label", 
-        "voxel_index": 124, 
         "label": "1124"
     }, 
     {
+        "voxel_value": 125, 
         "name": "lh.L_PBelt_ROI.label", 
-        "voxel_index": 125, 
         "label": "1125"
     }, 
     {
+        "voxel_value": 126, 
         "name": "lh.L_A5_ROI.label", 
-        "voxel_index": 126, 
         "label": "1126"
     }, 
     {
+        "voxel_value": 127, 
         "name": "lh.L_PHA1_ROI.label", 
-        "voxel_index": 127, 
         "label": "1127"
     }, 
     {
+        "voxel_value": 128, 
         "name": "lh.L_PHA3_ROI.label", 
-        "voxel_index": 128, 
         "label": "1128"
     }, 
     {
+        "voxel_value": 129, 
         "name": "lh.L_STSda_ROI.label", 
-        "voxel_index": 129, 
         "label": "1129"
     }, 
     {
+        "voxel_value": 130, 
         "name": "lh.L_STSdp_ROI.label", 
-        "voxel_index": 130, 
         "label": "1130"
     }, 
     {
+        "voxel_value": 131, 
         "name": "lh.L_STSvp_ROI.label", 
-        "voxel_index": 131, 
         "label": "1131"
     }, 
     {
+        "voxel_value": 132, 
         "name": "lh.L_TGd_ROI.label", 
-        "voxel_index": 132, 
         "label": "1132"
     }, 
     {
+        "voxel_value": 133, 
         "name": "lh.L_TE1a_ROI.label", 
-        "voxel_index": 133, 
         "label": "1133"
     }, 
     {
+        "voxel_value": 134, 
         "name": "lh.L_TE1p_ROI.label", 
-        "voxel_index": 134, 
         "label": "1134"
     }, 
     {
+        "voxel_value": 135, 
         "name": "lh.L_TE2a_ROI.label", 
-        "voxel_index": 135, 
         "label": "1135"
     }, 
     {
+        "voxel_value": 136, 
         "name": "lh.L_TF_ROI.label", 
-        "voxel_index": 136, 
         "label": "1136"
     }, 
     {
+        "voxel_value": 137, 
         "name": "lh.L_TE2p_ROI.label", 
-        "voxel_index": 137, 
         "label": "1137"
     }, 
     {
+        "voxel_value": 138, 
         "name": "lh.L_PHT_ROI.label", 
-        "voxel_index": 138, 
         "label": "1138"
     }, 
     {
+        "voxel_value": 139, 
         "name": "lh.L_PH_ROI.label", 
-        "voxel_index": 139, 
         "label": "1139"
     }, 
     {
+        "voxel_value": 140, 
         "name": "lh.L_TPOJ1_ROI.label", 
-        "voxel_index": 140, 
         "label": "1140"
     }, 
     {
+        "voxel_value": 141, 
         "name": "lh.L_TPOJ2_ROI.label", 
-        "voxel_index": 141, 
         "label": "1141"
     }, 
     {
+        "voxel_value": 142, 
         "name": "lh.L_TPOJ3_ROI.label", 
-        "voxel_index": 142, 
         "label": "1142"
     }, 
     {
+        "voxel_value": 143, 
         "name": "lh.L_DVT_ROI.label", 
-        "voxel_index": 143, 
         "label": "1143"
     }, 
     {
+        "voxel_value": 144, 
         "name": "lh.L_PGp_ROI.label", 
-        "voxel_index": 144, 
         "label": "1144"
     }, 
     {
+        "voxel_value": 145, 
         "name": "lh.L_IP2_ROI.label", 
-        "voxel_index": 145, 
         "label": "1145"
     }, 
     {
+        "voxel_value": 146, 
         "name": "lh.L_IP1_ROI.label", 
-        "voxel_index": 146, 
         "label": "1146"
     }, 
     {
+        "voxel_value": 147, 
         "name": "lh.L_IP0_ROI.label", 
-        "voxel_index": 147, 
         "label": "1147"
     }, 
     {
+        "voxel_value": 148, 
         "name": "lh.L_PFop_ROI.label", 
-        "voxel_index": 148, 
         "label": "1148"
     }, 
     {
+        "voxel_value": 149, 
         "name": "lh.L_PF_ROI.label", 
-        "voxel_index": 149, 
         "label": "1149"
     }, 
     {
+        "voxel_value": 150, 
         "name": "lh.L_PFm_ROI.label", 
-        "voxel_index": 150, 
         "label": "1150"
     }, 
     {
+        "voxel_value": 151, 
         "name": "lh.L_PGi_ROI.label", 
-        "voxel_index": 151, 
         "label": "1151"
     }, 
     {
+        "voxel_value": 152, 
         "name": "lh.L_PGs_ROI.label", 
-        "voxel_index": 152, 
         "label": "1152"
     }, 
     {
+        "voxel_value": 153, 
         "name": "lh.L_V6A_ROI.label", 
-        "voxel_index": 153, 
         "label": "1153"
     }, 
     {
+        "voxel_value": 154, 
         "name": "lh.L_VMV1_ROI.label", 
-        "voxel_index": 154, 
         "label": "1154"
     }, 
     {
+        "voxel_value": 155, 
         "name": "lh.L_VMV3_ROI.label", 
-        "voxel_index": 155, 
         "label": "1155"
     }, 
     {
+        "voxel_value": 156, 
         "name": "lh.L_PHA2_ROI.label", 
-        "voxel_index": 156, 
         "label": "1156"
     }, 
     {
+        "voxel_value": 157, 
         "name": "lh.L_V4t_ROI.label", 
-        "voxel_index": 157, 
         "label": "1157"
     }, 
     {
+        "voxel_value": 158, 
         "name": "lh.L_FST_ROI.label", 
-        "voxel_index": 158, 
         "label": "1158"
     }, 
     {
+        "voxel_value": 159, 
         "name": "lh.L_V3CD_ROI.label", 
-        "voxel_index": 159, 
         "label": "1159"
     }, 
     {
+        "voxel_value": 160, 
         "name": "lh.L_LO3_ROI.label", 
-        "voxel_index": 160, 
         "label": "1160"
     }, 
     {
+        "voxel_value": 161, 
         "name": "lh.L_VMV2_ROI.label", 
-        "voxel_index": 161, 
         "label": "1161"
     }, 
     {
+        "voxel_value": 162, 
         "name": "lh.L_31pd_ROI.label", 
-        "voxel_index": 162, 
         "label": "1162"
     }, 
     {
+        "voxel_value": 163, 
         "name": "lh.L_31a_ROI.label", 
-        "voxel_index": 163, 
         "label": "1163"
     }, 
     {
+        "voxel_value": 164, 
         "name": "lh.L_VVC_ROI.label", 
-        "voxel_index": 164, 
         "label": "1164"
     }, 
     {
+        "voxel_value": 165, 
         "name": "lh.L_25_ROI.label", 
-        "voxel_index": 165, 
         "label": "1165"
     }, 
     {
+        "voxel_value": 166, 
         "name": "lh.L_s32_ROI.label", 
-        "voxel_index": 166, 
         "label": "1166"
     }, 
     {
+        "voxel_value": 167, 
         "name": "lh.L_pOFC_ROI.label", 
-        "voxel_index": 167, 
         "label": "1167"
     }, 
     {
+        "voxel_value": 168, 
         "name": "lh.L_PoI1_ROI.label", 
-        "voxel_index": 168, 
         "label": "1168"
     }, 
     {
+        "voxel_value": 169, 
         "name": "lh.L_Ig_ROI.label", 
-        "voxel_index": 169, 
         "label": "1169"
     }, 
     {
+        "voxel_value": 170, 
         "name": "lh.L_FOP5_ROI.label", 
-        "voxel_index": 170, 
         "label": "1170"
     }, 
     {
+        "voxel_value": 171, 
         "name": "lh.L_p10p_ROI.label", 
-        "voxel_index": 171, 
         "label": "1171"
     }, 
     {
+        "voxel_value": 172, 
         "name": "lh.L_p47r_ROI.label", 
-        "voxel_index": 172, 
         "label": "1172"
     }, 
     {
+        "voxel_value": 173, 
         "name": "lh.L_TGv_ROI.label", 
-        "voxel_index": 173, 
         "label": "1173"
     }, 
     {
+        "voxel_value": 174, 
         "name": "lh.L_MBelt_ROI.label", 
-        "voxel_index": 174, 
         "label": "1174"
     }, 
     {
+        "voxel_value": 175, 
         "name": "lh.L_LBelt_ROI.label", 
-        "voxel_index": 175, 
         "label": "1175"
     }, 
     {
+        "voxel_value": 176, 
         "name": "lh.L_A4_ROI.label", 
-        "voxel_index": 176, 
         "label": "1176"
     }, 
     {
+        "voxel_value": 177, 
         "name": "lh.L_STSva_ROI.label", 
-        "voxel_index": 177, 
         "label": "1177"
     }, 
     {
+        "voxel_value": 178, 
         "name": "lh.L_TE1m_ROI.label", 
-        "voxel_index": 178, 
         "label": "1178"
     }, 
     {
+        "voxel_value": 179, 
         "name": "lh.L_PI_ROI.label", 
-        "voxel_index": 179, 
         "label": "1179"
     }, 
     {
+        "voxel_value": 180, 
         "name": "lh.L_a32pr_ROI.label", 
-        "voxel_index": 180, 
         "label": "1180"
     }, 
     {
+        "voxel_value": 181, 
         "name": "lh.L_p24_ROI.label", 
-        "voxel_index": 181, 
         "label": "1181"
     }, 
     {
+        "voxel_value": 182, 
         "name": "rh.???.label", 
-        "voxel_index": 182, 
         "label": "2001"
     }, 
     {
+        "voxel_value": 183, 
         "name": "rh.R_V1_ROI.label", 
-        "voxel_index": 183, 
         "label": "2002"
     }, 
     {
+        "voxel_value": 184, 
         "name": "rh.R_MST_ROI.label", 
-        "voxel_index": 184, 
         "label": "2003"
     }, 
     {
+        "voxel_value": 185, 
         "name": "rh.R_V6_ROI.label", 
-        "voxel_index": 185, 
         "label": "2004"
     }, 
     {
+        "voxel_value": 186, 
         "name": "rh.R_V2_ROI.label", 
-        "voxel_index": 186, 
         "label": "2005"
     }, 
     {
+        "voxel_value": 187, 
         "name": "rh.R_V3_ROI.label", 
-        "voxel_index": 187, 
         "label": "2006"
     }, 
     {
+        "voxel_value": 188, 
         "name": "rh.R_V4_ROI.label", 
-        "voxel_index": 188, 
         "label": "2007"
     }, 
     {
+        "voxel_value": 189, 
         "name": "rh.R_V8_ROI.label", 
-        "voxel_index": 189, 
         "label": "2008"
     }, 
     {
+        "voxel_value": 190, 
         "name": "rh.R_4_ROI.label", 
-        "voxel_index": 190, 
         "label": "2009"
     }, 
     {
+        "voxel_value": 191, 
         "name": "rh.R_3b_ROI.label", 
-        "voxel_index": 191, 
         "label": "2010"
     }, 
     {
+        "voxel_value": 192, 
         "name": "rh.R_FEF_ROI.label", 
-        "voxel_index": 192, 
         "label": "2011"
     }, 
     {
+        "voxel_value": 193, 
         "name": "rh.R_PEF_ROI.label", 
-        "voxel_index": 193, 
         "label": "2012"
     }, 
     {
+        "voxel_value": 194, 
         "name": "rh.R_55b_ROI.label", 
-        "voxel_index": 194, 
         "label": "2013"
     }, 
     {
+        "voxel_value": 195, 
         "name": "rh.R_V3A_ROI.label", 
-        "voxel_index": 195, 
         "label": "2014"
     }, 
     {
+        "voxel_value": 196, 
         "name": "rh.R_RSC_ROI.label", 
-        "voxel_index": 196, 
         "label": "2015"
     }, 
     {
+        "voxel_value": 197, 
         "name": "rh.R_POS2_ROI.label", 
-        "voxel_index": 197, 
         "label": "2016"
     }, 
     {
+        "voxel_value": 198, 
         "name": "rh.R_V7_ROI.label", 
-        "voxel_index": 198, 
         "label": "2017"
     }, 
     {
+        "voxel_value": 199, 
         "name": "rh.R_IPS1_ROI.label", 
-        "voxel_index": 199, 
         "label": "2018"
     }, 
     {
+        "voxel_value": 200, 
         "name": "rh.R_FFC_ROI.label", 
-        "voxel_index": 200, 
         "label": "2019"
     }, 
     {
+        "voxel_value": 201, 
         "name": "rh.R_V3B_ROI.label", 
-        "voxel_index": 201, 
         "label": "2020"
     }, 
     {
+        "voxel_value": 202, 
         "name": "rh.R_LO1_ROI.label", 
-        "voxel_index": 202, 
         "label": "2021"
     }, 
     {
+        "voxel_value": 203, 
         "name": "rh.R_LO2_ROI.label", 
-        "voxel_index": 203, 
         "label": "2022"
     }, 
     {
+        "voxel_value": 204, 
         "name": "rh.R_PIT_ROI.label", 
-        "voxel_index": 204, 
         "label": "2023"
     }, 
     {
+        "voxel_value": 205, 
         "name": "rh.R_MT_ROI.label", 
-        "voxel_index": 205, 
         "label": "2024"
     }, 
     {
+        "voxel_value": 206, 
         "name": "rh.R_A1_ROI.label", 
-        "voxel_index": 206, 
         "label": "2025"
     }, 
     {
+        "voxel_value": 207, 
         "name": "rh.R_PSL_ROI.label", 
-        "voxel_index": 207, 
         "label": "2026"
     }, 
     {
+        "voxel_value": 208, 
         "name": "rh.R_SFL_ROI.label", 
-        "voxel_index": 208, 
         "label": "2027"
     }, 
     {
+        "voxel_value": 209, 
         "name": "rh.R_PCV_ROI.label", 
-        "voxel_index": 209, 
         "label": "2028"
     }, 
     {
+        "voxel_value": 210, 
         "name": "rh.R_STV_ROI.label", 
-        "voxel_index": 210, 
         "label": "2029"
     }, 
     {
+        "voxel_value": 211, 
         "name": "rh.R_7Pm_ROI.label", 
-        "voxel_index": 211, 
         "label": "2030"
     }, 
     {
+        "voxel_value": 212, 
         "name": "rh.R_7m_ROI.label", 
-        "voxel_index": 212, 
         "label": "2031"
     }, 
     {
+        "voxel_value": 213, 
         "name": "rh.R_POS1_ROI.label", 
-        "voxel_index": 213, 
         "label": "2032"
     }, 
     {
+        "voxel_value": 214, 
         "name": "rh.R_23d_ROI.label", 
-        "voxel_index": 214, 
         "label": "2033"
     }, 
     {
+        "voxel_value": 215, 
         "name": "rh.R_v23ab_ROI.label", 
-        "voxel_index": 215, 
         "label": "2034"
     }, 
     {
+        "voxel_value": 216, 
         "name": "rh.R_d23ab_ROI.label", 
-        "voxel_index": 216, 
         "label": "2035"
     }, 
     {
+        "voxel_value": 217, 
         "name": "rh.R_31pv_ROI.label", 
-        "voxel_index": 217, 
         "label": "2036"
     }, 
     {
+        "voxel_value": 218, 
         "name": "rh.R_5m_ROI.label", 
-        "voxel_index": 218, 
         "label": "2037"
     }, 
     {
+        "voxel_value": 219, 
         "name": "rh.R_5mv_ROI.label", 
-        "voxel_index": 219, 
         "label": "2038"
     }, 
     {
+        "voxel_value": 220, 
         "name": "rh.R_23c_ROI.label", 
-        "voxel_index": 220, 
         "label": "2039"
     }, 
     {
+        "voxel_value": 221, 
         "name": "rh.R_5L_ROI.label", 
-        "voxel_index": 221, 
         "label": "2040"
     }, 
     {
+        "voxel_value": 222, 
         "name": "rh.R_24dd_ROI.label", 
-        "voxel_index": 222, 
         "label": "2041"
     }, 
     {
+        "voxel_value": 223, 
         "name": "rh.R_24dv_ROI.label", 
-        "voxel_index": 223, 
         "label": "2042"
     }, 
     {
+        "voxel_value": 224, 
         "name": "rh.R_7AL_ROI.label", 
-        "voxel_index": 224, 
         "label": "2043"
     }, 
     {
+        "voxel_value": 225, 
         "name": "rh.R_SCEF_ROI.label", 
-        "voxel_index": 225, 
         "label": "2044"
     }, 
     {
+        "voxel_value": 226, 
         "name": "rh.R_6ma_ROI.label", 
-        "voxel_index": 226, 
         "label": "2045"
     }, 
     {
+        "voxel_value": 227, 
         "name": "rh.R_7Am_ROI.label", 
-        "voxel_index": 227, 
         "label": "2046"
     }, 
     {
+        "voxel_value": 228, 
         "name": "rh.R_7PL_ROI.label", 
-        "voxel_index": 228, 
         "label": "2047"
     }, 
     {
+        "voxel_value": 229, 
         "name": "rh.R_7PC_ROI.label", 
-        "voxel_index": 229, 
         "label": "2048"
     }, 
     {
+        "voxel_value": 230, 
         "name": "rh.R_LIPv_ROI.label", 
-        "voxel_index": 230, 
         "label": "2049"
     }, 
     {
+        "voxel_value": 231, 
         "name": "rh.R_VIP_ROI.label", 
-        "voxel_index": 231, 
         "label": "2050"
     }, 
     {
+        "voxel_value": 232, 
         "name": "rh.R_MIP_ROI.label", 
-        "voxel_index": 232, 
         "label": "2051"
     }, 
     {
+        "voxel_value": 233, 
         "name": "rh.R_1_ROI.label", 
-        "voxel_index": 233, 
         "label": "2052"
     }, 
     {
+        "voxel_value": 234, 
         "name": "rh.R_2_ROI.label", 
-        "voxel_index": 234, 
         "label": "2053"
     }, 
     {
+        "voxel_value": 235, 
         "name": "rh.R_3a_ROI.label", 
-        "voxel_index": 235, 
         "label": "2054"
     }, 
     {
+        "voxel_value": 236, 
         "name": "rh.R_6d_ROI.label", 
-        "voxel_index": 236, 
         "label": "2055"
     }, 
     {
+        "voxel_value": 237, 
         "name": "rh.R_6mp_ROI.label", 
-        "voxel_index": 237, 
         "label": "2056"
     }, 
     {
+        "voxel_value": 238, 
         "name": "rh.R_6v_ROI.label", 
-        "voxel_index": 238, 
         "label": "2057"
     }, 
     {
+        "voxel_value": 239, 
         "name": "rh.R_p24pr_ROI.label", 
-        "voxel_index": 239, 
         "label": "2058"
     }, 
     {
+        "voxel_value": 240, 
         "name": "rh.R_33pr_ROI.label", 
-        "voxel_index": 240, 
         "label": "2059"
     }, 
     {
+        "voxel_value": 241, 
         "name": "rh.R_a24pr_ROI.label", 
-        "voxel_index": 241, 
         "label": "2060"
     }, 
     {
+        "voxel_value": 242, 
         "name": "rh.R_p32pr_ROI.label", 
-        "voxel_index": 242, 
         "label": "2061"
     }, 
     {
+        "voxel_value": 243, 
         "name": "rh.R_a24_ROI.label", 
-        "voxel_index": 243, 
         "label": "2062"
     }, 
     {
+        "voxel_value": 244, 
         "name": "rh.R_d32_ROI.label", 
-        "voxel_index": 244, 
         "label": "2063"
     }, 
     {
+        "voxel_value": 245, 
         "name": "rh.R_8BM_ROI.label", 
-        "voxel_index": 245, 
         "label": "2064"
     }, 
     {
+        "voxel_value": 246, 
         "name": "rh.R_p32_ROI.label", 
-        "voxel_index": 246, 
         "label": "2065"
     }, 
     {
+        "voxel_value": 247, 
         "name": "rh.R_10r_ROI.label", 
-        "voxel_index": 247, 
         "label": "2066"
     }, 
     {
+        "voxel_value": 248, 
         "name": "rh.R_47m_ROI.label", 
-        "voxel_index": 248, 
         "label": "2067"
     }, 
     {
+        "voxel_value": 249, 
         "name": "rh.R_8Av_ROI.label", 
-        "voxel_index": 249, 
         "label": "2068"
     }, 
     {
+        "voxel_value": 250, 
         "name": "rh.R_8Ad_ROI.label", 
-        "voxel_index": 250, 
         "label": "2069"
     }, 
     {
+        "voxel_value": 251, 
         "name": "rh.R_9m_ROI.label", 
-        "voxel_index": 251, 
         "label": "2070"
     }, 
     {
+        "voxel_value": 252, 
         "name": "rh.R_8BL_ROI.label", 
-        "voxel_index": 252, 
         "label": "2071"
     }, 
     {
+        "voxel_value": 253, 
         "name": "rh.R_9p_ROI.label", 
-        "voxel_index": 253, 
         "label": "2072"
     }, 
     {
+        "voxel_value": 254, 
         "name": "rh.R_10d_ROI.label", 
-        "voxel_index": 254, 
         "label": "2073"
     }, 
     {
+        "voxel_value": 255, 
         "name": "rh.R_8C_ROI.label", 
-        "voxel_index": 255, 
         "label": "2074"
     }, 
     {
+        "voxel_value": 256, 
         "name": "rh.R_44_ROI.label", 
-        "voxel_index": 256, 
         "label": "2075"
     }, 
     {
+        "voxel_value": 257, 
         "name": "rh.R_45_ROI.label", 
-        "voxel_index": 257, 
         "label": "2076"
     }, 
     {
+        "voxel_value": 258, 
         "name": "rh.R_47l_ROI.label", 
-        "voxel_index": 258, 
         "label": "2077"
     }, 
     {
+        "voxel_value": 259, 
         "name": "rh.R_a47r_ROI.label", 
-        "voxel_index": 259, 
         "label": "2078"
     }, 
     {
+        "voxel_value": 260, 
         "name": "rh.R_6r_ROI.label", 
-        "voxel_index": 260, 
         "label": "2079"
     }, 
     {
+        "voxel_value": 261, 
         "name": "rh.R_IFJa_ROI.label", 
-        "voxel_index": 261, 
         "label": "2080"
     }, 
     {
+        "voxel_value": 262, 
         "name": "rh.R_IFJp_ROI.label", 
-        "voxel_index": 262, 
         "label": "2081"
     }, 
     {
+        "voxel_value": 263, 
         "name": "rh.R_IFSp_ROI.label", 
-        "voxel_index": 263, 
         "label": "2082"
     }, 
     {
+        "voxel_value": 264, 
         "name": "rh.R_IFSa_ROI.label", 
-        "voxel_index": 264, 
         "label": "2083"
     }, 
     {
+        "voxel_value": 265, 
         "name": "rh.R_p9-46v_ROI.label", 
-        "voxel_index": 265, 
         "label": "2084"
     }, 
     {
+        "voxel_value": 266, 
         "name": "rh.R_46_ROI.label", 
-        "voxel_index": 266, 
         "label": "2085"
     }, 
     {
+        "voxel_value": 267, 
         "name": "rh.R_a9-46v_ROI.label", 
-        "voxel_index": 267, 
         "label": "2086"
     }, 
     {
+        "voxel_value": 268, 
         "name": "rh.R_9-46d_ROI.label", 
-        "voxel_index": 268, 
         "label": "2087"
     }, 
     {
+        "voxel_value": 269, 
         "name": "rh.R_9a_ROI.label", 
-        "voxel_index": 269, 
         "label": "2088"
     }, 
     {
+        "voxel_value": 270, 
         "name": "rh.R_10v_ROI.label", 
-        "voxel_index": 270, 
         "label": "2089"
     }, 
     {
+        "voxel_value": 271, 
         "name": "rh.R_a10p_ROI.label", 
-        "voxel_index": 271, 
         "label": "2090"
     }, 
     {
+        "voxel_value": 272, 
         "name": "rh.R_10pp_ROI.label", 
-        "voxel_index": 272, 
         "label": "2091"
     }, 
     {
+        "voxel_value": 273, 
         "name": "rh.R_11l_ROI.label", 
-        "voxel_index": 273, 
         "label": "2092"
     }, 
     {
+        "voxel_value": 274, 
         "name": "rh.R_13l_ROI.label", 
-        "voxel_index": 274, 
         "label": "2093"
     }, 
     {
+        "voxel_value": 275, 
         "name": "rh.R_OFC_ROI.label", 
-        "voxel_index": 275, 
         "label": "2094"
     }, 
     {
+        "voxel_value": 276, 
         "name": "rh.R_47s_ROI.label", 
-        "voxel_index": 276, 
         "label": "2095"
     }, 
     {
+        "voxel_value": 277, 
         "name": "rh.R_LIPd_ROI.label", 
-        "voxel_index": 277, 
         "label": "2096"
     }, 
     {
+        "voxel_value": 278, 
         "name": "rh.R_6a_ROI.label", 
-        "voxel_index": 278, 
         "label": "2097"
     }, 
     {
+        "voxel_value": 279, 
         "name": "rh.R_i6-8_ROI.label", 
-        "voxel_index": 279, 
         "label": "2098"
     }, 
     {
+        "voxel_value": 280, 
         "name": "rh.R_s6-8_ROI.label", 
-        "voxel_index": 280, 
         "label": "2099"
     }, 
     {
+        "voxel_value": 281, 
         "name": "rh.R_43_ROI.label", 
-        "voxel_index": 281, 
         "label": "2100"
     }, 
     {
+        "voxel_value": 282, 
         "name": "rh.R_OP4_ROI.label", 
-        "voxel_index": 282, 
         "label": "2101"
     }, 
     {
+        "voxel_value": 283, 
         "name": "rh.R_OP1_ROI.label", 
-        "voxel_index": 283, 
         "label": "2102"
     }, 
     {
+        "voxel_value": 284, 
         "name": "rh.R_OP2-3_ROI.label", 
-        "voxel_index": 284, 
         "label": "2103"
     }, 
     {
+        "voxel_value": 285, 
         "name": "rh.R_52_ROI.label", 
-        "voxel_index": 285, 
         "label": "2104"
     }, 
     {
+        "voxel_value": 286, 
         "name": "rh.R_RI_ROI.label", 
-        "voxel_index": 286, 
         "label": "2105"
     }, 
     {
+        "voxel_value": 287, 
         "name": "rh.R_PFcm_ROI.label", 
-        "voxel_index": 287, 
         "label": "2106"
     }, 
     {
+        "voxel_value": 288, 
         "name": "rh.R_PoI2_ROI.label", 
-        "voxel_index": 288, 
         "label": "2107"
     }, 
     {
+        "voxel_value": 289, 
         "name": "rh.R_TA2_ROI.label", 
-        "voxel_index": 289, 
         "label": "2108"
     }, 
     {
+        "voxel_value": 290, 
         "name": "rh.R_FOP4_ROI.label", 
-        "voxel_index": 290, 
         "label": "2109"
     }, 
     {
+        "voxel_value": 291, 
         "name": "rh.R_MI_ROI.label", 
-        "voxel_index": 291, 
         "label": "2110"
     }, 
     {
+        "voxel_value": 292, 
         "name": "rh.R_Pir_ROI.label", 
-        "voxel_index": 292, 
         "label": "2111"
     }, 
     {
+        "voxel_value": 293, 
         "name": "rh.R_AVI_ROI.label", 
-        "voxel_index": 293, 
         "label": "2112"
     }, 
     {
+        "voxel_value": 294, 
         "name": "rh.R_AAIC_ROI.label", 
-        "voxel_index": 294, 
         "label": "2113"
     }, 
     {
+        "voxel_value": 295, 
         "name": "rh.R_FOP1_ROI.label", 
-        "voxel_index": 295, 
         "label": "2114"
     }, 
     {
+        "voxel_value": 296, 
         "name": "rh.R_FOP3_ROI.label", 
-        "voxel_index": 296, 
         "label": "2115"
     }, 
     {
+        "voxel_value": 297, 
         "name": "rh.R_FOP2_ROI.label", 
-        "voxel_index": 297, 
         "label": "2116"
     }, 
     {
+        "voxel_value": 298, 
         "name": "rh.R_PFt_ROI.label", 
-        "voxel_index": 298, 
         "label": "2117"
     }, 
     {
+        "voxel_value": 299, 
         "name": "rh.R_AIP_ROI.label", 
-        "voxel_index": 299, 
         "label": "2118"
     }, 
     {
+        "voxel_value": 300, 
         "name": "rh.R_EC_ROI.label", 
-        "voxel_index": 300, 
         "label": "2119"
     }, 
     {
+        "voxel_value": 301, 
         "name": "rh.R_PreS_ROI.label", 
-        "voxel_index": 301, 
         "label": "2120"
     }, 
     {
+        "voxel_value": 302, 
         "name": "rh.R_H_ROI.label", 
-        "voxel_index": 302, 
         "label": "2121"
     }, 
     {
+        "voxel_value": 303, 
         "name": "rh.R_ProS_ROI.label", 
-        "voxel_index": 303, 
         "label": "2122"
     }, 
     {
+        "voxel_value": 304, 
         "name": "rh.R_PeEc_ROI.label", 
-        "voxel_index": 304, 
         "label": "2123"
     }, 
     {
+        "voxel_value": 305, 
         "name": "rh.R_STGa_ROI.label", 
-        "voxel_index": 305, 
         "label": "2124"
     }, 
     {
+        "voxel_value": 306, 
         "name": "rh.R_PBelt_ROI.label", 
-        "voxel_index": 306, 
         "label": "2125"
     }, 
     {
+        "voxel_value": 307, 
         "name": "rh.R_A5_ROI.label", 
-        "voxel_index": 307, 
         "label": "2126"
     }, 
     {
+        "voxel_value": 308, 
         "name": "rh.R_PHA1_ROI.label", 
-        "voxel_index": 308, 
         "label": "2127"
     }, 
     {
+        "voxel_value": 309, 
         "name": "rh.R_PHA3_ROI.label", 
-        "voxel_index": 309, 
         "label": "2128"
     }, 
     {
+        "voxel_value": 310, 
         "name": "rh.R_STSda_ROI.label", 
-        "voxel_index": 310, 
         "label": "2129"
     }, 
     {
+        "voxel_value": 311, 
         "name": "rh.R_STSdp_ROI.label", 
-        "voxel_index": 311, 
         "label": "2130"
     }, 
     {
+        "voxel_value": 312, 
         "name": "rh.R_STSvp_ROI.label", 
-        "voxel_index": 312, 
         "label": "2131"
     }, 
     {
+        "voxel_value": 313, 
         "name": "rh.R_TGd_ROI.label", 
-        "voxel_index": 313, 
         "label": "2132"
     }, 
     {
+        "voxel_value": 314, 
         "name": "rh.R_TE1a_ROI.label", 
-        "voxel_index": 314, 
         "label": "2133"
     }, 
     {
+        "voxel_value": 315, 
         "name": "rh.R_TE1p_ROI.label", 
-        "voxel_index": 315, 
         "label": "2134"
     }, 
     {
+        "voxel_value": 316, 
         "name": "rh.R_TE2a_ROI.label", 
-        "voxel_index": 316, 
         "label": "2135"
     }, 
     {
+        "voxel_value": 317, 
         "name": "rh.R_TF_ROI.label", 
-        "voxel_index": 317, 
         "label": "2136"
     }, 
     {
+        "voxel_value": 318, 
         "name": "rh.R_TE2p_ROI.label", 
-        "voxel_index": 318, 
         "label": "2137"
     }, 
     {
+        "voxel_value": 319, 
         "name": "rh.R_PHT_ROI.label", 
-        "voxel_index": 319, 
         "label": "2138"
     }, 
     {
+        "voxel_value": 320, 
         "name": "rh.R_PH_ROI.label", 
-        "voxel_index": 320, 
         "label": "2139"
     }, 
     {
+        "voxel_value": 321, 
         "name": "rh.R_TPOJ1_ROI.label", 
-        "voxel_index": 321, 
         "label": "2140"
     }, 
     {
+        "voxel_value": 322, 
         "name": "rh.R_TPOJ2_ROI.label", 
-        "voxel_index": 322, 
         "label": "2141"
     }, 
     {
+        "voxel_value": 323, 
         "name": "rh.R_TPOJ3_ROI.label", 
-        "voxel_index": 323, 
         "label": "2142"
     }, 
     {
+        "voxel_value": 324, 
         "name": "rh.R_DVT_ROI.label", 
-        "voxel_index": 324, 
         "label": "2143"
     }, 
     {
+        "voxel_value": 325, 
         "name": "rh.R_PGp_ROI.label", 
-        "voxel_index": 325, 
         "label": "2144"
     }, 
     {
+        "voxel_value": 326, 
         "name": "rh.R_IP2_ROI.label", 
-        "voxel_index": 326, 
         "label": "2145"
     }, 
     {
+        "voxel_value": 327, 
         "name": "rh.R_IP1_ROI.label", 
-        "voxel_index": 327, 
         "label": "2146"
     }, 
     {
+        "voxel_value": 328, 
         "name": "rh.R_IP0_ROI.label", 
-        "voxel_index": 328, 
         "label": "2147"
     }, 
     {
+        "voxel_value": 329, 
         "name": "rh.R_PFop_ROI.label", 
-        "voxel_index": 329, 
         "label": "2148"
     }, 
     {
+        "voxel_value": 330, 
         "name": "rh.R_PF_ROI.label", 
-        "voxel_index": 330, 
         "label": "2149"
     }, 
     {
+        "voxel_value": 331, 
         "name": "rh.R_PFm_ROI.label", 
-        "voxel_index": 331, 
         "label": "2150"
     }, 
     {
+        "voxel_value": 332, 
         "name": "rh.R_PGi_ROI.label", 
-        "voxel_index": 332, 
         "label": "2151"
     }, 
     {
+        "voxel_value": 333, 
         "name": "rh.R_PGs_ROI.label", 
-        "voxel_index": 333, 
         "label": "2152"
     }, 
     {
+        "voxel_value": 334, 
         "name": "rh.R_V6A_ROI.label", 
-        "voxel_index": 334, 
         "label": "2153"
     }, 
     {
+        "voxel_value": 335, 
         "name": "rh.R_VMV1_ROI.label", 
-        "voxel_index": 335, 
         "label": "2154"
     }, 
     {
+        "voxel_value": 336, 
         "name": "rh.R_VMV3_ROI.label", 
-        "voxel_index": 336, 
         "label": "2155"
     }, 
     {
+        "voxel_value": 337, 
         "name": "rh.R_PHA2_ROI.label", 
-        "voxel_index": 337, 
         "label": "2156"
     }, 
     {
+        "voxel_value": 338, 
         "name": "rh.R_V4t_ROI.label", 
-        "voxel_index": 338, 
         "label": "2157"
     }, 
     {
+        "voxel_value": 339, 
         "name": "rh.R_FST_ROI.label", 
-        "voxel_index": 339, 
         "label": "2158"
     }, 
     {
+        "voxel_value": 340, 
         "name": "rh.R_V3CD_ROI.label", 
-        "voxel_index": 340, 
         "label": "2159"
     }, 
     {
+        "voxel_value": 341, 
         "name": "rh.R_LO3_ROI.label", 
-        "voxel_index": 341, 
         "label": "2160"
     }, 
     {
+        "voxel_value": 342, 
         "name": "rh.R_VMV2_ROI.label", 
-        "voxel_index": 342, 
         "label": "2161"
     }, 
     {
+        "voxel_value": 343, 
         "name": "rh.R_31pd_ROI.label", 
-        "voxel_index": 343, 
         "label": "2162"
     }, 
     {
+        "voxel_value": 344, 
         "name": "rh.R_31a_ROI.label", 
-        "voxel_index": 344, 
         "label": "2163"
     }, 
     {
+        "voxel_value": 345, 
         "name": "rh.R_VVC_ROI.label", 
-        "voxel_index": 345, 
         "label": "2164"
     }, 
     {
+        "voxel_value": 346, 
         "name": "rh.R_25_ROI.label", 
-        "voxel_index": 346, 
         "label": "2165"
     }, 
     {
+        "voxel_value": 347, 
         "name": "rh.R_s32_ROI.label", 
-        "voxel_index": 347, 
         "label": "2166"
     }, 
     {
+        "voxel_value": 348, 
         "name": "rh.R_pOFC_ROI.label", 
-        "voxel_index": 348, 
         "label": "2167"
     }, 
     {
+        "voxel_value": 349, 
         "name": "rh.R_PoI1_ROI.label", 
-        "voxel_index": 349, 
         "label": "2168"
     }, 
     {
+        "voxel_value": 350, 
         "name": "rh.R_Ig_ROI.label", 
-        "voxel_index": 350, 
         "label": "2169"
     }, 
     {
+        "voxel_value": 351, 
         "name": "rh.R_FOP5_ROI.label", 
-        "voxel_index": 351, 
         "label": "2170"
     }, 
     {
+        "voxel_value": 352, 
         "name": "rh.R_p10p_ROI.label", 
-        "voxel_index": 352, 
         "label": "2171"
     }, 
     {
+        "voxel_value": 353, 
         "name": "rh.R_p47r_ROI.label", 
-        "voxel_index": 353, 
         "label": "2172"
     }, 
     {
+        "voxel_value": 354, 
         "name": "rh.R_TGv_ROI.label", 
-        "voxel_index": 354, 
         "label": "2173"
     }, 
     {
+        "voxel_value": 355, 
         "name": "rh.R_MBelt_ROI.label", 
-        "voxel_index": 355, 
         "label": "2174"
     }, 
     {
+        "voxel_value": 356, 
         "name": "rh.R_LBelt_ROI.label", 
-        "voxel_index": 356, 
         "label": "2175"
     }, 
     {
+        "voxel_value": 357, 
         "name": "rh.R_A4_ROI.label", 
-        "voxel_index": 357, 
         "label": "2176"
     }, 
     {
+        "voxel_value": 358, 
         "name": "rh.R_STSva_ROI.label", 
-        "voxel_index": 358, 
         "label": "2177"
     }, 
     {
+        "voxel_value": 359, 
         "name": "rh.R_TE1m_ROI.label", 
-        "voxel_index": 359, 
         "label": "2178"
     }, 
     {
+        "voxel_value": 360, 
         "name": "rh.R_PI_ROI.label", 
-        "voxel_index": 360, 
         "label": "2179"
     }, 
     {
+        "voxel_value": 361, 
         "name": "rh.R_a32pr_ROI.label", 
-        "voxel_index": 361, 
         "label": "2180"
     }, 
     {
+        "voxel_value": 362, 
         "name": "rh.R_p24_ROI.label", 
-        "voxel_index": 362, 
         "label": "2181"
     }, 
     {
+        "voxel_value": 363, 
         "name": "Freesurfer Aseg / Left thalamus", 
-        "voxel_index": 363, 
         "label": "10"
     }, 
     {
+        "voxel_value": 364, 
         "name": "Freesurfer Aseg / Left caudate", 
-        "voxel_index": 364, 
         "label": "11"
     }, 
     {
+        "voxel_value": 365, 
         "name": "Freesurfer Aseg / Left putamen", 
-        "voxel_index": 365, 
         "label": "12"
     }, 
     {
+        "voxel_value": 366, 
         "name": "Freesurfer Aseg / Left pallidum", 
-        "voxel_index": 366, 
         "label": "13"
     }, 
     {
+        "voxel_value": 367, 
         "name": "Freesurfer Aseg / Left hippocampus", 
-        "voxel_index": 367, 
         "label": "17"
     }, 
     {
+        "voxel_value": 368, 
         "name": "Freesurfer Aseg / Left amygdala", 
-        "voxel_index": 368, 
         "label": "18"
     }, 
     {
+        "voxel_value": 369, 
         "name": "Freesurfer Aseg / Left accumbens", 
-        "voxel_index": 369, 
         "label": "26"
     }, 
     {
+        "voxel_value": 370, 
         "name": "Freesurfer Aseg / Right thalamus", 
-        "voxel_index": 370, 
         "label": "49"
     }, 
     {
+        "voxel_value": 371, 
         "name": "Freesurfer Aseg / Right caudate", 
-        "voxel_index": 371, 
         "label": "50"
     }, 
     {
+        "voxel_value": 372, 
         "name": "Freesurfer Aseg / Right putamen", 
-        "voxel_index": 372, 
         "label": "51"
     }, 
     {
+        "voxel_value": 373, 
         "name": "Freesurfer Aseg / Right pallidum", 
-        "voxel_index": 373, 
         "label": "52"
     }, 
     {
+        "voxel_value": 374, 
         "name": "Freesurfer Aseg / Right hippocampus", 
-        "voxel_index": 374, 
         "label": "53"
     }, 
     {
+        "voxel_value": 375, 
         "name": "Freesurfer Aseg / Right amygdala", 
-        "voxel_index": 375, 
         "label": "54"
     }, 
     {
+        "voxel_value": 376, 
         "name": "Freesurfer Aseg / Right accumbens", 
-        "voxel_index": 376, 
         "label": "58"
     }
 ]
