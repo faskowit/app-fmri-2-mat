@@ -15,6 +15,7 @@ import nibabel as nib
 import numpy as np
 from nilearn import input_data, image
 import pandas as pd
+from scipy import signal
 
 NUSCHOICES= ["36P", "9P", "6P", 
              "aCompCor", "24aCompCor", "24aCompCorGsr",
@@ -189,6 +190,7 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None):
     # check if old/new confound names
     if 'GlobalSignal' in df:
         print("detected old confounds names")
+        imgsignals = ['CSF', 'WhiteMatter', 'GlobalSignal']
         p6cols = ['X', 'Y', 'Z', 'RotX', 'RotY', 'RotZ']
         p9cols = ['CSF', 'WhiteMatter', 'GlobalSignal', 'X', 'Y', 'Z', 'RotX', 'RotY', 'RotZ']
         globalsignalcol = 'GlobalSignal'
@@ -196,6 +198,7 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None):
         framewisecol = 'FramewiseDisplacement'
     elif 'global_signal' in df:
         print("detected new confounds names")
+        imgsignals = ['csf', 'white_matter', 'global_signal']
         p6cols = ['trans_x', 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z']
         p9cols = ['csf', 'white_matter', 'global_signal', 'trans_x', 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z']
         globalsignalcol = 'global_signal'
@@ -204,6 +207,9 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None):
     else:
         print("trouble reading necessary columns from confounds file. exiting")
         exit(1)
+
+    # detrend the image signals
+    df[imgsignals] = signal.detrend(df[imgsignals])
 
     # extract nusiance regressors for movement + signal
     p6 = df[p6cols]
@@ -232,10 +238,10 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None):
 
     # GSR4
     gsr = df[globalsignalcol]
+    gsr2 = gsr ** 2
     gsr_der = gsr.diff().fillna(0)
     gsr_der2 = gsr_der ** 2
-    gsr4 = pd.concat((gsr, gsr_der, gsr_der2), axis=1)
-    gsr4['sqrterm'] = np.power(range(1, gsr.shape[0]+1), 2)
+    gsr4 = pd.concat((gsr, gsr2, gsr_der, gsr_der2), axis=1)
 
     if kind == "globalsig":
         confounds = gsr
