@@ -85,8 +85,6 @@ def nuisance_regress(inputimg, confoundsfile, inputmask, inputtr=0,
                          "standardize": True, "low_pass": lowpassval,
                          "high_pass": highpassval, "t_r": tr,
                          "smoothing_fwhm": smoothkern, "verbose": 1, }
-        detrend_params = {"mask_img": inputmask, "detrend": True,
-                          "standardize": False, "t_r": tr, }
 
         # invoke masker
         masker = input_data.NiftiMasker(**masker_params)
@@ -96,7 +94,6 @@ def nuisance_regress(inputimg, confoundsfile, inputmask, inputtr=0,
 
         # inverse masker operation to get the nifti object, n.b. this returns a Nifti1Image!!!
         outimg = masker.inverse_transform(time_series)  # nus regress
-        outimg = image.clean_img(outimg, **detrend_params)  # de-trend
 
     else:
         # no mask! so no masker
@@ -106,12 +103,9 @@ def nuisance_regress(inputimg, confoundsfile, inputmask, inputtr=0,
                         "detrend": False, "standardize": True,
                         "low_pass": lowpassval, "high_pass": highpassval, 
                         "t_r": tr, }
-        detrend_params = {"detrend": True, "standardize": False, "t_r": tr, }
 
         loadimg = image.load_img(inputimg)
-
         outimg = image.clean_img(loadimg, **clean_params)  # nus regress
-        outimg = image.clean_img(outimg, **detrend_params)  # de-trend
 
     # get rid of the first N volumes
     # outimgtrim = image.index_img(outimg, np.arange(discardvols, outimg.shape[3]))
@@ -225,7 +219,7 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None):
     # extract nusiance regressors for movement + signal
     p6 = df[p6cols]
     p9 = df[p9cols]
-    
+
     # 6Pder
     p6_der = p6.diff().fillna(0)
     p6_der.columns = [c + "_der" for c in p6_der.columns]
@@ -281,6 +275,9 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None):
             # it will never get here, but assign confounds so my linter doesn't complain
             confounds = ''
             exit(1)
+
+    # add to all confounds df a linear trend
+    confounds['lin'] = list(range(1, confounds.shape[0]+1))
 
     if spikereg_threshold:
         threshold = spikereg_threshold
