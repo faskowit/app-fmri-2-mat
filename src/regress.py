@@ -58,10 +58,14 @@ def nuisance_regress(inputimg, confoundsfile, inputmask, inputtr=0,
                                              kind=conftype,
                                              spikereg_threshold=spikethr)
 
-    # check highpass low pass
-    if highpassval >= lowpassval:
-        print("high and low pass values dont make sense. exiting")
-        exit(1)
+    if lowpassval == 0:
+        print("detected lowpassval 0, setting to None")
+        lowpassval = None 
+    else:
+        # check highpass versus low pass
+        if highpassval >= lowpassval:
+            print("high and low pass values dont make sense. exiting")
+            exit(1)
 
     # check tr
     if inputtr == 0:
@@ -191,7 +195,7 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None):
         imgsignals = ['CSF', 'WhiteMatter', 'GlobalSignal']
         p6cols = ['X', 'Y', 'Z', 'RotX', 'RotY', 'RotZ']
         p9cols = ['CSF', 'WhiteMatter', 'GlobalSignal', 'X', 'Y', 'Z', 'RotX', 'RotY', 'RotZ']
-        globalsignalcol = 'GlobalSignal'
+        globalsignalcol = ['GlobalSignal']
         compCorregex = 'aCompCor'
         framewisecol = 'FramewiseDisplacement'
         # de-trend the image signals
@@ -204,7 +208,7 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None):
         imgsignals = ['csf', 'white_matter', 'global_signal']
         p6cols = ['trans_x', 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z']
         p9cols = ['csf', 'white_matter', 'global_signal', 'trans_x', 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z']
-        globalsignalcol = 'global_signal'
+        globalsignalcol = ['global_signal']
         compCorregex = 'a_comp_cor_'
         framewisecol = 'framewise_displacement'
         # de-trend the image signals
