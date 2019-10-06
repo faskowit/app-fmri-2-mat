@@ -30,6 +30,7 @@ inCONF="null"
 inOUTBASE="null"
 inTR="null"
 saveTS="null"
+noMat="null"
 inDISCARD="null"
 inSPACE="null"
 
@@ -95,7 +96,9 @@ else
 									inSPACE=$1
 	                    			;;
 	       	-s | -savets )			saveTS="true"
-	       							;;	
+	       							;;
+	       	-n | -nomat )			noMat="true"
+									;;	
 	        -h | --help )           echo "see script"
 	                                exit 1
 	                                ;;
@@ -210,6 +213,9 @@ for (( i=0; i<${#inPARC[@]}; i++ )) ; do
 		"
 	if [[ ${saveTS} = "true" ]] ; then
 		cmd="${cmd} -savetimeseries"
+	fi
+	if [[ ${noMat}  = "true" ]] ; then
+		cmd="${cmd} -nomatrix"
 	fi
 	echo $cmd
 	eval $cmd
