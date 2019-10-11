@@ -12,19 +12,20 @@ copied/adapted from original code here: https://github.com/fliem/sea_zrh_rs
 
 import argparse
 import nibabel as nib
-import numpy as np
+# import numpy as np
 from nilearn import input_data, image
 import pandas as pd
-from scipy import signal
+# from scipy import signal
 
 NUSCHOICES= ["36P", "9P", "6P", 
              "aCompCor", "24aCompCor", "24aCompCorGsr",
              "globalsig", "globalsig4"]
 
+
 # https://github.com/edickie/ciftify/blob/master/ciftify/bin/ciftify_clean_img.py#L301
 # MIT License https://github.com/edickie/ciftify/blob/master/LICENSE
 def image_drop_dummy_trs(nib_image, start_from_tr):
-    ''' use nilearn to drop the number of trs from the image'''
+    # use nilearn to drop the number of trs from the image
     img_out = nib_image.slicer[:,:,:, start_from_tr:]
     return img_out
 
@@ -192,7 +193,7 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None):
     # check if old/new confound names
     if 'GlobalSignal' in df:
         print("detected old confounds names")
-        imgsignals = ['CSF', 'WhiteMatter', 'GlobalSignal']
+        # imgsignals = ['CSF', 'WhiteMatter', 'GlobalSignal']
         p6cols = ['X', 'Y', 'Z', 'RotX', 'RotY', 'RotZ']
         p9cols = ['CSF', 'WhiteMatter', 'GlobalSignal', 'X', 'Y', 'Z', 'RotX', 'RotY', 'RotZ']
         globalsignalcol = ['GlobalSignal']
@@ -205,7 +206,7 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None):
 
     elif 'global_signal' in df:
         print("detected new confounds names")
-        imgsignals = ['csf', 'white_matter', 'global_signal']
+        # imgsignals = ['csf', 'white_matter', 'global_signal']
         p6cols = ['trans_x', 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z']
         p9cols = ['csf', 'white_matter', 'global_signal', 'trans_x', 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z']
         globalsignalcol = ['global_signal']
@@ -266,6 +267,10 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None):
         # then we grab compcor stuff
         # get compcor nuisance regressors and combine with 12P
         aCompC = df.filter(regex=compCorregex)
+        if aCompC.empty:
+            print("could not find compcor columns. exiting")
+            exit(1)
+
         p12aCompC = pd.concat((p12, aCompC), axis=1)
         p24aCompC = pd.concat((p12, p12_2, aCompC), axis=1)
 
