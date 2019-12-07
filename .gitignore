@@ -5,3 +5,5 @@ testdata
 *.csv
 product.json
 config.json
+test_*
+config*.json*

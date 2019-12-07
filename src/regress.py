@@ -270,6 +270,10 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None):
         if aCompC.empty:
             print("could not find compcor columns. exiting")
             exit(1)
+        elif aCompC.shape[1] > 5:
+            # if there are more than 5 columns, take only the first five components
+            aCCcolnames = [(''.join([compCorregex, "{:0>2}".format(n)])) for n in range(0, 5)]
+            aCompC = aCompC[aCCcolnames]
 
         p12aCompC = pd.concat((p12, aCompC), axis=1)
         p24aCompC = pd.concat((p12, p12_2, aCompC), axis=1)
