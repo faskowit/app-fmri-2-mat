@@ -26,6 +26,7 @@ ls -dl ${PWD}
 inFMRI="null"
 inMASK="null"
 inCONF="null"
+inCONFJSON="null"
 inOUTBASE="null"
 inTR="null"
 saveTS="null"
@@ -55,6 +56,7 @@ if [[ -f config.json ]] ; then
 	inMASK=`jq -r '.mask' config.json`
 	inPARC=`jq -r '.parc' config.json`
 	inCONF=`jq -r '.confounds' config.json`
+  inCONFJSON=`jq -r '.confjson' config.json`
 	inTR=`jq -r '.tr' config.json`
 	saveTS=`jq -r '.savets' config.json`
 	inDISCARD=`jq -r '.discardvols' config.json`
@@ -81,6 +83,10 @@ else
 	        ;;
 	        -c | -conf ) shift
                                     inCONF=$1
+                                    checkisfile $1
+          ;;
+        	-j | -cjson ) shift
+                                    inCONFJSON=$1
                                     checkisfile $1
           ;;
 	        -o | -out ) shift
@@ -190,6 +196,9 @@ if [[ ${inTR} != "null" ]] ; then
 fi
 if [[ ${regStrategy} != "null" ]] ; then
   cmd="${cmd} -strategy ${regStrategy}"
+fi
+if [[ ${inCONFJSON} != "null" ]] ; then
+  cmd="${cmd} -confjson ${inCONFJSON}"
 fi
 echo $cmd
 eval $cmd

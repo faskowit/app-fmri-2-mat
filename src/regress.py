@@ -11,8 +11,9 @@ copied/adapted from original code here: https://github.com/fliem/sea_zrh_rs
 """
 
 import argparse
+import json
 import nibabel as nib
-# import numpy as np
+import numpy as np
 from nilearn import input_data, image
 import pandas as pd
 # from scipy import signal
@@ -32,7 +33,7 @@ def image_drop_dummy_trs(nib_image, start_from_tr):
 
 def nuisance_regress(inputimg, confoundsfile, inputmask, inputtr=0,
     conftype="36P", spikethr=0.25, smoothkern=6.0, discardvols=4,
-    highpassval=0.008, lowpassval=0.08):
+    highpassval=0.008, lowpassval=0.08, confoundsjson=''):
     """
     
     returns a nibabel.nifti1.Nifti1Image that is cleaned in following ways:
@@ -57,7 +58,8 @@ def nuisance_regress(inputimg, confoundsfile, inputmask, inputtr=0,
     # extract confounds
     confounds, outlier_stats = get_confounds(confoundsfile,
                                              kind=conftype,
-                                             spikereg_threshold=spikethr)
+                                             spikereg_threshold=spikethr,
+                                             confounds_json=confoundsjson)
 
     if lowpassval == 0:
         print("detected lowpassval 0, setting to None")
@@ -158,7 +160,7 @@ def get_spikereg_confounds(motion_ts, threshold):
     return outliers, outlier_stats
 
 
-def get_confounds(confounds_file, kind="36P", spikereg_threshold=None):
+def get_confounds(confounds_file, kind="36P", spikereg_threshold=None, confounds_json=''):
     """
     takes a fmriprep confounds file and creates data frame with regressors.
     kind == "36P" returns Satterthwaite's 36P confound regressors
@@ -167,9 +169,6 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None):
     kind == "aCompCor"* returns model no. 11 from Parkes
     kind == "24aCompCor"* returns model no. 7 from Parkes
     kind == "24aCompCorGsr"* returns model no. 9 from Parkes
-
-    * fmriprep only provides 5 components overall... not sure if its exactly
-    the same as in the paper, as they mention 5 from wm, 5 from csf
 
     if spikereg_threshold=None, no spike regression is performed
 
@@ -271,9 +270,33 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None):
             print("could not find compcor columns. exiting")
             exit(1)
         elif aCompC.shape[1] > 5:
-            # if there are more than 5 columns, take only the first five components
-            aCCcolnames = [(''.join([compCorregex, "{:0>2}".format(n)])) for n in range(0, 5)]
-            aCompC = aCompC[aCCcolnames]
+
+            # if the confounds json is available, read the variance explained
+            # from the 'combined' 'Mask' components, and use top 5 of those
+            if confounds_json:
+                # read the confounds json
+                with open(confounds_json, 'r') as json_file:
+                    confjson = json.load(json_file)
+                print('read confounds json')
+
+                # initalize lists
+                combokeys = []
+                varex = []
+                for key in confjson:
+                    if 'Mask' in confjson[key].keys():
+                        if confjson[key]['Mask'] == 'combined':
+                            combokeys.append(key)
+                            varex.append(confjson[key]['VarianceExplained'])
+
+                # get the sort based on variance explained
+                sortvar = np.argsort(varex)
+                aCCcolnames = [combokeys[i] for i in sortvar[-5:]]
+                aCompC = aCompC[aCCcolnames]
+
+            else:
+                # if there are more than 5 columns, take only the first five components
+                aCCcolnames = [(''.join([compCorregex, "{:0>2}".format(n)])) for n in range(0, 5)]
+                aCompC = aCompC[aCCcolnames]
 
         p12aCompC = pd.concat((p12, aCompC), axis=1)
         p24aCompC = pd.concat((p12, p12_2, aCompC), axis=1)
@@ -328,6 +351,8 @@ def main():
                         default=0.008)
     parser.add_argument('-lowpass', type=float, help='low pass value',
                         default=0.08)
+    parser.add_argument('-confjson', type=str, help='confound json file, output by newer version of fmriprep',
+                        default=None)
     parser.add_argument('-out', type=str, help='ouput base name',
                         default='output')
 
@@ -357,7 +382,8 @@ def main():
                                                 smoothkern=args.fwhm,
                                                 discardvols=args.discardvols,
                                                 highpassval=args.highpass,
-                                                lowpassval=args.lowpass)
+                                                lowpassval=args.lowpass,
+                                                confoundsjson=args.confjson)
 
     # write it
     nib.save(nrImg, ''.join([args.out, '_nuisance.nii.gz']))
