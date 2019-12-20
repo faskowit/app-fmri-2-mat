@@ -210,31 +210,34 @@ if [[ ! -f ${regressFMRI} ]] ; then
 	exit 1
 fi
 
+# EDIT: the python can handle the looping over parcs, save time by only having
+# to call python once.
 # loop through the pars provided. output is storred based on name of parc
-for (( i=0; i<${#inPARC[@]}; i++ )) ; do
+# for (( i=0; i<${#inPARC[@]}; i++ )) ; do
 
-	mkdir -p ${inOUTBASE}/output_makemat/
+mkdir -p ${inOUTBASE}/output_makemat/
 
-	echo ; echo "making matrix $((i+1)) from parc: ${inPARC[i]}" ; echo
+# echo ; echo "making matrix $((i+1)) from parc: ${inPARC[i]}" ; echo
 
-	cmd="python3 ${EXEDIR}/src/makemat.py \
-			-space ${inSPACE} \
-			-type correlation \
-			-out ${inOUTBASE}/output_makemat/out \
-			${MEXTRA} \
-			${regressFMRI} \
-			${inMASK} \
-			-parcs ${inPARC[i]} \
-		"
-	if [[ ${saveTS} = "true" ]] ; then
-		cmd="${cmd} -savetimeseries"
-	fi
-	if [[ ${noMat}  = "true" ]] ; then
-		cmd="${cmd} -nomatrix"
-	fi
-	echo $cmd
-	eval $cmd
-done
+cmd="python3 ${EXEDIR}/src/makemat.py \
+    -space ${inSPACE} \
+    -type correlation \
+    -out ${inOUTBASE}/output_makemat/out \
+    ${MEXTRA} \
+    ${regressFMRI} \
+    ${inMASK} \
+    -parcs ${inPARC[*]} \
+  "
+if [[ ${saveTS} = "true" ]] ; then
+  cmd="${cmd} -savetimeseries"
+fi
+if [[ ${noMat}  = "true" ]] ; then
+  cmd="${cmd} -nomatrix"
+fi
+echo $cmd
+eval $cmd
+
+# done # for (( i=0; i<${#inPARC[@]}; i++ ))
 
 ###############################################################################
 # map output for bl
