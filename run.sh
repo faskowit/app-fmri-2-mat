@@ -56,12 +56,12 @@ if [[ -f config.json ]] ; then
 	inMASK=`jq -r '.mask' config.json`
 	inPARC=`jq -r '.parc' config.json`
 	inCONF=`jq -r '.confounds' config.json`
-  inCONFJSON=`jq -r '.confjson' config.json`
+  	inCONFJSON=`jq -r '.confjson' config.json`
 	inTR=`jq -r '.tr' config.json`
 	saveTS=`jq -r '.savets' config.json`
 	inDISCARD=`jq -r '.discardvols' config.json`
 	inSPACE=`jq -r '.inspace' config.json`
-  regStrategy=`jq -r '.strategy' config.json`
+  	regStrategy=`jq -r '.strategy' config.json`
 
 else
 	echo "reading command line args"

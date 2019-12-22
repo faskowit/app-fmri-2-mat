@@ -54,21 +54,31 @@ def nuisance_regress(inputimg, confoundsfile, inputmask, inputtr=0,
         studies of functional connectivity. Neuroimage, 154, 174-187.
     
     """
-    
+
+    dct = False
+    if highpassval == 'cosine':
+        print("using cosine basis for high pass")
+        highpassval = None
+        dct = True
+    else:
+        highpassval = float(highpassval)
+
+    if lowpassval == 0:
+        print("detected lowpassval 0, setting to None")
+        lowpassval = None
+    else:
+        # check highpass versus low pass
+        if highpassval:
+            if highpassval >= lowpassval:
+                print("high and low pass values dont make sense. exiting")
+                exit(1)
+
     # extract confounds
     confounds, outlier_stats = get_confounds(confoundsfile,
                                              kind=conftype,
                                              spikereg_threshold=spikethr,
-                                             confounds_json=confoundsjson)
-
-    if lowpassval == 0:
-        print("detected lowpassval 0, setting to None")
-        lowpassval = None 
-    else:
-        # check highpass versus low pass
-        if highpassval >= lowpassval:
-            print("high and low pass values dont make sense. exiting")
-            exit(1)
+                                             confounds_json=confoundsjson,
+                                             dctbasis=dct)
 
     # check tr
     if inputtr == 0:
@@ -160,7 +170,7 @@ def get_spikereg_confounds(motion_ts, threshold):
     return outliers, outlier_stats
 
 
-def get_confounds(confounds_file, kind="36P", spikereg_threshold=None, confounds_json=''):
+def get_confounds(confounds_file, kind="36P", spikereg_threshold=None, confounds_json='', dctbasis=False):
     """
     takes a fmriprep confounds file and creates data frame with regressors.
     kind == "36P" returns Satterthwaite's 36P confound regressors
@@ -321,7 +331,12 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None, confounds
         # if no spike regression still call get_spikereg_confounds to get count
         # of available trs
         threshold = 99999
-        
+
+    # if using dctbasis, get these from confounds file and add it
+    if dctbasis:
+        cosconfounds = df.filter(regex='cosine')
+        confounds = pd.concat((confounds, cosconfounds), axis=1)
+
     outliers, outlier_stats = get_spikereg_confounds(df[framewisecol].values, threshold)
 
     if spikereg_threshold:
@@ -347,7 +362,7 @@ def main():
                         default=6.0)
     parser.add_argument('-discardvols', type=int, help='number of volumes to discard at beginning of func',
                         default=4)
-    parser.add_argument('-highpass', type=float, help='high pass value',
+    parser.add_argument('-highpass', type=str, help='high pass value, can be "cosine" for using DCT-basis',
                         default=0.008)
     parser.add_argument('-lowpass', type=float, help='low pass value',
                         default=0.08)
