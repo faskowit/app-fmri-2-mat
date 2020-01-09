@@ -200,6 +200,8 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None, confounds
     df = pd.read_csv(confounds_file, sep="\t")
 
     # check if old/new confound names
+    p6cols = ''
+    p9cols = ''
     if 'GlobalSignal' in df:
         print("detected old confounds names")
         # imgsignals = ['CSF', 'WhiteMatter', 'GlobalSignal']

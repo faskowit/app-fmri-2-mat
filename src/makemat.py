@@ -49,7 +49,7 @@ def extract_mat(rsimg, maskimg, labelimg, conntype='correlation', space='labels'
                                           verbose=0)
 
     # get the unique labels list, other than 0, which will be first
-    reginparc = np.unique(labelimg.get_data())[1:].astype(np.int)
+    reginparc = np.unique(labelimg.get_fdata())[1:].astype(np.int)
     reglabs = list(reginparc.astype(np.str))
 
     # Extract time series
