@@ -6,6 +6,11 @@
 #set -e
 #set -x
 
+# if py_bin not exported to script, use "python3"
+if [[ -z ${py_bin} ]] ; then
+	py_bin=python3
+fi
+
 function checkisfile {
 
 	inFile=$1
@@ -181,7 +186,7 @@ fi
 
 mkdir -p ${inOUTBASE}/output_regress/
 
-cmd="python3 ${EXEDIR}/src/regress.py \
+cmd="${py_bin} ${EXEDIR}/src/regress.py \
 		-out ${inOUTBASE}/output_regress/out \
 		-discardvols ${inDISCARD} \
 		${REXTRA} \
@@ -219,7 +224,7 @@ mkdir -p ${inOUTBASE}/output_makemat/
 
 # echo ; echo "making matrix $((i+1)) from parc: ${inPARC[i]}" ; echo
 
-cmd="python3 ${EXEDIR}/src/makemat.py \
+cmd="${py_bin} ${EXEDIR}/src/makemat.py \
     -space ${inSPACE} \
     -type correlation \
     -out ${inOUTBASE}/output_makemat/out \
@@ -252,7 +257,7 @@ if [[ -f config.json ]] ; then
 
 	if [[ ! -z ${keyGrep} ]] ; then
 		# convert matcon output to brainlife neuro/cm
-		python3 ./generate_cm_datatype.py
+		${py_bin} ./generate_cm_datatype.py
 		echo "generated bl cm data in ./cm"
 	else
 		echo "no key found in config.json, didn't do bl formatting"
