@@ -20,7 +20,7 @@ import pandas as pd
 
 NUSCHOICES= ["36P", "9P", "6P", 
              "aCompCor", "24aCompCor", "24aCompCorGsr",
-             "globalsig", "globalsig4"]
+             "globalsig", "globalsig4", "linear" ]
 
 
 # https://github.com/edickie/ciftify/blob/master/ciftify/bin/ciftify_clean_img.py#L301
@@ -281,7 +281,7 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None, confounds
         if aCompC.empty:
             print("could not find compcor columns. exiting")
             exit(1)
-        elif aCompC.shape[1] > 5:
+        elif aCompC.shape[1] > 10:
 
             # if the confounds json is available, read the variance explained
             # from the 'combined' 'Mask' components, and use top 5 of those
@@ -319,13 +319,18 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None, confounds
             confounds = p24aCompC
         elif kind == "24aCompCorGsr":
             confounds = pd.concat((p24aCompC, gsr4), axis=1)
+        elif kind == "linear":
+            pass
         else:
             # it will never get here, but assign confounds so my linter doesn't complain
             confounds = ''
             exit(1)
 
-    # add to all confounds df a linear trend
-    confounds['lin'] = list(range(1, confounds.shape[0]+1))
+    if kind != "linear"
+        # add to all confounds df a linear trend
+        confounds['lin'] = list(range(1, confounds.shape[0]+1))
+    else # it is "linear"
+        confounds = pd.DataFrame(list(range(1, df.shape[0]+1)))
 
     if spikereg_threshold:
         threshold = spikereg_threshold
