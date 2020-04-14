@@ -326,10 +326,10 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None, confounds
             confounds = ''
             exit(1)
 
-    if kind != "linear"
+    if kind != "linear" :
         # add to all confounds df a linear trend
         confounds['lin'] = list(range(1, confounds.shape[0]+1))
-    else # it is "linear"
+    else : # it is "linear"
         confounds = pd.DataFrame(list(range(1, df.shape[0]+1)))
 
     if spikereg_threshold:
