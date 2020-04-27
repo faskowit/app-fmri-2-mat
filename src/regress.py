@@ -274,6 +274,8 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None, confounds
         confounds = p9
     elif kind == "6P":
         confounds = p6
+    elif kind == "linear":
+        pass
     else:
         # then we grab compcor stuff
         # get compcor nuisance regressors and combine with 12P
