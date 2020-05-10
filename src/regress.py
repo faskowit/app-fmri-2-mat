@@ -33,7 +33,8 @@ def image_drop_dummy_trs(nib_image, start_from_tr):
 
 def nuisance_regress(inputimg, confoundsfile, inputmask, inputtr=0,
     conftype="36P", spikethr=0.25, smoothkern=6.0, discardvols=4,
-    highpassval=0.008, lowpassval=0.08, confoundsjson=''):
+    highpassval=0.008, lowpassval=0.08, confoundsjson='',
+    addregressors=''):
     """
     
     returns a nibabel.nifti1.Nifti1Image that is cleaned in following ways:
@@ -78,7 +79,8 @@ def nuisance_regress(inputimg, confoundsfile, inputmask, inputtr=0,
                                              kind=conftype,
                                              spikereg_threshold=spikethr,
                                              confounds_json=confoundsjson,
-                                             dctbasis=dct)
+                                             dctbasis=dct,
+                                             addreg=addregressors)
 
     # check tr
     if inputtr == 0:
@@ -170,7 +172,7 @@ def get_spikereg_confounds(motion_ts, threshold):
     return outliers, outlier_stats
 
 
-def get_confounds(confounds_file, kind="36P", spikereg_threshold=None, confounds_json='', dctbasis=False):
+def get_confounds(confounds_file, kind="36P", spikereg_threshold=None, confounds_json='', dctbasis=False, addreg=''):
     """
     takes a fmriprep confounds file and creates data frame with regressors.
     kind == "36P" returns Satterthwaite's 36P confound regressors
@@ -346,6 +348,11 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None, confounds
         cosconfounds = df.filter(regex='cosine')
         confounds = pd.concat((confounds, cosconfounds), axis=1)
 
+    # any additional regressors to add?
+    if addreg:
+        addregtable = pd.read_csv(addreg, sep="\t")
+        confounds = pd.concat([confounds, addregtable], axis=1) 
+
     outliers, outlier_stats = get_spikereg_confounds(df[framewisecol].values, threshold)
 
     if spikereg_threshold:
@@ -379,6 +386,7 @@ def main():
                         default=None)
     parser.add_argument('-out', type=str, help='ouput base name',
                         default='output')
+    parser.add_argument('-add_regressors', type=str, help='add these regressors')
 
     # parse
     args = parser.parse_args()
@@ -407,7 +415,8 @@ def main():
                                                 discardvols=args.discardvols,
                                                 highpassval=args.highpass,
                                                 lowpassval=args.lowpass,
-                                                confoundsjson=args.confjson)
+                                                confoundsjson=args.confjson,
+                                                addregressors=args.add_regressors)
 
     # write it
     nib.save(nrImg, ''.join([args.out, '_nuisance.nii.gz']))
