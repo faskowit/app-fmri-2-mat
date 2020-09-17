@@ -29,7 +29,13 @@ Need python3 with nibable, pandas, nilearn, and h5py
     -nomat:     flag to not make correlation matrix
     EXTRA OPTS
     -regressextra, -makematextra
-                these args let advanced users have access to the python scripts in /src
+                these args let advanced users have access to the python scripts in /src. 
+                For example, to change the smoothing kernel in the regress.py script, 
+                you can add `-regressextra -fwhm 2`. Other options are low and high pass 
+                filter settings, and the spike threshold. Check out the python scripts 
+                for all these extra options. 
 ```
 
 These scripts have also been made Brainlife.io compatible (re: cm datatype), but can be run outside of the brainlife platform.
+
+<sub> This material is based upon work supported by the National Science Foundation Graduate Research Fellowship under Grant No. 1342962. Any opinion, findings, and conclusions or recommendations expressed in this material are those of the authors(s) and do not necessarily reflect the views of the National Science Foundation. </sub>
