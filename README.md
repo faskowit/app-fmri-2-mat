@@ -34,6 +34,9 @@ Need python3 with nibable, pandas, nilearn, and h5py
                 you can add `-regressextra -fwhm 2`. Other options are low and high pass 
                 filter settings, and the spike threshold. Check out the python scripts 
                 for all these extra options. 
+                ***also*** please be aware of the default parameters being used in these
+                python scripts; these parameters, which are set to reasonable values 
+                based on literature, will surely affect your processed data. cheers. 
 ```
 
 These scripts have also been made Brainlife.io compatible (re: cm datatype), but can be run outside of the brainlife platform.
