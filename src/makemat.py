@@ -38,15 +38,17 @@ def get_con_df(raw_mat, roi_names):
     return con_df
 
 
-def extract_mat(rsimg, maskimg, labelimg, conntype='correlation', space='labels', savets=False, nomat=False):
+def extract_mat(rsimg, maskimg, labelimg, conntype='correlation', space='labels', 
+                savets=False, nomat=False, dtr=False, stdz=False):
 
     masker = input_data.NiftiLabelsMasker(labelimg,
                                           background_label=0,
                                           smoothing_fwhm=None,
-                                          standardize=False, detrend=False,
+                                          standardize=stdz, 
+                                          detrend=dtr,
                                           mask_img=maskimg,
                                           resampling_target=space,
-                                          verbose=0)
+                                          verbose=1)
 
     # get the unique labels list, other than 0, which will be first
     reginparc = np.unique(labelimg.get_fdata())[1:].astype(np.int)
@@ -81,6 +83,10 @@ def main():
     parser.add_argument('-type', type=str, help='type of connectivity',
                         choices=['correlation', 'partial correlation', 'covariance'],
                         default='correlation')
+    parser.add_argument('-detrend', help='enable linear detrending timeseries for each region',
+                        action="store_true", default=False)
+    parser.add_argument('-standarize', help='enable standardize of signals',
+                        action="store_true", default=False)   
     parser.add_argument('-out', type=str, help='output base name',
                         default='output')
     parser.add_argument('-savetimeseries', help='also save average time series from each roi in parcellation',
@@ -118,7 +124,9 @@ def main():
                                                       conntype=args.type, 
                                                       space=args.space,
                                                       savets=args.savetimeseries,
-                                                      nomat=args.nomatrix)
+                                                      nomat=args.nomatrix,
+                                                      dtr=args.detrend,
+                                                      stdz=args.standarize)
 
         # format name
         baseoutname = (os.path.basename(parc)).rsplit('.nii', 1)[0]

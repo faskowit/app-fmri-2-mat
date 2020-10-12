@@ -34,7 +34,7 @@ def image_drop_dummy_trs(nib_image, start_from_tr):
 def nuisance_regress(inputimg, confoundsfile, inputmask, inputtr=0,
     conftype="36P", spikethr=0.25, smoothkern=6.0, discardvols=4,
     highpassval=0.008, lowpassval=0.08, confoundsjson='',
-    addregressors=''):
+    addregressors='', initdum=0):
     """
     
     returns a nibabel.nifti1.Nifti1Image that is cleaned in following ways:
@@ -80,7 +80,8 @@ def nuisance_regress(inputimg, confoundsfile, inputmask, inputtr=0,
                                              spikereg_threshold=spikethr,
                                              confounds_json=confoundsjson,
                                              dctbasis=dct,
-                                             addreg=addregressors)
+                                             addreg=addregressors,
+                                             initdum=initdum)
 
     # check tr
     if inputtr == 0:
@@ -89,8 +90,8 @@ def nuisance_regress(inputimg, confoundsfile, inputmask, inputtr=0,
         tr = inputimg.header.get_zooms()[3]
         print("found that tr is: {}".format(str(tr)))
 
-        if tr == 0:
-            print("thats not a good tr. exiting")
+        if not tr:
+            print("did not find a good TR value. exiting")
             exit(1)
 
     else:
@@ -118,6 +119,7 @@ def nuisance_regress(inputimg, confoundsfile, inputmask, inputtr=0,
         # no mask! so no masker
         print("cleaning image with no mask")
 
+        # threfore no smoothkernel here is possible
         clean_params = {"confounds": confounds.values,
                         "detrend": False, "standardize": True,
                         "low_pass": lowpassval, "high_pass": highpassval, 
@@ -172,7 +174,8 @@ def get_spikereg_confounds(motion_ts, threshold):
     return outliers, outlier_stats
 
 
-def get_confounds(confounds_file, kind="36P", spikereg_threshold=None, confounds_json='', dctbasis=False, addreg=''):
+def get_confounds(confounds_file, kind="36P", spikereg_threshold=None, 
+                  confounds_json='', dctbasis=False, addreg='', initdum=0):
     """
     takes a fmriprep confounds file and creates data frame with regressors.
     kind == "36P" returns Satterthwaite's 36P confound regressors
@@ -212,10 +215,6 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None, confounds
         globalsignalcol = ['GlobalSignal']
         compCorregex = 'aCompCor'
         framewisecol = 'FramewiseDisplacement'
-        # de-trend the image signals
-        # df['CSF'] = signal.detrend(df['CSF'])
-        # df['WhiteMatter'] = signal.detrend(df['WhiteMatter'])
-        # df['GlobalSignal'] = signal.detrend(df['GlobalSignal'])
 
     elif 'global_signal' in df:
         print("detected new confounds names")
@@ -225,10 +224,6 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None, confounds
         globalsignalcol = ['global_signal']
         compCorregex = 'a_comp_cor_'
         framewisecol = 'framewise_displacement'
-        # de-trend the image signals
-        # df['CSF'] = signal.detrend(df['csf'])
-        # df['WhiteMatter'] = signal.detrend(df['white_matter'])
-        # df['GlobalSignal'] = signal.detrend(df['global_signal'])
 
     else:
         print("trouble reading necessary columns from confounds file. exiting")
@@ -333,7 +328,8 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None, confounds
     if kind != "linear" :
         # add to all confounds df a linear trend
         confounds['lin'] = list(range(1, confounds.shape[0]+1))
-    else : # it is "linear"
+        # pass 
+    else: # it is "linear"
         confounds = pd.DataFrame(list(range(1, df.shape[0]+1)))
 
     if spikereg_threshold:
@@ -352,6 +348,14 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None, confounds
     if addreg:
         addregtable = pd.read_csv(addreg, sep="\t")
         confounds = pd.concat([confounds, addregtable], axis=1) 
+
+    # and dummy regressors at beginning to add?
+    if initdum:
+        ii = np.zeros(confounds.shape[0])
+        # add vals
+        ii[0:initdum] = np.arange(1,(initdum+1))
+        dumpd = pd.get_dummies(ii,drop_first=True,prefix='initdum')
+        confounds = pd.concat([confounds, dumpd], axis=1) 
 
     outliers, outlier_stats = get_spikereg_confounds(df[framewisecol].values, threshold)
 
@@ -387,6 +391,8 @@ def main():
     parser.add_argument('-out', type=str, help='ouput base name',
                         default='output')
     parser.add_argument('-add_regressors', type=str, help='add these regressors')
+    parser.add_argument('-initaldummy', type=int, help='add x regressors to beginning of data',
+                        choices=range(1, 50))
 
     # parse
     args = parser.parse_args()
@@ -416,7 +422,8 @@ def main():
                                                 highpassval=args.highpass,
                                                 lowpassval=args.lowpass,
                                                 confoundsjson=args.confjson,
-                                                addregressors=args.add_regressors)
+                                                addregressors=args.add_regressors,
+                                                initdum=args.initaldummy)
 
     # write it
     nib.save(nrImg, ''.join([args.out, '_nuisance.nii.gz']))
