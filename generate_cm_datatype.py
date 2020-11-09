@@ -3,11 +3,14 @@
 import json
 import os
 import shutil
+import glob
 
 with open('config.json') as config_file:
     config = json.load(config_file)
 
-input_csv = "output_makemat/out_parc_correlation_connMatdf.csv"
+# input_csv = "output_makemat/out_parc_correlation_connMatdf.csv"
+input_csv_name = "output_makemat/out_*_connMatdf.csv"
+input_csv = glob.glob(input_csv_name)[0]
 
 #parse key file
 catalog = dict()

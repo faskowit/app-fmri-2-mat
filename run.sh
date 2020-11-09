@@ -73,57 +73,59 @@ else
 
 	while [ "$1" != "" ]; do
 	    case $1 in
-	        -f | -fmri ) shift
-	                               	  inFMRI=$1
-	                          		    checkisfile $1
+	        -f | -fmri ) 	shift
+							inFMRI=$1
+							checkisfile $1
 	        ;;
-	        -m | -mask ) shift
-									                  inMASK=$1
-									                  checkisfile $1
+	        -m | -mask ) 	shift
+							inMASK=$1
+							checkisfile $1
 	        ;;
-	        -p | -parc ) shift
-                                    checkisfile $1
-                                    # add to list
-                                    inPARC[${#inPARC[@]}]=$1
+	        -p | -parc ) 	shift
+							# add to list
+							inPARC[${#inPARC[@]}]=$1
 	        ;;
-	        -c | -conf ) shift
-                                    inCONF=$1
-                                    checkisfile $1
-          ;;
-        	-j | -cjson ) shift
-                                    inCONFJSON=$1
-                                    checkisfile $1
-          ;;
-	        -o | -out ) shift
-                                    inOUTBASE=$1
-          ;;
-	        -t | -tr ) shift
-                                    inTR=$1
+	        -c | -conf ) 	shift
+							inCONF=$1
+							checkisfile $1
+			;;
+        	-j | -cjson ) 	shift
+							inCONFJSON=$1
+							checkisfile $1
+			;;
+	        -o | -out ) 	shift
+							inOUTBASE=$1
+			;;
+	        -t | -tr ) 		shift
+							inTR=$1
 	        ;;
 	        -d | -discard ) shift
-					                          inDISCARD=$1
+							inDISCARD=$1
 	        ;;
-          -e | -space ) shift
-									                  inSPACE=$1
+			-e | -space ) 	shift
+							inSPACE=$1
 	        ;;
 	        -y | -strategy ) shift
-									                  regStrategy=$1
+							regStrategy=$1
 	        ;;
-	       	-s | -savets )            saveTS="true"
+	       	-s | -savets ) 
+							saveTS="true"
 	       	;;
-	       	-n | -nomat )			        noMat="true"
-					;;
-	        -h | --help )             echo "see script"
-	                                  exit 1
+	       	-n | -nomat )
+							noMat="true"
+			;;
+	        -h | --help ) 	echo "see script"
+							exit 1
 	        ;;
-          -regressextra )	shift
-									                  REXTRA="${REXTRA} $1 $2" ; shift
-					;;
-			    -makematextra )	shift
-                                    MEXTRA="${MEXTRA} $1 $2" ; shift
-          ;;
+          	-regressextra )	shift
+							REXTRA="${REXTRA} $1 $2" ; shift
+			;;
+			-makematextra )	shift
+							MEXTRA="${MEXTRA} $1 $2" ; shift
+			;;
 	        * ) echo "see script"
 	            exit 1
+	        ;;
 	    esac
 	    shift #this shift "moves up" the arg in after each case
 	done
@@ -243,6 +245,13 @@ echo $cmd
 eval $cmd
 
 # done # for (( i=0; i<${#inPARC[@]}; i++ ))
+
+# check if mat is made...
+outFile=$(ls ${inOUTBASE}/output_makemat/out_*_connMatdf.csv)
+if [[ ! -e $outFile ]] ; then
+	echo "output csv file not created! error"
+	exit 1
+fi
 
 ###############################################################################
 # map output for bl
