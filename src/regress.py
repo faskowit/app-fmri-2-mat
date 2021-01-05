@@ -34,7 +34,7 @@ def image_drop_dummy_trs(nib_image, start_from_tr):
 def nuisance_regress(inputimg, confoundsfile, inputmask, inputtr=0,
     conftype="36P", spikethr=0.25, smoothkern=6.0, discardvols=4,
     highpassval=0.008, lowpassval=0.08, confoundsjson='',
-    addregressors='', initdum=0):
+    addregressors='', addlinear=False, initdum=0):
     """
     
     returns a nibabel.nifti1.Nifti1Image that is cleaned in following ways:
@@ -81,7 +81,8 @@ def nuisance_regress(inputimg, confoundsfile, inputmask, inputtr=0,
                                              confounds_json=confoundsjson,
                                              dctbasis=dct,
                                              addreg=addregressors,
-                                             initdum=initdum)
+                                             initdum=initdum,
+                                             addlin=addlinear)
 
     # check tr
     if inputtr == 0:
@@ -175,7 +176,8 @@ def get_spikereg_confounds(motion_ts, threshold):
 
 
 def get_confounds(confounds_file, kind="36P", spikereg_threshold=None, 
-                  confounds_json='', dctbasis=False, addreg='', initdum=0):
+                  confounds_json='', dctbasis=False, addreg='', initdum=0,
+                  addlin=False):
     """
     takes a fmriprep confounds file and creates data frame with regressors.
     kind == "36P" returns Satterthwaite's 36P confound regressors
@@ -325,11 +327,13 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None,
             confounds = ''
             exit(1)
 
-    if kind != "linear" :
-        # add to all confounds df a linear trend
+    if addlin:
+        # add linear
+        # high pass filter should take care of most linear trend... 
+        # could remove rest of linear trend in the makemat function
         confounds['lin'] = list(range(1, confounds.shape[0]+1))
-        # pass 
-    else: # it is "linear"
+        pass 
+    elif kind == "linear" : # it is "linear"
         confounds = pd.DataFrame(list(range(1, df.shape[0]+1)))
 
     if spikereg_threshold:
@@ -391,6 +395,7 @@ def main():
     parser.add_argument('-out', type=str, help='ouput base name',
                         default='output')
     parser.add_argument('-add_regressors', type=str, help='add these regressors')
+    parser.add_argument('-add_linear', action="store_true", help='add linear trend to ')
     parser.add_argument('-initaldummy', type=int, help='add x regressors to beginning of data',
                         choices=range(1, 50))
 
@@ -423,6 +428,7 @@ def main():
                                                 lowpassval=args.lowpass,
                                                 confoundsjson=args.confjson,
                                                 addregressors=args.add_regressors,
+                                                addlinear=args.add_linear,
                                                 initdum=args.initaldummy)
 
     # write it

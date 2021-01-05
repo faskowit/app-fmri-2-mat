@@ -36,6 +36,7 @@ inOUTBASE="null"
 inTR="null"
 saveTS="null"
 noMat="null"
+addLin="null"
 inDISCARD="null"
 inSPACE="null"
 regStrategy="null"
@@ -111,11 +112,12 @@ else
 	       	-s | -savets ) 
 							saveTS="true"
 	       	;;
-	       	-n | -nomat )
-							noMat="true"
-			;;
-	        -h | --help ) 	echo "see script"
-							exit 1
+	       	-n | -nomat )			        noMat="true"
+					;;
+	       	-a | -addlin )			        addLin="true"
+					;;
+	        -h | --help )             echo "see script"
+	                                  exit 1
 	        ;;
           	-regressextra )	shift
 							REXTRA="${REXTRA} $1 $2" ; shift
@@ -206,6 +208,9 @@ if [[ ${regStrategy} != "null" ]] ; then
 fi
 if [[ ${inCONFJSON} != "null" ]] ; then
   cmd="${cmd} -confjson ${inCONFJSON}"
+fi
+if [[ ${addLin} != "null" ]] ; then
+  cmd="$cmd -add_linear"
 fi
 echo $cmd
 eval $cmd
