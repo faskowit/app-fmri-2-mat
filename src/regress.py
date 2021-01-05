@@ -327,12 +327,10 @@ def get_confounds(confounds_file, kind="36P", spikereg_threshold=None,
             confounds = ''
             exit(1)
 
-    if addlin:
-        # add linear
+    if kind != "linear" and addlin:
         # high pass filter should take care of most linear trend... 
         # could remove rest of linear trend in the makemat function
-        confounds['lin'] = list(range(1, confounds.shape[0]+1))
-        pass 
+        confounds['lin'] = list(range(1, confounds.shape[0]+1)) 
     elif kind == "linear" : # it is "linear"
         confounds = pd.DataFrame(list(range(1, df.shape[0]+1)))
 
