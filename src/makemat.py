@@ -83,10 +83,10 @@ def main():
     parser.add_argument('-type', type=str, help='type of connectivity',
                         choices=['correlation', 'partial correlation', 'covariance'],
                         default='correlation')
-    parser.add_argument('-detrend', help='enable linear detrending timeseries for each region',
-                        action="store_true", default=False)
-    parser.add_argument('-standarize', help='enable standardize of signals',
-                        action="store_true", default=False)   
+    parser.add_argument('-detrend', help='bool (default true), detrending timeseries for each region',
+                        default=True, type=bool)
+    parser.add_argument('-standarize', help='bool (default true), standardize of signals',
+                        default=True, type=bool)   
     parser.add_argument('-out', type=str, help='output base name',
                         default='output')
     parser.add_argument('-savetimeseries', help='also save average time series from each roi in parcellation',
