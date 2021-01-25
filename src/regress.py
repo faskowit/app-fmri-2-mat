@@ -34,7 +34,7 @@ def image_drop_dummy_trs(nib_image, start_from_tr):
 def nuisance_regress(inputimg, confoundsfile, inputmask, inputtr=0,
     conftype="36P", spikethr=0.25, smoothkern=6.0, discardvols=4,
     highpassval=0.008, lowpassval=0.08, confoundsjson='',
-    addregressors='', addlinear=False, initdum=0):
+    addregressors='', addlinear=False, addafterdetr=False, initdum=0):
     """
     
     returns a nibabel.nifti1.Nifti1Image that is cleaned in following ways:
@@ -128,6 +128,13 @@ def nuisance_regress(inputimg, confoundsfile, inputmask, inputtr=0,
 
         loadimg = image.load_img(inputimg)
         outimg = image.clean_img(loadimg, **clean_params)  # nus regress
+
+    if addafterdetr:
+        print("detrend after confounds")
+        outimg2 = image.clean_img(outimg, detrend=True, standardize=False,
+              confounds=None, low_pass=None, high_pass=None, t_r=None,
+              ensure_finite=False, mask_img=inputmask)
+        outimg = outimg2 
 
     # get rid of the first N volumes
     # outimgtrim = image.index_img(outimg, np.arange(discardvols, outimg.shape[3]))
@@ -393,7 +400,8 @@ def main():
     parser.add_argument('-out', type=str, help='ouput base name',
                         default='output')
     parser.add_argument('-add_regressors', type=str, help='add these regressors')
-    parser.add_argument('-add_linear', action="store_true", help='add linear trend to ')
+    parser.add_argument('-add_linear', action="store_true", help='add linear trend to confound regression')
+    parser.add_argument('-add_detrend_after', action="store_true", help='add detrend after conf regression ')
     parser.add_argument('-initaldummy', type=int, help='add x regressors to beginning of data',
                         choices=range(1, 50))
 
@@ -427,6 +435,7 @@ def main():
                                                 confoundsjson=args.confjson,
                                                 addregressors=args.add_regressors,
                                                 addlinear=args.add_linear,
+                                                addafterdetr=args.add_detrend_after,
                                                 initdum=args.initaldummy)
 
     # write it

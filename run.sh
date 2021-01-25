@@ -252,8 +252,8 @@ eval $cmd
 # done # for (( i=0; i<${#inPARC[@]}; i++ ))
 
 # check if mat is made...
-outFile=$(ls ${inOUTBASE}/output_makemat/out_*_connMatdf.csv)
-if [[ ! -e $outFile ]] ; then
+outFile=$(ls ${inOUTBASE}/output_makemat/out_*_connMatdf.csv 2>/dev/null)
+if [[ ! -e $outFile ]] && [[ ${noMat} != "true" ]] ; then
 	echo "output csv file not created! error"
 	exit 1
 fi
