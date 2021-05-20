@@ -41,6 +41,7 @@ inDISCARD="null"
 inSPACE="null"
 regStrategy="null"
 runBL="null"
+spikeTHR="null"
 
 # initialize this to be an array so we can add multiple parcs via cmd line
 inPARC=()
@@ -71,6 +72,8 @@ if [[ -f config.json ]] ; then
   	regStrategy=`jq -r '.strategy' config.json`
   	noMat=`jq -r '.nomatrix' config.json`
   	addLin=`jq -r '.addlinear' config.json`
+  	spikeTHR=`jq -r '.spikethresh' config.json`
+
 
   	runBL="true"
 
@@ -203,10 +206,10 @@ cmd="${py_bin} ${EXEDIR}/src/regress.py \
 		${inCONF} \
 	"
 if [[ ${inMASK} != "null" ]] ; then
-	cmd="${cmd} -mask ${inMASK}"
+  cmd="${cmd} -mask ${inMASK}"
 fi
 if [[ ${inTR} != "null" ]] ; then
-	cmd="${cmd} -tr ${inTR}"
+  cmd="${cmd} -tr ${inTR}"
 fi
 if [[ ${regStrategy} != "null" ]] ; then
   cmd="${cmd} -strategy ${regStrategy}"
@@ -216,6 +219,9 @@ if [[ ${inCONFJSON} != "null" ]] ; then
 fi
 if [[ ${addLin} != "null" ]] ; then
   cmd="$cmd -add_linear"
+fi
+if [[ ${spikeTHR} != "null" ]] ; then
+  cmd="${cmd} -spikethr ${spikeTHR}"
 fi
 echo $cmd
 eval $cmd
