@@ -40,6 +40,7 @@ addLin="null"
 inDISCARD="null"
 inSPACE="null"
 regStrategy="null"
+runBL="null"
 
 # initialize this to be an array so we can add multiple parcs via cmd line
 inPARC=()
@@ -68,6 +69,10 @@ if [[ -f config.json ]] ; then
 	inDISCARD=`jq -r '.discardvols' config.json`
 	inSPACE=`jq -r '.inspace' config.json`
   	regStrategy=`jq -r '.strategy' config.json`
+  	noMat=`jq -r '.nomatrix' config.json`
+  	addLin=`jq -r '.addlinear' config.json`
+
+  	runBL="true"
 
 else
 	echo "reading command line args"
@@ -258,6 +263,12 @@ if [[ ! -e $outFile ]] && [[ ${noMat} != "true" ]] ; then
 	exit 1
 fi
 
+outFile=$(ls ${inOUTBASE}/output_makemat/out_*_timeseries.tsv.gz 2>/dev/null)
+if [[ ! -e $outFile ]] && [[ ${saveTS} = "true" ]] ; then
+	echo "output timesereis file not created! error"
+	exit 1
+fi
+
 ###############################################################################
 # map output for bl
 
@@ -265,7 +276,10 @@ mv ${inOUTBASE}/output_regress/out_nuisance.nii.gz \
 	${inOUTBASE}/output_regress/bold.nii.gz 
 
 # if we are running on brainlife, lets format!
-if [[ -f config.json ]] ; then
+# and if we making a matrix
+if [[ ${runBL} == "true" ]] && \
+	[[ -f config.json ]] && \
+	[[ ${noMat}  != "true" ]] ; then
 		
 	keyGrep=$(cat config.json | grep "key")
 
@@ -276,4 +290,18 @@ if [[ -f config.json ]] ; then
 	else
 		echo "no key found in config.json, didn't do bl formatting"
 	fi
+fi
+
+# if running on brainlife and writing timeseries
+if [[ ${runBL} == "true" ]] && \
+	[[ ${saveTS} == "true" ]] ; then
+
+	# moving the output to a BL friendly place
+	mkdir ./timeseries/
+	outFile=$(ls ${inOUTBASE}/output_makemat/out_*_timeseries.tsv.gz 2>/dev/null)
+	mv ${outFile} ./out_ts/timeseries.tsv.gz
+
+	outFile=$(ls ${inOUTBASE}/output_makemat/out_*_timeseries.json 2>/dev/null)
+	mv ${outFile} ./out_ts/timeseries.json
+
 fi

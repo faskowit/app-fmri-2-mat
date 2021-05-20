@@ -11,6 +11,7 @@ copied/adapted from original code here: https://github.com/fliem/sea_zrh_rs
 """
 
 import os
+import json
 import argparse
 import nibabel as nib
 import numpy as np
@@ -186,6 +187,16 @@ def main():
                                 )
             outtsdf = ''.join([args.out, '_', baseoutname, '_timeseries.tsv.gz'])
             tsdf.to_csv(outtsdf,sep='\t', index=False,compression='gzip')                              
+
+            # and the json
+            outtsjson = ''.join([args.out, '_', baseoutname, '_timeseries.json'])
+            tsjson = [] 
+            for n in regions:
+                tsjson.append({'column_name': ''.join(['ROI_{}'.format(n)]), 
+                               'label_index': str(n)})
+                
+            with open(outtsjson,'w') as writejson:
+                json.dump(tsjson, writejson)
 
 
 if __name__ == '__main__':
