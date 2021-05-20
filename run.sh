@@ -314,7 +314,7 @@ if [[ ${runBL} == "true" ]] && \
 		
 	keyGrep=$(cat config.json | grep "key")
 
-	if [[ ! -z ${keyGrep} ]] ; then
+	if [[ -n ${keyGrep} ]] ; then
 		# convert matcon output to brainlife neuro/cm
 		${py_bin} ./generate_cm_datatype.py
 		echo "generated bl cm data in ./cm"
@@ -328,7 +328,7 @@ if [[ ${runBL} == "true" ]] && \
 	[[ ${saveTS} == "true" ]] ; then
 
 	# moving the output to a BL friendly place
-	mkdir ./timeseries/
+	mkdir ./out_ts/
 	outFile=$(ls ${inOUTBASE}/output_makemat/out_*_timeseries.tsv.gz 2>/dev/null)
 	mv ${outFile} ./out_ts/timeseries.tsv.gz
 
