@@ -17,7 +17,7 @@ import nibabel as nib
 import numpy as np
 from nilearn import input_data, connectome
 import pandas as pd
-# import h5py
+import h5py
 
 
 def get_con_df(raw_mat, roi_names):
@@ -173,13 +173,13 @@ def main():
         # also write out time series if requested
         if args.savetimeseries:
 
-            # # this method closes file: https://stackoverflow.com/questions/29863342/close-an-open-h5py-data-file
-            # with h5py.File(''.join([args.out, '_', baseoutname, '_timeseries.hdf5']), "w")as h5f:
-            #     h5f.create_dataset('timeseries',
-            #                        data=times,
-            #                        compression="gzip")
-            #     h5f.create_dataset('regionids',
-            #                        data=np.array(regions))
+            # this method closes file: https://stackoverflow.com/questions/29863342/close-an-open-h5py-data-file
+            with h5py.File(''.join([args.out, '_', baseoutname, '_timeseries.hdf5']), "w")as h5f:
+                h5f.create_dataset('timeseries',
+                                    data=times,
+                                    compression="gzip")
+                h5f.create_dataset('regionids',
+                                    data=np.array(regions))
                 
             # new timeseries datatype
             tsdf = pd.DataFrame(times, columns=[(''.join(['ROI_{}'.format(n)])) 

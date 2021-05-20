@@ -39,9 +39,9 @@ noMat="null"
 addLin="null"
 inDISCARD="null"
 inSPACE="null"
-regStrategy="null"
-runBL="null"
-spikeTHR="null"
+# regSTRATEGY="null"
+# runBL="null"
+# spikeTHR="null"
 
 # initialize this to be an array so we can add multiple parcs via cmd line
 inPARC=()
@@ -60,21 +60,37 @@ if [[ -f config.json ]] ; then
 	# roll with config.json
 	echo "reading config.json"
 
+	# required
 	inFMRI=`jq -r '.fmri' config.json`
 	inMASK=`jq -r '.mask' config.json`
 	inPARC=`jq -r '.parc' config.json`
 	inCONF=`jq -r '.confounds' config.json`
+
+	# make by fmriprep
   	inCONFJSON=`jq -r '.confjson' config.json`
+
+  	# need for temporal smoothing
 	inTR=`jq -r '.tr' config.json`
-	saveTS=`jq -r '.savets' config.json`
+
+	# opts
 	inDISCARD=`jq -r '.discardvols' config.json`
 	inSPACE=`jq -r '.inspace' config.json`
-  	regStrategy=`jq -r '.strategy' config.json`
-  	noMat=`jq -r '.nomatrix' config.json`
-  	addLin=`jq -r '.addlinear' config.json`
+
+	inLOWPASS=`jq -r '.lowpass' config.json`
+	inHIGHPASS=`jq -r '.highpass' config.json`
+	inSMOOTH=`jq -r '.smoothfwhm' config.json`
+
+  	regSTRATEGY=`jq -r '.strategy' config.json`
   	spikeTHR=`jq -r '.spikethresh' config.json`
 
+	# bools
+  	addLin=`jq -r '.addlinear' config.json`
 
+  	# set flags for app
+	saveTS=`jq -r '.savets' config.json`
+  	noMat=`jq -r '.nomatrix' config.json`
+
+  	echo "RUNNING ON BRAINLIFE"
   	runBL="true"
 
 else
@@ -115,7 +131,7 @@ else
 							inSPACE=$1
 	        ;;
 	        -y | -strategy ) shift
-							regStrategy=$1
+							regSTRATEGY=$1
 	        ;;
 	       	-s | -savets ) 
 							saveTS="true"
@@ -157,7 +173,7 @@ if [[ ${inOUTBASE} = "null" ]] ; then
 fi
 
 if [[ ${inDISCARD} = "null" ]] ; then
-	inDISCARD=4 
+	inDISCARD=0
 fi
 
 # https://stackoverflow.com/questions/806906/how-do-i-test-if-a-variable-is-a-number-in-bash
@@ -205,23 +221,32 @@ cmd="${py_bin} ${EXEDIR}/src/regress.py \
 		${inFMRI} \
 		${inCONF} \
 	"
-if [[ ${inMASK} != "null" ]] ; then
+if [[ -n ${inMASK} ]] && [[ ${inMASK} != "null" ]] ; then
   cmd="${cmd} -mask ${inMASK}"
 fi
-if [[ ${inTR} != "null" ]] ; then
+if [[ -n ${inTR} ]] && [[ ${inTR} != "null" ]] ; then
   cmd="${cmd} -tr ${inTR}"
 fi
-if [[ ${regStrategy} != "null" ]] ; then
-  cmd="${cmd} -strategy ${regStrategy}"
+if [[ -n ${regSTRATEGY} ]] &&  [[ ${regSTRATEGY} != "null" ]] ; then
+  cmd="${cmd} -strategy ${regSTRATEGY}"
 fi
-if [[ ${inCONFJSON} != "null" ]] ; then
+if [[ -n ${inCONFJSON} ]] && [[ ${inCONFJSON} != "null" ]] ; then
   cmd="${cmd} -confjson ${inCONFJSON}"
 fi
-if [[ ${addLin} != "null" ]] ; then
-  cmd="$cmd -add_linear"
-fi
-if [[ ${spikeTHR} != "null" ]] ; then
+if [[ -n ${spikeTHR} ]] && [[ ${spikeTHR} != "null" ]] ; then
   cmd="${cmd} -spikethr ${spikeTHR}"
+fi
+if [[ -n ${inLOWPASS} ]] && [[ ${inLOWPASS} != "null" ]] ; then
+  cmd="${cmd} -lowpass ${inLOWPASS}"
+fi
+if [[ -n ${inHIGHPASS} ]] && [[ ${inHIGHPASS} != "null" ]] ; then
+  cmd="${cmd} -highpass ${inHIGHPASS}"
+fi
+if [[ -n ${inSMOOTH} ]] && [[ ${inSMOOTH} != "null" ]] ; then
+  cmd="${cmd} -fwhm ${inSMOOTH}"
+fi
+if [[ -n ${addLin} ]] && [[ ${addLin} = "true" ]] ; then
+  cmd="$cmd -add_linear"
 fi
 echo $cmd
 eval $cmd
