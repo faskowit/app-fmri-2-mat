@@ -50,8 +50,16 @@ def extract_mat(rsimg, maskimg, labelimg, conntype='correlation', space='labels'
                                           resampling_target=space,
                                           verbose=1)
 
+    # mask the labimg so that there are no regions that dont have data
+    from nilearn.image import resample_to_img
+    if space == 'data':
+        # source, target
+        resamplabs = resample_to_img(labelimg,maskimg,interpolation='nearest')
+    else:
+        resamplabs = resample_to_img(labelimg,labelimg,interpolation='nearest')
+
     # get the unique labels list, other than 0, which will be first
-    reginparc = np.unique(labelimg.get_fdata())[1:].astype(np.int)
+    reginparc = np.unique(resamplabs.get_fdata())[1:].astype(np.int)
     reglabs = list(reginparc.astype(np.str))
 
     # Extract time series
@@ -120,6 +128,7 @@ def main():
         print("\nmaking conn matricies for {}".format(str(parc)))
 
         labimg = nib.load(parc)
+                
         conndf, connmat, times, regions = extract_mat(inputimg, inputmask, labimg,
                                                       conntype=args.type, 
                                                       space=args.space,
@@ -150,6 +159,13 @@ def main():
                                    compression="gzip")
                 h5f.create_dataset('regionids',
                                    data=np.array(regions))
+                
+            # new timeseries datatype
+            tsdf = pd.DataFrame(times, columns=[(''.join(['ROI_{}'.format(n)])) 
+                                                for n in regions],
+                                )
+            outtsdf = ''.join([args.out, '_', baseoutname, '_timeseries.tsv.gz'])
+            tsdf.to_csv(outtsdf,sep='\t', index=False,compression='gzip')                              
 
 
 if __name__ == '__main__':
