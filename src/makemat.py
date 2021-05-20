@@ -16,7 +16,7 @@ import nibabel as nib
 import numpy as np
 from nilearn import input_data, connectome
 import pandas as pd
-import h5py
+# import h5py
 
 
 def get_con_df(raw_mat, roi_names):
@@ -53,14 +53,34 @@ def extract_mat(rsimg, maskimg, labelimg, conntype='correlation', space='labels'
     # mask the labimg so that there are no regions that dont have data
     from nilearn.image import resample_to_img
     if space == 'data':
-        # source, target
+        # resample_to_image(source, target)
+        # assume here that the mask is also fmri space
         resamplabs = resample_to_img(labelimg,maskimg,interpolation='nearest')
+        resampmask = resample_to_img(maskimg,maskimg,interpolation='nearest')
     else:
         resamplabs = resample_to_img(labelimg,labelimg,interpolation='nearest')
+        resampmask = resample_to_img(maskimg,labelimg,interpolation='nearest')
+        
+    # mask
+    from nilearn.masking import apply_mask
+    resamplabsmasked = apply_mask(resamplabs,resampmask)
 
     # get the unique labels list, other than 0, which will be first
-    reginparc = np.unique(resamplabs.get_fdata())[1:].astype(np.int)
+    #reginparc = np.unique(resamplabs.get_fdata())[1:].astype(np.int)
+    reginparc = np.unique(resamplabsmasked)[1:].astype(np.int)
     reglabs = list(reginparc.astype(np.str))
+
+    reginorigparc = np.unique(labelimg.get_fdata())[1:].astype(np.int)
+    if len(reginparc) != len(reginorigparc):
+        print('\n !!!WARNING!!! during resampling of label image, some of the'
+              ' ROIs (likely very small) were interpolated out. Please take '
+              'care to note which ROIs are present in the output data\n')
+        print('ALTERNATIVELY, your parcellation is not in the same space'
+              'as the bold data.\n')
+        if abs(len(reginparc) - len(reginorigparc)) > 9:
+            print('\nBASED ON QUICK HEURISTIC...I think your parcellation '
+                  'is not in the right space. Please check that the two '
+                  'images are aligned properly.')
 
     # Extract time series
     time_series = masker.fit_transform(rsimg)
@@ -152,13 +172,13 @@ def main():
         # also write out time series if requested
         if args.savetimeseries:
 
-            # this method closes file: https://stackoverflow.com/questions/29863342/close-an-open-h5py-data-file
-            with h5py.File(''.join([args.out, '_', baseoutname, '_timeseries.hdf5']), "w")as h5f:
-                h5f.create_dataset('timeseries',
-                                   data=times,
-                                   compression="gzip")
-                h5f.create_dataset('regionids',
-                                   data=np.array(regions))
+            # # this method closes file: https://stackoverflow.com/questions/29863342/close-an-open-h5py-data-file
+            # with h5py.File(''.join([args.out, '_', baseoutname, '_timeseries.hdf5']), "w")as h5f:
+            #     h5f.create_dataset('timeseries',
+            #                        data=times,
+            #                        compression="gzip")
+            #     h5f.create_dataset('regionids',
+            #                        data=np.array(regions))
                 
             # new timeseries datatype
             tsdf = pd.DataFrame(times, columns=[(''.join(['ROI_{}'.format(n)])) 
