@@ -6,4 +6,4 @@
 set -e
 set -x
 
-time singularity exec -e docker://faskowit/app-fmri-2-mat ./run.sh
+time singularity exec -e docker://faskowit/app-fmri-2-mat:brnch-0.1.5 ./run.sh

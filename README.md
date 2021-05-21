@@ -1,6 +1,8 @@
 [![Abcdspec-compliant](https://img.shields.io/badge/ABCD_Spec-v1.1-green.svg)](https://github.com/brain-life/abcd-spec)
 [![Run on Brainlife.io](https://img.shields.io/badge/Brainlife-brainlife.app.167-blue.svg)](https://doi.org/10.25663/brainlife.app.167)
 
+branch 0.1.5
+
 # app-fmri-2-mat
 fmriprep outputs to connectivity matrices 
 
@@ -74,10 +76,8 @@ These scripts have also been made Brainlife.io compatible (re: cm datatype), but
         "parc": "/path/to/parcellation.nii.gz",
         "confounds": "/path/to/confounds.tsv",
         "mask": "/path/to/mask.nii.gz",
-        "confjson": "/path/to/config.json",
         "tr": "2.3",
         "savets": "true",
-        "discardvols": 4,
         "inspace": "data",
         "strategy" "36p"
 }
