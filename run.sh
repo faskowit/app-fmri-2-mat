@@ -296,7 +296,7 @@ fi
 
 outFile=$(ls ${inOUTBASE}/output_makemat/out_*_timeseries.tsv.gz 2>/dev/null)
 if [[ ! -e $outFile ]] && [[ ${saveTS} = "true" ]] ; then
-	echo "output timesereis file not created! error"
+	echo "output timeseries file not created! error"
 	exit 1
 fi
 

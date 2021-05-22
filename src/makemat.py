@@ -150,7 +150,7 @@ def main():
 
         labimg = nib.load(parc)
                 
-        conndf, connmat, times, regions = extract_mat(inputimg, inputmask, labimg,
+        conndf, connmat, timeseries, regions = extract_mat(inputimg, inputmask, labimg,
                                                       conntype=args.type, 
                                                       space=args.space,
                                                       savets=args.savetimeseries,
@@ -176,14 +176,21 @@ def main():
             # this method closes file: https://stackoverflow.com/questions/29863342/close-an-open-h5py-data-file
             with h5py.File(''.join([args.out, '_', baseoutname, '_timeseries.hdf5']), "w")as h5f:
                 h5f.create_dataset('timeseries',
-                                    data=times,
+                                    data=timeseries,
                                     compression="gzip")
                 h5f.create_dataset('regionids',
                                     data=np.array(regions))
                 
+            # make full size matrix
+            nogaptimeseries = np.zeros([ timeseries.shape[0], np.max(regions) ])
+            nogaptimeseries[:,([x-1 for x in regions])] = timeseries 
+            # make list of missing regions
+            presentregs = np.zeros(np.max(regions),dtype=int)
+            presentregs[([x-1 for x in regions])] = 1
+                
             # new timeseries datatype
-            tsdf = pd.DataFrame(times, columns=[(''.join(['ROI_{}'.format(n)])) 
-                                                for n in regions],
+            tsdf = pd.DataFrame(nogaptimeseries, columns=[(''.join(['ROI_{}'.format(n)])) 
+                                                for n in range(1,np.max(regions)+1) ],
                                 )
             outtsdf = ''.join([args.out, '_', baseoutname, '_timeseries.tsv.gz'])
             tsdf.to_csv(outtsdf,sep='\t', index=False,compression='gzip')                              
@@ -191,9 +198,11 @@ def main():
             # and the json
             outtsjson = ''.join([args.out, '_', baseoutname, '_timeseries.json'])
             tsjson = [] 
-            for n in regions:
+            for n in range(1,np.max(regions)+1):
                 tsjson.append({'column_name': ''.join(['ROI_{}'.format(n)]), 
-                               'label_index': str(n)})
+                               'label_index': str(n),
+                               'in_parc': int(presentregs[n-1]),
+                               })
                 
             with open(outtsjson,'w') as writejson:
                 json.dump(tsjson, writejson)
