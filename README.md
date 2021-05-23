@@ -4,7 +4,7 @@
 branch 0.1.6
 
 # app-fmri-2-mat
-fmriprep outputs to connectivity matrices 
+fMRIPrep outputs that are nusiance regressed and then, in combination with a parcellation, made into timeseries and/or correlation matrix. 
 
 So you've just preprocessed your fmri data... but you are now left wondering how you go from these preprocessed outputs to something ammenable for analysis, such as a nuisance-regressed image or bold timeseries from nodes of a parcellation or even an NxN connectivity matrix.   
 
