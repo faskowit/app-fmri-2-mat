@@ -2,13 +2,15 @@
 [![Run on Brainlife.io](https://img.shields.io/badge/Brainlife-brainlife.app.167-blue.svg)](https://doi.org/10.25663/brainlife.app.167)
 
 # app-fmri-2-mat
-fmriprep outputs to connectivity matrices 
+fMRIPrep outputs that are nuisance regressed and then, in combination with a parcellation, made into timeseries and/or correlation matrix. 
 
 So you've just preprocessed your fmri data... but you are now left wondering how you go from these preprocessed outputs to something ammenable for analysis, such as a nuisance-regressed image or bold timeseries from nodes of a parcellation or even an NxN connectivity matrix.   
 
 These scripts will take a `bold.nii.gz`, `mask.nii.gz`, `confounds.tsv`, and `parcellation.nii.gz` and regress them (accoriding to a few nuisance strategies of your choice) and then create timeseries according to the nodes of your parc. 
 
 These tools rely heavily on nilearn's functions-so much grattiude to them. Also many thanks to [fliem](https://github.com/fliem) whose code here: https://github.com/fliem/sea_zrh_rs I copied/adopted/written on top of to make these tools.
+
+This code can be run within the [brainlife](https://brainlife.io/) environment, or your system directly, using either the command line interface or a `config.json` to mimic the brainlife functionality. 
 
 ### Authors 
 
@@ -77,7 +79,6 @@ These scripts have also been made Brainlife.io compatible (re: cm datatype), but
         "confjson": "/path/to/config.json",
         "tr": "2.3",
         "savets": "true",
-        "discardvols": 4,
         "inspace": "data",
         "strategy" "36p"
 }
