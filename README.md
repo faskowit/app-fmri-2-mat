@@ -2,6 +2,60 @@
 [![Run on Brainlife.io](https://img.shields.io/badge/Brainlife-brainlife.app.167-blue.svg)](https://doi.org/10.25663/brainlife.app.167)
 
 # app-fmri-2-mat
+
+<!-- brainlife-app:begin (generated from the App manifest; edit the manifest, not this block) -->
+
+> **Nuisance-regresses fMRIPrep BOLD data with its confounds and extracts mean time series for each region of a volumetric parcellation using nilearn.**
+
+Runs nilearn-based nuisance regression on a preprocessed BOLD image using the fMRIPrep confounds file (strategy, band-pass filter, smoothing and spike regression are configurable), then extracts the mean time series of every parcel. Use it after fMRIPrep to get denoised BOLD and regional time series for connectivity analysis. The BOLD image, mask and parcellation must be aligned (same space); if tr is empty the TR is read from the BOLD metadata. Leave inspace at data: the code accepts only 'data' or 'labels', so the 'label' option fails.
+
+| | |
+|---|---|
+| 📥 **Inputs** | `neuro/func/task` · `neuro/parcellation/volume` · `neuro/regressors` · `neuro/mask` |
+| 📤 **Outputs** | `neuro/func/task` · `generic/timeseries` |
+| 🐳 **Container** | `faskowit/app-fmri-2-mat:brnch-0.1.6` |
+| ⚙️ **Resources** | 1 CPUs · 0.5 h walltime |
+| 🔗 **Run it** | [doi.org/10.25663/brainlife.app.369](https://doi.org/10.25663/brainlife.app.369) |
+
+#### 📥 Inputs
+
+| Input | Datatype | Required | Description |
+|---|---|---|---|
+| `fmri` | `neuro/func/task` | yes | from fMRIPrep |
+| `parc` | `neuro/parcellation/volume` | yes | From multi-atlas transfer app; should be aligned to preprocessed bold.nii.gz (i.e. same space). The internal functions of this app will re-slice the func and the parc to be on the same voxel grid. |
+| `confounds` | `neuro/regressors` | yes | from fMRIPrep |
+| `mask` | `neuro/mask` (func) | yes | from fMRIPrep |
+
+#### 📤 Outputs
+
+| Output | Datatype | Description |
+|---|---|---|
+| `output_regress` | `neuro/func/task` | regressed output bold |
+| `out_ts` | `generic/timeseries` | new timeseries datatype |
+
+<details>
+<summary><b>⚙️ Parameters</b> (10)</summary>
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `strategy` | enum | `36P` | Strategy of nuisance regression, all strategies include linear de-trending Options: `36P`, `24aCompCor`, `globalsig`, `linear`, `24aCompCorGsr`. |
+| `tr` | number |  | If you know the TR, you can set it here. Script will also try to automatically read it from BL info (try this first). |
+| `smoothfwhm` | number | `0` | FWHM of spatial smoothing kernel applied to bold.nii.gz (put 0 for no smoothing) |
+| `lowpass` | number | `0.08` | Low-pass temporal filter |
+| `highpass` | number | `0.008` | High-pass temporal filter |
+| `addlinear` | boolean | `true` | Add linear regressor to nuisance regression. This makes your time series generally centered around 0. |
+| `spikethresh` | number | `9999` | If you want a spike regressor for frames that exceed a certain FD threshold, set that threshold here. Threshold is typically in the 0.5 to 1 range; else, "9999" means no spike regressor. |
+| `inspace` | enum | `data` | In almost ALL cases, this should be set to 'data'. It will take a super long time to run the app if you set it to 'label' and you might run out of memory. Options: `data`, `label`. |
+| `savets` | boolean | `true` | Save the regional time series (required to produce the out_ts output). |
+| `nomatrix` | boolean | `true` | Skip computing the correlation matrix and only extract time series. |
+
+</details>
+
+📚 **References used by this App:**
+- Avesani P, McPherson B, Hayashi S, et al. The open diffusion data derivatives, brain data upcycling via integrated publishing of derivatives and reproducible open cloud services. Sci Data 6, 69 (2019). [doi:10.1038/s41597-019-0073-y](https://doi.org/10.1038/s41597-019-0073-y)
+
+<!-- brainlife-app:end -->
+
 fMRIPrep outputs that are nuisance regressed and then, in combination with a parcellation, made into timeseries and/or correlation matrix. 
 
 So you've just preprocessed your fmri data... but you are now left wondering how you go from these preprocessed outputs to something ammenable for analysis, such as a nuisance-regressed image or bold timeseries from nodes of a parcellation or even an NxN connectivity matrix.   
