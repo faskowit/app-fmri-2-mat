@@ -1,7 +1,16 @@
-[![Abcdspec-compliant](https://img.shields.io/badge/ABCD_Spec-v1.1-green.svg)](https://github.com/brain-life/abcd-spec)
-[![Run on Brainlife.io](https://img.shields.io/badge/Brainlife-brainlife.app.167-blue.svg)](https://doi.org/10.25663/brainlife.app.167)
+<h1 align="center">fmri 2 mat</h1>
 
-# app-fmri-2-mat
+<p align="center">
+  Nuisance-regresses fMRIPrep BOLD data with its confounds and extracts mean time series for each region of a volumetric parcellation using nilearn.
+</p>
+
+<p align="center">
+  <a href="https://github.com/brainlife/abcd-spec"><img src="https://img.shields.io/badge/ABCD_Spec-v1.1-green.svg" alt="ABCD Spec v1.1"></a>
+  <a href="https://doi.org/10.25663/brainlife.app.369"><img src="https://img.shields.io/badge/Brainlife-brainlife.app.369-blue.svg" alt="Run on brainlife.io"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-see_LICENSE-lightgrey.svg" alt="License"></a>
+</p>
+
+## At a glance
 
 <!-- brainlife-app:begin (generated from the App manifest; edit the manifest, not this block) -->
 
@@ -11,13 +20,13 @@ Runs nilearn-based nuisance regression on a preprocessed BOLD image using the fM
 
 | | |
 |---|---|
-| 📥 **Inputs** | `neuro/func/task` · `neuro/parcellation/volume` · `neuro/regressors` · `neuro/mask` |
-| 📤 **Outputs** | `neuro/func/task` · `generic/timeseries` |
-| 🐳 **Container** | `faskowit/app-fmri-2-mat:brnch-0.1.6` |
-| ⚙️ **Resources** | 1 CPUs · 0.5 h walltime |
-| 🔗 **Run it** | [doi.org/10.25663/brainlife.app.369](https://doi.org/10.25663/brainlife.app.369) |
+| **Inputs** | `neuro/func/task` · `neuro/parcellation/volume` · `neuro/regressors` · `neuro/mask` |
+| **Outputs** | `neuro/func/task` · `generic/timeseries` |
+| **Container** | `faskowit/app-fmri-2-mat:brnch-0.1.6` |
+| **Resources** | 1 CPUs · 0.5 h walltime |
+| **Run it** | [doi.org/10.25663/brainlife.app.369](https://doi.org/10.25663/brainlife.app.369) |
 
-#### 📥 Inputs
+#### Inputs
 
 | Input | Datatype | Required | Description |
 |---|---|---|---|
@@ -26,7 +35,7 @@ Runs nilearn-based nuisance regression on a preprocessed BOLD image using the fM
 | `confounds` | `neuro/regressors` | yes | from fMRIPrep |
 | `mask` | `neuro/mask` (func) | yes | from fMRIPrep |
 
-#### 📤 Outputs
+#### Outputs
 
 | Output | Datatype | Description |
 |---|---|---|
@@ -34,7 +43,7 @@ Runs nilearn-based nuisance regression on a preprocessed BOLD image using the fM
 | `out_ts` | `generic/timeseries` | new timeseries datatype |
 
 <details>
-<summary><b>⚙️ Parameters</b> (10)</summary>
+<summary><b>Parameters</b> (10)</summary>
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
@@ -51,110 +60,93 @@ Runs nilearn-based nuisance regression on a preprocessed BOLD image using the fM
 
 </details>
 
-📚 **References used by this App:**
-- Avesani P, McPherson B, Hayashi S, et al. The open diffusion data derivatives, brain data upcycling via integrated publishing of derivatives and reproducible open cloud services. Sci Data 6, 69 (2019). [doi:10.1038/s41597-019-0073-y](https://doi.org/10.1038/s41597-019-0073-y)
-
 <!-- brainlife-app:end -->
 
-fMRIPrep outputs that are nuisance regressed and then, in combination with a parcellation, made into timeseries and/or correlation matrix. 
+## Versions on brainlife.io
 
-So you've just preprocessed your fmri data... but you are now left wondering how you go from these preprocessed outputs to something ammenable for analysis, such as a nuisance-regressed image or bold timeseries from nodes of a parcellation or even an NxN connectivity matrix.   
+This repository hosts several Apps, each built from its own branch.
 
-These scripts will take a `bold.nii.gz`, `mask.nii.gz`, `confounds.tsv`, and `parcellation.nii.gz` and regress them (accoriding to a few nuisance strategies of your choice) and then create timeseries according to the nodes of your parc. 
+| App | Branch | Run it | Status |
+|---|---|---|---|
+| fMRI Timeseries Extraction | [`0.1.6`](https://github.com/faskowit/app-fmri-2-mat/tree/0.1.6) | [doi:10.25663/brainlife.app.369](https://doi.org/10.25663/brainlife.app.369) | current |
+| fMRI to Connectivity Matrices | [`0.1.5`](https://github.com/faskowit/app-fmri-2-mat/tree/0.1.5) | [doi:10.25663/brainlife.app.167](https://doi.org/10.25663/brainlife.app.167) | available |
 
-These tools rely heavily on nilearn's functions-so much grattiude to them. Also many thanks to [fliem](https://github.com/fliem) whose code here: https://github.com/fliem/sea_zrh_rs I copied/adopted/written on top of to make these tools.
+## Running the App
 
-This code can be run within the [brainlife](https://brainlife.io/) environment, or your system directly, using either the command line interface or a `config.json` to mimic the brainlife functionality. 
+### On brainlife.io
 
-### Authors 
+Open the App at [doi.org/10.25663/brainlife.app.369](https://doi.org/10.25663/brainlife.app.369), choose `neuro/func/task`, `neuro/parcellation/volume`, `neuro/regressors`, `neuro/mask` from your project, set the parameters and press **Execute**. The results are saved to your project as `neuro/func/task`, `generic/timeseries`.
 
-- Josh Faskowitz (joshua.faskowitz@gmail.com) 
+### Locally
 
-### Funding 
+You need [Singularity/Apptainer](https://apptainer.org/) (the App runs in `faskowit/app-fmri-2-mat:brnch-0.1.6`), [`jq`](https://jqlang.github.io/jq/).
 
-[![NSF-GRFP-1342962](https://img.shields.io/badge/NSF_GRFP-1342962-blue.svg)](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1342962)
-[![NSF-BCS-1734853](https://img.shields.io/badge/NSF_BCS-1734853-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1734853)
-[![NSF-BCS-1636893](https://img.shields.io/badge/NSF_BCS-1636893-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1636893)
-[![NSF-ACI-1916518](https://img.shields.io/badge/NSF_ACI-1916518-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1916518)
-[![NSF-IIS-1912270](https://img.shields.io/badge/NSF_IIS-1912270-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1912270)
-[![NIH-NIBIB-R01EB029272](https://img.shields.io/badge/NIH_NIBIB-R01EB029272-green.svg)](https://grantome.com/grant/NIH/R01-EB029272-01)
+1. Clone this repository and check out the App's branch (`git checkout 0.1.6`).
+2. Create `config.json` with the paths to your inputs and the parameters:
 
-### Citations 
+   ```json
+   {
+       "fmri": "/path/to/fmri/fmri",
+       "parc": "/path/to/parc/parc",
+       "key": "/path/to/parc/key",
+       "label": "/path/to/parc/label",
+       "confounds": "/path/to/confounds/confounds",
+       "mask": "/path/to/mask/mask",
+       "strategy": "36P",
+       "tr": "",
+       "smoothfwhm": 0,
+       "lowpass": 0.08,
+       "highpass": 0.008,
+       "addlinear": true,
+       "spikethresh": 9999,
+       "inspace": "data",
+       "savets": true,
+       "nomatrix": true
+   }
+   ```
 
-Please cite the following articles when publishing papers that used data, code or other resources created by the brainlife.io community. Citing this repository will be good.
+3. Run `./main`.
 
-Avesani, P., McPherson, B., Hayashi, S. et al. The open diffusion data derivatives, brain data upcycling via integrated publishing of derivatives and reproducible open cloud services. Sci Data 6, 69 (2019). https://doi.org/10.1038/s41597-019-0073-y
+## Troubleshooting
 
-### How to use
-Need python3 with nibable, pandas, nilearn, and h5py
+- **ERROR: need an fmri, parc, and confounds file**: Provide the fmri, parc and confounds inputs.
+- **ERROR: space can only be 'data' or 'labels'**: Set inspace to data (or labels).
+- **output csv file not created! error**: Check that the parcellation is aligned to the BOLD image and that the regression step succeeded.
 
-```
-  run.sh
-    REQUIRED
-    -fmri:      your bold.nii.gz image here
-    -mask:      your mask.nii.gz image here
-    -parc:      parcellation in same space as bold.nii.gz
-    -conf:      confounds file (.tsv format, expecting it to be fmriprep's output)
-    OPTIONAL **=default
-    -out:       output prefix; **output_
-    -tr:        repetition time, if not provided, scripts will try to guess (not a great move)
-    -discard:   now many volumes (integer) to descard from beginning of bold; **0
-    -space:     for parc to bold resampling, which space to use; choices **data, labels
-    -strategy:  nuisance regression strategy; choices **36p, 9p, 6p, aCompCor, 24aCompCor
-                                                        24aCompCorGsr, globalsig, globalsig4
-    OPT FLAGS
-    -savets:    flag to save timeseries as hd5 file
-    -nomat:     flag to not make correlation matrix
-    EXTRA OPTS
-    -regressextra, -makematextra
-                these args let advanced users have access to the python scripts in /src. 
-                For example, to change the smoothing kernel in the regress.py script, 
-                you can add `-regressextra -fwhm 2`. Other options are low and high pass 
-                filter settings, and the spike threshold. Check out the python scripts 
-                for all these extra options. 
-                ***also*** please be aware of the default parameters being used in these
-                python scripts; these parameters, which are set to reasonable values 
-                based on literature, will surely affect your processed data. cheers. 
-```
+## Citing
 
-These scripts have also been made Brainlife.io compatible (re: cm datatype), but can be run outside of the brainlife platform.
+If you use this App, please cite it, the software it builds on and brainlife.io:
 
-### Running Locally (on your machine) in the Brainlife.io manner
+- fMRI Timeseries Extraction. brainlife.io App. [doi:10.25663/brainlife.app.369](https://doi.org/10.25663/brainlife.app.369)
+- Fischl. FreeSurfer. *NeuroImage* 62:774-781 (2012). [doi:10.1016/j.neuroimage.2012.01.021](https://doi.org/10.1016/j.neuroimage.2012.01.021)
+- Abraham et al. Machine learning for neuroimaging with scikit-learn. *Frontiers in Neuroinformatics* 8 (2014). [doi:10.3389/fninf.2014.00014](https://doi.org/10.3389/fninf.2014.00014)
+- Esteban et al. fMRIPrep: a robust preprocessing pipeline for functional MRI. *Nature Methods* 16:111-116 (2018). [doi:10.1038/s41592-018-0235-4](https://doi.org/10.1038/s41592-018-0235-4)
+- Hayashi S, Caron BA, Heinsfeld AS, et al. brainlife.io: a decentralized and open-source cloud platform to support neuroscience research. *Nature Methods* 21:809–813 (2024). [doi:10.1038/s41592-024-02237-2](https://doi.org/10.1038/s41592-024-02237-2)
+- Avesani P, McPherson B, Hayashi S, et al. The open diffusion data derivatives, brain data upcycling via integrated publishing of derivatives and reproducible open cloud services. *Scientific Data* 6:69 (2019). [doi:10.1038/s41597-019-0073-y](https://doi.org/10.1038/s41597-019-0073-y)
 
-1. git clone this repo.
-2. Inside the cloned directory, create `config.json` with something like the following content with paths to your input files.
+## Authors
 
-```json
-{
-        "fmri": "/path/to/bold.nii.gz",
-        "parc": "/path/to/parcellation.nii.gz",
-        "confounds": "/path/to/confounds.tsv",
-        "mask": "/path/to/mask.nii.gz",
-        "confjson": "/path/to/config.json",
-        "tr": "2.3",
-        "savets": "true",
-        "inspace": "data",
-        "strategy" "36p"
-}
-```
+- Josh Faskowitz
 
-3. Launch the App by executing `main`
+## Funding
 
-```bash
-./main
-```
+[![Wellcome-226486/Z/22/Z](https://img.shields.io/badge/Wellcome-226486%2FZ%2F22%2FZ-purple.svg)](https://wellcome.org/)
+[![NIH-NINDS-U24NS140384](https://img.shields.io/badge/NIH_NINDS-U24NS140384-green.svg)](https://reporter.nih.gov/project-details/11261037)
+[![NIH-NINDS-UM1NS132207](https://img.shields.io/badge/NIH_NINDS-UM1NS132207-green.svg)](https://reporter.nih.gov/project-details/11411328)
+[![NIH-NIBIB-R01EB029272](https://img.shields.io/badge/NIH_NIBIB-R01EB029272-green.svg)](https://reporter.nih.gov/project-details/10262925)
+[![NIH-NIBIB-R01EB030896](https://img.shields.io/badge/NIH_NIBIB-R01EB030896-green.svg)](https://reporter.nih.gov/project-details/10428625)
+[![NIH-NIMH-R01MH126699](https://img.shields.io/badge/NIH_NIMH-R01MH126699-green.svg)](https://reporter.nih.gov/project-details/10460628)
+[![NIH-NIDCD-R01DC020088](https://img.shields.io/badge/NIH_NIDCD-R01DC020088-green.svg)](https://reporter.nih.gov/project-details/11140284)
+[![NSF-BCS-1734853](https://img.shields.io/badge/NSF_BCS-1734853-blue.svg)](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1734853)
+[![NSF-BCS-2203524](https://img.shields.io/badge/NSF_BCS-2203524-blue.svg)](https://www.nsf.gov/awardsearch/showAward?AWD_ID=2203524)
+[![NSF-IIS-1636893](https://img.shields.io/badge/NSF_IIS-1636893-blue.svg)](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1636893)
+[![NSF-OAC-2148729](https://img.shields.io/badge/NSF_OAC-2148729-blue.svg)](https://www.nsf.gov/awardsearch/showAward?AWD_ID=2148729)
+[![NSF-IIS-1912270](https://img.shields.io/badge/NSF_IIS-1912270-blue.svg)](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1912270)
+[![NSF-IIS-2148700](https://img.shields.io/badge/NSF_IIS-2148700-blue.svg)](https://www.nsf.gov/awardsearch/showAward?AWD_ID=2148700)
+[![NSF-OAC-1916518](https://img.shields.io/badge/NSF_OAC-1916518-blue.svg)](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1916518)
 
-## Output
+<sub>brainlife.io, which runs this App, is publicly funded by Wellcome, the U.S. National Institutes of Health and the U.S. National Science Foundation; acknowledging that support helps keep it running.</sub>
 
-All output files will be generated under the current working directory (pwd), in directories called `output_makemat` and `output_regress`. 
+## License
 
-### Dependencies
-
-This App uses [singularity](https://www.sylabs.io/singularity/) to run. If you don't have singularity, you can run this script in a unix enviroment with:  
-
-  - python3: https://www.python.org/downloads/
-  - jq: https://stedolan.github.io/jq/
-  
-  #### MIT Copyright (c) Josh Faskowitz & brainlife.io
-
-<sub> This material is based upon work supported by the National Science Foundation Graduate Research Fellowship under Grant No. 1342962. Any opinion, findings, and conclusions or recommendations expressed in this material are those of the authors(s) and do not necessarily reflect the views of the National Science Foundation. </sub>
+See [LICENSE](LICENSE).
